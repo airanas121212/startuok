@@ -9,7 +9,7 @@
 .partner-strip-head{text-align:center;max-width:720px;margin:0 auto 24px}
 .partner-strip-kicker{display:inline-block;margin-bottom:6px;color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .partner-strip-head p{margin:0;color:#53657f;font-size:16px;font-weight:700}
-.partner-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:12px;position:relative;z-index:1}
+.partner-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:12px;position:relative;z-index:1}
 .partner-logo{min-height:72px;display:flex;align-items:center;justify-content:center;padding:17px 15px;border:1px solid rgba(207,220,238,.9);border-radius:15px;background:rgba(255,255,255,.9);box-shadow:0 8px 22px rgba(18,53,98,.045);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease}
 .partner-logo:hover{transform:translateY(-3px);border-color:rgba(15,134,255,.35);background:#fff;box-shadow:0 14px 30px rgba(18,73,143,.10)}
 .partner-logo img{display:block;width:100%;height:27px;object-fit:contain;filter:none;opacity:1;transition:opacity .24s ease,transform .24s ease}
@@ -21,11 +21,12 @@
 .partner-logo img[alt="Stripe"]{height:30px}
 .partner-logo img[alt="DPD"]{height:32px}
 .partner-logo img[alt="Paysera"]{height:29px}
+.partner-logo img[alt="Google"]{height:30px;max-width:128px}
 .partner-logo img[alt="Venipak"]{height:28px}
 .partner-logo img[alt="Klaviyo"]{height:27px;padding:6px 10px;background:#ffd602;border-radius:8px}
 .partner-logo img[alt="Montonio"]{height:41px;max-width:140px}
 .partner-strip-note{text-align:center;margin:18px 0 0;color:#7b8ba3;font-size:12px;font-weight:700}
-@media(max-width:900px){.partner-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.partner-strip{padding:34px 0 31px}}
+@media(max-width:900px){.partner-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.partner-strip{padding:34px 0 31px}}
 @media(max-width:560px){.partner-strip{padding:30px 0 28px}.partner-strip-head{margin-bottom:20px}.partner-strip-head p{font-size:14px;line-height:1.5}.partner-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.partner-logo{min-height:64px;padding:14px 12px}.partner-logo img{height:24px}.partner-strip-note{font-size:11px;line-height:1.5;margin-top:15px}.partner-logo img[alt="Montonio"]{height:35px;max-width:120px}.partner-logo img[alt="Omniva"]{height:38px;max-width:130px}}
 
 @media(hover:none),(pointer:coarse){.partner-logo img{filter:none;opacity:1}.partner-logo:active{transform:translateY(-2px);border-color:rgba(15,134,255,.35);box-shadow:0 12px 26px rgba(18,73,143,.09)}}

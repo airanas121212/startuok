@@ -1,10 +1,15 @@
-STARTUOK UPDATED FILES — UPLOAD TO GITHUB
+STARTUOK COMPLETE WEBSITE UPDATE — UPLOAD TO GITHUB
 
 1. Extract this ZIP on your computer.
 2. Open the GitHub repository for startuok.online.
-3. Upload the extracted files/folders to the repository root, preserving the folder structure.
+3. Upload the contents of the extracted startuok folder to the repository root, preserving the folder structure.
 4. Replace existing files when prompted.
-5. Commit the changes, for example: "Make contact form actions explicit".
-6. Wait for the GitHub Pages deployment to finish, then test the form on mobile.
+5. Commit the changes, for example: "Add Google integration logo and balance partner grid".
+6. Wait for the GitHub Pages deployment to finish, then test the homepage and Shopify integrations page on mobile.
+
+Included updates:
+- safer contact-form actions;
+- Google added to the supported platforms/integrations strip;
+- 10-logo responsive grid: 10 desktop, 5 tablet, 2 mobile.
 
 Important: GitHub's web interface does not automatically extract an uploaded ZIP. Extract it first.
