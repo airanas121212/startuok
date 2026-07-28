@@ -61,15 +61,18 @@ document.querySelectorAll('[data-package]').forEach((link) => {
   });
 });
 
-// Statinei svetainei paliekamas sąžiningas ir atsparesnis el. pašto kelias:
-// suformuojamas laiškas, o tekstą galima nukopijuoti, jei el. pašto programa neatsidaro.
+// Statinė svetainė nieko nesiunčia automatiškai. Užpildžius formą,
+// lankytojas aiškiai pasirenka: atidaryti el. pašto programą arba kopijuoti tekstą.
 (() => {
   const form = document.getElementById('lead-form');
   const status = document.getElementById('form-status');
+  const actions = document.getElementById('form-actions');
+  const openEmailButton = document.getElementById('open-email');
   const copyButton = document.getElementById('copy-message');
-  if (!form || !status || !copyButton) return;
+  if (!form || !status || !actions || !openEmailButton || !copyButton) return;
 
   let lastMessage = '';
+  let lastMailto = '';
 
   const buildMessage = () => {
     const data = new FormData(form);
@@ -85,7 +88,13 @@ document.querySelectorAll('[data-package]').forEach((link) => {
     };
   };
 
-  form.addEventListener('submit', async (event) => {
+  const prepareMessage = () => {
+    const message = buildMessage();
+    lastMessage = message.body;
+    lastMailto = `mailto:labas@startuok.online?subject=${encodeURIComponent(message.subject)}&body=${encodeURIComponent(message.body)}`;
+  };
+
+  form.addEventListener('submit', (event) => {
     event.preventDefault();
     status.classList.remove('error');
 
@@ -93,32 +102,39 @@ document.querySelectorAll('[data-package]').forEach((link) => {
       form.reportValidity();
       status.textContent = 'Užpildykite visus laukus ir patikrinkite el. pašto adresą.';
       status.classList.add('error');
+      actions.hidden = true;
       return;
     }
 
-    const message = buildMessage();
-    lastMessage = message.body;
-    copyButton.hidden = false;
+    prepareMessage();
+    actions.hidden = false;
+    status.textContent = 'Laiškas paruoštas. Pasirinkite, ar atidaryti el. pašto programą, ar nukopijuoti tekstą.';
+    openEmailButton.focus();
+  });
 
-    try {
-      await navigator.clipboard?.writeText(lastMessage);
-      status.textContent = 'Laiško tekstas nukopijuotas. Atidarome jūsų el. pašto programą…';
-    } catch {
-      status.textContent = 'Atidarome jūsų el. pašto programą. Jei ji neatsidarys, naudokite kopijavimo mygtuką.';
+  openEmailButton.addEventListener('click', () => {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
-
-    const mailto = `mailto:labas@startuok.online?subject=${encodeURIComponent(message.subject)}&body=${encodeURIComponent(message.body)}`;
-    window.location.href = mailto;
+    prepareMessage();
+    status.textContent = 'Atidaroma jūsų el. pašto programa…';
+    status.classList.remove('error');
+    window.location.href = lastMailto;
   });
 
   copyButton.addEventListener('click', async () => {
-    if (!lastMessage) lastMessage = buildMessage().body;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    prepareMessage();
     try {
       await navigator.clipboard.writeText(lastMessage);
       status.textContent = 'Užklausos tekstas nukopijuotas. Galite jį įklijuoti į bet kurią el. pašto programą.';
       status.classList.remove('error');
     } catch {
-      status.textContent = 'Nepavyko nukopijuoti automatiškai. Pažymėkite formos tekstą ir nukopijuokite rankiniu būdu.';
+      status.textContent = 'Naršyklė neleido kopijuoti automatiškai. Atidarykite el. pašto programą arba nukopijuokite tekstą iš formos rankiniu būdu.';
       status.classList.add('error');
     }
   });

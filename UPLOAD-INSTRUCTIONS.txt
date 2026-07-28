@@ -1,0 +1,10 @@
+STARTUOK UPDATED FILES — UPLOAD TO GITHUB
+
+1. Extract this ZIP on your computer.
+2. Open the GitHub repository for startuok.online.
+3. Upload the extracted files/folders to the repository root, preserving the folder structure.
+4. Replace existing files when prompted.
+5. Commit the changes, for example: "Make contact form actions explicit".
+6. Wait for the GitHub Pages deployment to finish, then test the form on mobile.
+
+Important: GitHub's web interface does not automatically extract an uploaded ZIP. Extract it first.

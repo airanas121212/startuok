@@ -80,9 +80,12 @@
       <label>El. paštas<input name="email" type="email" autocomplete="email" required></label>
       <label>Trumpai apie projektą<textarea name="message" rows="5" placeholder="Kokia platforma naudojama, kiek yra produktų ir kas privalo būti perkelta?" required></textarea></label>
       <button class="button" type="submit">Paruošti laišką</button>
-      <small>Paspaudus bus paruoštas laiškas jūsų el. pašto programoje. Svetainė duomenų nesaugo. <a href="../privatumas.html">Privatumo informacija</a>.</small>
+      <small>Paspaudus laiškas bus paruoštas naršyklėje. Tada pasirinksite atidaryti el. pašto programą arba nukopijuoti tekstą. Svetainė duomenų nesaugo. <a href="../privatumas.html">Privatumo informacija</a>.</small>
       <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
-      <button class="copy-message" id="copy-message" type="button" hidden>Kopijuoti užklausos tekstą</button>
+      <div class="form-actions" id="form-actions" hidden>
+        <button class="button button-small" id="open-email" type="button">Atidaryti el. pašto programą</button>
+        <button class="copy-message" id="copy-message" type="button">Kopijuoti užklausos tekstą</button>
+      </div>
     </form>
   </div>
 </section></main><footer>
