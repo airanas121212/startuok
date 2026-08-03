@@ -1,352 +1,319 @@
-const menuButton = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
+clearTimeout(window.__startuokRevealFallback);
+document.documentElement.classList.remove('reveal-fallback');
+(() => {
+  'use strict';
+  const doc = document;
+  const root = doc.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-menuButton?.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Uždaryti meniu' : 'Atidaryti meniu');
-});
+  requestAnimationFrame(() => requestAnimationFrame(() => doc.body.classList.add('is-ready')));
 
-document.querySelectorAll('.nav a').forEach((link) => link.addEventListener('click', () => {
-  nav?.classList.remove('open');
-  menuButton?.setAttribute('aria-expanded', 'false');
-  menuButton?.setAttribute('aria-label', 'Atidaryti meniu');
-}));
+  doc.querySelectorAll('[data-current-year]').forEach((year) => {
+    year.textContent = new Date().getFullYear();
+  });
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && nav?.classList.contains('open')) {
+  // Header and menu.
+  const header = doc.querySelector('.site-header');
+  const menuButton = doc.querySelector('.menu-toggle');
+  const nav = doc.querySelector('.nav');
+  const updateHeader = () => header?.classList.toggle('scrolled', window.scrollY > 18);
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+
+  const closeMenu = (returnFocus = false) => {
+    if (!menuButton || !nav) return;
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', 'Atidaryti meniu');
     nav.classList.remove('open');
-    menuButton?.setAttribute('aria-expanded', 'false');
-    menuButton?.setAttribute('aria-label', 'Atidaryti meniu');
-    menuButton?.focus();
+    doc.body.classList.remove('nav-open');
+    if (returnFocus) menuButton.focus();
+  };
+  if (menuButton && nav) {
+    menuButton.addEventListener('click', () => {
+      const open = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!open));
+      menuButton.setAttribute('aria-label', open ? 'Atidaryti meniu' : 'Uždaryti meniu');
+      nav.classList.toggle('open', !open);
+      doc.body.classList.toggle('nav-open', !open);
+    });
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu()));
+    doc.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(true); });
+    doc.addEventListener('click', (event) => {
+      if (!nav.classList.contains('open') || nav.contains(event.target) || menuButton.contains(event.target)) return;
+      closeMenu();
+    });
   }
-});
 
-document.addEventListener('click', (event) => {
-  if (!nav?.classList.contains('open') || nav.contains(event.target) || menuButton?.contains(event.target)) return;
-  nav.classList.remove('open');
-  menuButton?.setAttribute('aria-expanded', 'false');
-  menuButton?.setAttribute('aria-label', 'Atidaryti meniu');
-});
-
-const revealItems = document.querySelectorAll('.reveal');
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+  // Scroll reveal: one calm entrance per element.
+  const revealItems = [...doc.querySelectorAll('.reveal')];
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.09, rootMargin: '0px 0px -5% 0px' });
+    revealItems.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.96 && rect.bottom > 0) item.classList.add('visible');
+      else revealObserver.observe(item);
+    });
+  } else revealItems.forEach((item) => item.classList.add('visible'));
+
+  // Active homepage navigation section.
+  const sectionLinks = [...doc.querySelectorAll('.nav a[href*="#"]')];
+  const observedSections = sectionLinks.map((link) => {
+    const hash = link.getAttribute('href')?.split('#')[1];
+    return hash ? { link, section: doc.getElementById(hash) } : null;
+  }).filter((item) => item?.section);
+  if (observedSections.length && 'IntersectionObserver' in window) {
+    const navObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
+      if (!visible) return;
+      sectionLinks.forEach((link) => link.classList.remove('is-active'));
+      observedSections.find((item) => item.section === visible.target)?.link.classList.add('is-active');
+    }, { rootMargin: '-22% 0px -62% 0px', threshold: [0,.2,.6] });
+    observedSections.forEach((item) => navObserver.observe(item.section));
+  }
+
+  // Subtle pointer spotlight on premium cards.
+  if (finePointer && !reduceMotion) {
+    doc.querySelectorAll('.interactive-card').forEach((card) => {
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);
+      }, { passive: true });
+    });
+  }
+
+  // Hero showcase: controls, autoplay, swipe and subtle 3D response.
+  const carousel = doc.querySelector('.portfolio-browser');
+  if (carousel) {
+    const slides = [...carousel.querySelectorAll('.project-slide')];
+    const dots = [...carousel.querySelectorAll('.portfolio-dots button')];
+    const url = doc.getElementById('project-url');
+    let index = 0;
+    let timer = 0;
+    let touchStartX = 0;
+    const show = (next) => {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        const active = i === index;
+        slide.classList.toggle('active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+      });
+      dots.forEach((dot, i) => {
+        const active = i === index;
+        dot.classList.toggle('active', active);
+        dot.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+      if (url) url.textContent = slides[index]?.dataset.url || '';
+    };
+    const stop = () => window.clearInterval(timer);
+    const play = () => {
+      stop();
+      if (!reduceMotion && !doc.hidden) timer = window.setInterval(() => show(index + 1), 7000);
+    };
+    carousel.querySelector('.portfolio-next')?.addEventListener('click', () => { show(index + 1); play(); });
+    carousel.querySelector('.portfolio-prev')?.addEventListener('click', () => { show(index - 1); play(); });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); play(); }));
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', play);
+    carousel.addEventListener('focusin', stop);
+    carousel.addEventListener('focusout', play);
+    carousel.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0]?.clientX || 0; }, { passive: true });
+    carousel.addEventListener('touchend', (event) => {
+      const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+      if (Math.abs(distance) > 45) { show(index + (distance < 0 ? 1 : -1)); play(); }
+    }, { passive: true });
+    doc.addEventListener('visibilitychange', () => doc.hidden ? stop() : play());
+    if (finePointer && !reduceMotion) {
+      carousel.addEventListener('pointermove', (event) => {
+        const rect = carousel.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - .5) * 2;
+        const y = ((event.clientY - rect.top) / rect.height - .5) * 2;
+        carousel.style.setProperty('--tilt-y', `${x * 1.5}deg`);
+        carousel.style.setProperty('--tilt-x', `${y * -1.25}deg`);
+      }, { passive: true });
+      carousel.addEventListener('pointerleave', () => {
+        carousel.style.setProperty('--tilt-y', '0deg');
+        carousel.style.setProperty('--tilt-x', '0deg');
+      });
+    }
+    show(0); play();
+  }
+
+  // Timeline emphasis as each real step enters the reading area.
+  doc.querySelectorAll('.animated-timeline').forEach((timeline) => {
+    const items = [...timeline.querySelectorAll(':scope > li')];
+    if (!items.length) return;
+    if (reduceMotion || !('IntersectionObserver' in window)) { items.forEach((item) => item.classList.add('is-active')); return; }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-active', entry.isIntersecting));
+    }, { rootMargin: '-32% 0px -48% 0px', threshold: .15 });
+    items.forEach((item) => observer.observe(item));
+  });
+
+  // Accessible accordion: only one open; animate content height when motion is allowed.
+  doc.querySelectorAll('.accordion').forEach((accordion) => {
+    const items = [...accordion.querySelectorAll(':scope > details')];
+    items.forEach((item) => {
+      const summary = item.querySelector(':scope > summary');
+      const contentNodes = [...item.children].filter((node) => node !== summary);
+      if (!summary || !contentNodes.length) return;
+      const wrapper = doc.createElement('div');
+      wrapper.className = 'details-content';
+      contentNodes.forEach((node) => wrapper.appendChild(node));
+      item.appendChild(wrapper);
+      item.addEventListener('toggle', () => {
+        if (item.open) items.forEach((other) => { if (other !== item && other.open) other.open = false; });
+      });
+      if (!reduceMotion) {
+        summary.addEventListener('click', (event) => {
+          event.preventDefault();
+          const opening = !item.open;
+          const start = item.offsetHeight;
+          if (opening) item.open = true;
+          const end = summary.offsetHeight + (opening ? wrapper.scrollHeight : 0);
+          const animation = item.animate({ height: [`${start}px`, `${end}px`] }, { duration: 330, easing: 'cubic-bezier(.22,1,.36,1)' });
+          animation.onfinish = () => { if (!opening) item.open = false; item.style.height = ''; };
+        });
       }
     });
-  }, { threshold: 0.1 });
-  revealItems.forEach((element) => observer.observe(element));
-} else {
-  revealItems.forEach((element) => element.classList.add('visible'));
-}
-
-const year = document.getElementById('year');
-if (year) year.textContent = new Date().getFullYear();
-
-// Kainodaros mygtukai perkelia pasirinktą paketą į užklausą.
-document.querySelectorAll('[data-package]').forEach((link) => {
-  link.addEventListener('click', () => {
-    const message = document.querySelector('#lead-form textarea[name="message"]');
-    if (!message) return;
-    const packageName = link.dataset.package;
-    if (!message.value.trim()) {
-      message.value = `Domina paketas „${packageName}“.\n\nTrumpai apie projektą: `;
-    } else if (!message.value.includes(`„${packageName}“`)) {
-      message.value = `Domina paketas „${packageName}“.\n\n${message.value}`;
-    }
   });
-});
 
-// Statinė svetainė nieko nesiunčia automatiškai. Užpildžius formą,
-// lankytojas aiškiai pasirenka: atidaryti el. pašto programą arba kopijuoti tekstą.
-(() => {
-  const form = document.getElementById('lead-form');
-  const status = document.getElementById('form-status');
-  const actions = document.getElementById('form-actions');
-  const openEmailButton = document.getElementById('open-email');
-  const copyButton = document.getElementById('copy-message');
-  if (!form || !status || !actions || !openEmailButton || !copyButton) return;
+  const quizForm = doc.querySelector('#quiz-form');
+  if (quizForm) initQuiz(quizForm);
+  const leadForm = doc.querySelector('#lead-form');
+  if (leadForm) initLeadForm(leadForm);
 
-  let lastMessage = '';
-  let lastMailto = '';
+  const mobileCta = doc.querySelector('.mobile-cta');
+  if (mobileCta) {
+    const update = () => doc.body.classList.toggle('mobile-cta-visible', window.scrollY > 620);
+    update(); window.addEventListener('scroll', update, { passive: true });
+  }
 
-  const buildMessage = () => {
-    const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const project = String(data.get('message') || '').trim();
-    return {
-      name,
-      email,
-      project,
-      subject: `Startuok projekto užklausa — ${name}`,
-      body: `Vardas: ${name}\nEl. paštas: ${email}\n\nProjektas:\n${project}`
+  function initQuiz(form) {
+    const steps = [...form.querySelectorAll('.quiz-step')];
+    const next = form.querySelector('.quiz-next');
+    const back = form.querySelector('.quiz-back');
+    const error = form.querySelector('.quiz-error');
+    const progress = doc.querySelector('.quiz-progress span');
+    const progressText = doc.querySelector('#quiz-progress-text');
+    const result = doc.querySelector('.quiz-result');
+    const summary = doc.querySelector('#quiz-summary');
+    const direction = doc.querySelector('#quiz-direction');
+    const formLink = doc.querySelector('#quiz-form-link');
+    const copy = doc.querySelector('#quiz-copy');
+    const context = doc.querySelector('#quiz-context');
+    const contexts = [
+      ['💡','Suprasti dabartinę situaciją','Sprendimas priklauso nuo to, nuo ko pradedate.'],
+      ['🛍️','Apibrėžti pardavimo modelį','Produktas keičia mokėjimo, pristatymo ir produkto puslapio logiką.'],
+      ['🗂️','Įvertinti katalogo mastą','Produktų ir variantų kiekis lemia importą, filtrus ir valdymą.'],
+      ['🌍','Suprasti rinkas','Kalbos, valiutos, mokesčiai ir pristatymas turi būti suplanuoti kartu.'],
+      ['🧩','Atskirti tikruosius poreikius','Pažymėkite tik tai, kas turi veikti pirmoje versijoje.'],
+      ['✅','Patikrinti pasiruošimą','Turinys ir duomenys dažnai lemia grafiką labiau nei programavimas.'],
+      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal apimtį, prieigas ir jūsų komandos pasiruošimą.']
+    ];
+    let current = 0;
+
+    const updateContext = () => {
+      if (!context) return;
+      const [icon,title,text] = contexts[current];
+      const iconEl=context.querySelector('.quiz-context-icon');
+      const strong=context.querySelector('strong');
+      const p=context.querySelector('p');
+      if(iconEl) iconEl.textContent=icon;
+      if(strong) strong.textContent=title;
+      if(p) p.textContent=text;
     };
-  };
-
-  const prepareMessage = () => {
-    const message = buildMessage();
-    lastMessage = message.body;
-    lastMailto = `mailto:labas@startuok.online?subject=${encodeURIComponent(message.subject)}&body=${encodeURIComponent(message.body)}`;
-  };
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    status.classList.remove('error');
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      status.textContent = 'Užpildykite visus laukus ir patikrinkite el. pašto adresą.';
-      status.classList.add('error');
-      actions.hidden = true;
-      return;
-    }
-
-    prepareMessage();
-    actions.hidden = false;
-    status.textContent = 'Laiškas paruoštas. Pasirinkite, ar atidaryti el. pašto programą, ar nukopijuoti tekstą.';
-    openEmailButton.focus();
-  });
-
-  openEmailButton.addEventListener('click', () => {
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    prepareMessage();
-    status.textContent = 'Atidaroma jūsų el. pašto programa…';
-    status.classList.remove('error');
-    window.location.href = lastMailto;
-  });
-
-  copyButton.addEventListener('click', async () => {
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    prepareMessage();
-    try {
-      await navigator.clipboard.writeText(lastMessage);
-      status.textContent = 'Užklausos tekstas nukopijuotas. Galite jį įklijuoti į bet kurią el. pašto programą.';
-      status.classList.remove('error');
-    } catch {
-      status.textContent = 'Naršyklė neleido kopijuoti automatiškai. Atidarykite el. pašto programą arba nukopijuokite tekstą iš formos rankiniu būdu.';
-      status.classList.add('error');
-    }
-  });
-})();
-
-// DUK skiltyje vienu metu paliekamas atvertas tik vienas atsakymas.
-document.querySelectorAll('.accordion details').forEach((item) => {
-  item.addEventListener('toggle', () => {
-    if (!item.open) return;
-    document.querySelectorAll('.accordion details[open]').forEach((openItem) => {
-      if (openItem !== item) openItem.removeAttribute('open');
-    });
-  });
-});
-
-// Interaktyvus projekto klausimynas. Viskas veikia naršyklėje ir nesiunčia duomenų į serverį.
-(() => {
-  const quiz = document.getElementById('project-quiz');
-  const form = document.getElementById('quiz-form');
-  if (!quiz || !form) return;
-
-  const steps = [...form.querySelectorAll('.quiz-step')];
-  const nextButton = form.querySelector('.quiz-next');
-  const backButton = form.querySelector('.quiz-back');
-  const counter = quiz.querySelector('.quiz-counter');
-  const progress = quiz.querySelector('.quiz-progress span');
-  const error = form.querySelector('.quiz-error');
-  const result = quiz.querySelector('.quiz-result');
-  const restartButton = quiz.querySelector('.quiz-restart');
-  const useResultButton = document.getElementById('use-result');
-  let currentStep = 0;
-
-  const labels = {
-    stage: 'Situacija', product: 'Pardavimo modelis', catalog: 'Katalogas',
-    market: 'Rinka', needs: 'Reikalinga pagalba', readiness: 'Pasiruošimas', timing: 'Starto laikas'
-  };
-
-  function showStep(index) {
-    currentStep = index;
-    steps.forEach((step, stepIndex) => {
-      const active = stepIndex === index;
-      step.classList.toggle('active', active);
-      step.setAttribute('aria-hidden', String(!active));
-    });
-    counter.textContent = `${index + 1} iš ${steps.length}`;
-    progress.style.width = `${((index + 1) / steps.length) * 100}%`;
-    backButton.hidden = index === 0;
-    nextButton.textContent = index === steps.length - 1 ? 'Pamatyti kryptį →' : 'Toliau →';
-    error.textContent = '';
-  }
-
-  function isStepValid(step) {
-    return [...step.querySelectorAll('input')].some((control) => control.checked);
-  }
-
-  function collectAnswers() {
-    const data = new FormData(form);
-    return {
-      stage: data.get('stage'), product: data.get('product'), catalog: data.get('catalog'),
-      market: data.get('market'), needs: data.getAll('needs'), readiness: data.get('readiness'), timing: data.get('timing')
+    const showStep = (index) => {
+      current = Math.max(0, Math.min(index, steps.length - 1));
+      steps.forEach((step, i) => step.classList.toggle('active', i === current));
+      back.hidden = current === 0;
+      next.textContent = current === steps.length - 1 ? 'Rodyti santrauką →' : 'Toliau →';
+      error.textContent = '';
+      if (progress) progress.style.width = `${((current + 1) / steps.length) * 100}%`;
+      if (progressText) progressText.textContent = `${current + 1} iš ${steps.length}`;
+      updateContext();
+      const checked = steps[current].querySelector('input:checked');
+      const firstInput = checked || steps[current].querySelector('input');
+      if (firstInput) firstInput.focus({ preventScroll: true });
     };
-  }
-
-  function buildRecommendation(answers) {
-    const complexCatalog = answers.catalog?.includes('500') || answers.catalog?.includes('Daugiau');
-    const multiMarket = answers.market && answers.market !== 'Tik Lietuvoje';
-    const migration = answers.stage?.includes('persikelti') || answers.needs.includes('Duomenų perkėlimo');
-    let title = 'Pradėkite nuo aiškios Shopify projekto apimties.';
-    let text = 'Pirmiausia verta susidėlioti parduotuvės struktūrą, būtiniausias integracijas ir turinį, kurio reikės realiam paleidimui.';
-
-    if (migration) {
-      title = 'Jums reikalingas suplanuotas perkėlimas į Shopify.';
-      text = 'Svarbiausia būtų įvertinti duomenų kokybę, saugiai perkelti katalogą ir suplanuoti URL bei paleidimą taip, kad prekybos trikdis būtų kuo mažesnis.';
-    } else if (complexCatalog || multiMarket) {
-      title = 'Jums reikalinga individualiai suplanuota Shopify struktūra.';
-      text = 'Didesniam katalogui ar kelioms rinkoms reikia iš anksto suplanuoti produktų logiką, kalbas, valiutas, pristatymą ir automatizavimo ribas.';
-    } else if (answers.stage === 'Dar tik turiu idėją') {
-      title = 'Jums tiktų nedidelis, augimui paruoštas startas.';
-      text = 'Verta pradėti nuo svarbiausių produktų, aiškaus pasiūlymo ir paprasto pirkimo kelio, neapkraunant pirmos versijos funkcijomis, kurių dar nereikia.';
-    }
-    return { title, text };
-  }
-
-  function showResult() {
-    const answers = collectAnswers();
-    const recommendation = buildRecommendation(answers);
-    form.hidden = true;
-    result.hidden = false;
-    counter.textContent = 'Baigta';
-    progress.style.width = '100%';
-    document.getElementById('result-title').textContent = recommendation.title;
-    document.getElementById('result-text').textContent = recommendation.text;
-
-    const summary = document.getElementById('result-summary');
-    summary.replaceChildren();
-    [answers.stage, answers.catalog, answers.market, answers.timing].filter(Boolean).forEach((value) => {
-      const chip = document.createElement('span');
-      chip.textContent = value;
-      summary.append(chip);
+    const validStep = () => {
+      if (steps[current].querySelectorAll('input:checked').length) return true;
+      error.textContent = 'Pasirinkite bent vieną atsakymą.';
+      steps[current].animate?.([{transform:'translateX(0)'},{transform:'translateX(-7px)'},{transform:'translateX(7px)'},{transform:'translateX(0)'}],{duration:260});
+      return false;
+    };
+    next.addEventListener('click', () => {
+      if (!validStep()) return;
+      if (current < steps.length - 1) return showStep(current + 1);
+      const data = new FormData(form);
+      const needs = data.getAll('needs');
+      let serviceCode = 'kurimas';
+      let serviceName = 'Shopify parduotuvės kūrimas';
+      if (data.get('stage') === 'Noriu persikelti į Shopify' || needs.includes('Duomenų perkėlimo')) {
+        serviceCode = 'migracija'; serviceName = 'Migracija į Shopify';
+      } else if (needs.some((item) => item.includes('integracij'))) {
+        serviceCode = 'integracijos'; serviceName = 'Shopify integracijos';
+      }
+      const lines = ['Shopify projekto klausimyno santrauka','',`Dabartinė situacija: ${data.get('stage')}`,`Pardavimo modelis: ${data.get('product')}`,`Katalogas: ${data.get('catalog')}`,`Rinkos: ${data.get('market')}`,`Poreikiai: ${needs.join(', ')}`,`Turinio parengtis: ${data.get('readiness')}`,`Pageidaujamas laikas: ${data.get('timing')}`,'',`Pradinė kryptis: ${serviceName}`,'','Papildoma informacija:'];
+      const text = lines.join('\n');
+      try { sessionStorage.setItem('startuokBrief', text); } catch (_) {}
+      summary.value = text; direction.textContent = serviceName;
+      formLink.href = `../aptarti-projekta/index.html?from=klausimynas&service=${serviceCode}`;
+      form.hidden = true; doc.querySelector('.quiz-meta').hidden = true; result.classList.add('active');
+      result.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
-
-    quiz.dataset.answers = JSON.stringify(answers);
-    quiz.dataset.recommendation = JSON.stringify(recommendation);
-  }
-
-  nextButton.addEventListener('click', () => {
-    const step = steps[currentStep];
-    if (!isStepValid(step)) {
-      error.textContent = currentStep === 4
-        ? 'Pasirinkite bent vieną jums aktualų punktą.'
-        : 'Pasirinkite vieną atsakymą, kad galėtume tęsti.';
-      return;
-    }
-    if (currentStep < steps.length - 1) showStep(currentStep + 1);
-    else showResult();
-  });
-
-  backButton.addEventListener('click', () => {
-    if (currentStep > 0) showStep(currentStep - 1);
-  });
-
-  steps.forEach((step, index) => {
-    step.querySelectorAll('input[type="radio"]').forEach((input) => {
-      input.addEventListener('change', () => {
-        error.textContent = '';
-        if (index < steps.length - 1) window.setTimeout(() => showStep(index + 1), 160);
-        else window.setTimeout(showResult, 160);
-      });
+    back.addEventListener('click', () => showStep(current - 1));
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(summary.value); copy.textContent = 'Nukopijuota'; }
+      catch (_) { summary.select(); doc.execCommand('copy'); copy.textContent = 'Nukopijuota'; }
     });
-    step.querySelectorAll('input[type="checkbox"]').forEach((input) => {
-      input.addEventListener('change', () => { error.textContent = ''; });
-    });
-  });
-
-  restartButton.addEventListener('click', () => {
-    form.reset();
-    form.hidden = false;
-    result.hidden = true;
     showStep(0);
-  });
+  }
 
-  useResultButton.addEventListener('click', () => {
-    const answers = JSON.parse(quiz.dataset.answers || '{}');
-    const recommendation = JSON.parse(quiz.dataset.recommendation || '{}');
-    const message = document.querySelector('#lead-form textarea[name="message"]');
-    if (message) {
-      const lines = [
-        'Užpildžiau projekto klausimyną.', '',
-        `Rekomenduojama kryptis: ${recommendation.title || ''}`,
-        ...Object.entries(answers).map(([key, value]) => `${labels[key] || key}: ${Array.isArray(value) ? value.join(', ') : value}`),
-        '', 'Papildoma informacija: '
-      ];
-      message.value = lines.join('\n');
+  function initLeadForm(form) {
+    const status = form.querySelector('.form-status');
+    const copyButton = form.querySelector('.copy-message');
+    const messageField = form.elements.message;
+    const serviceField = form.elements.service;
+    const prefillNote = doc.querySelector('.prefill-note');
+    const params = new URLSearchParams(window.location.search);
+    const serviceMap = { kurimas:'Shopify parduotuvės kūrimas', migracija:'Migracija į Shopify', integracijos:'Shopify integracijos', kita:'Kita situacija' };
+    const requestedService = params.get('service');
+    if (requestedService && serviceMap[requestedService]) serviceField.value = serviceMap[requestedService];
+    if (params.get('from') === 'klausimynas') {
+      try { const brief = sessionStorage.getItem('startuokBrief'); if (brief && !messageField.value) { messageField.value = brief; prefillNote?.classList.add('active'); } } catch (_) {}
     }
-    document.getElementById('kontaktai')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.setTimeout(() => document.querySelector('#lead-form input[name="name"]')?.focus(), 650);
-  });
-
-  showStep(0);
-})();
-
-// Hero koncepcijų karuselė.
-(() => {
-  const carousel = document.querySelector('.portfolio-browser');
-  if (!carousel) return;
-
-  const slides = [...carousel.querySelectorAll('.project-slide')];
-  const dots = [...carousel.querySelectorAll('.portfolio-dots button')];
-  const url = document.getElementById('project-url');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let index = 0;
-  let timer;
-
-  const show = (next) => {
-    index = (next + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => {
-      const active = slideIndex === index;
-      slide.classList.toggle('active', active);
-      slide.setAttribute('aria-hidden', String(!active));
+    const compose = () => {
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const company = String(data.get('company') || '').trim();
+      const service = String(data.get('service') || '').trim();
+      const budget = String(data.get('budget') || '').trim();
+      const timing = String(data.get('timing') || '').trim();
+      const message = String(data.get('message') || '').trim();
+      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujamas laikas: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
+      return { name, service, body };
+    };
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); status.textContent='Patikrinkite privalomus laukus.'; return; }
+      const mail = compose(); const subject = `[Startuok] ${mail.service} – ${mail.name}`;
+      status.textContent = 'Paruoštas laiškas. Jeigu el. pašto programa neatsidarė, nukopijuokite užklausą.';
+      copyButton.hidden = false;
+      window.location.href = `mailto:labas@startuok.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mail.body)}`;
     });
-    dots.forEach((dot, dotIndex) => {
-      const active = dotIndex === index;
-      dot.classList.toggle('active', active);
-      dot.setAttribute('aria-current', active ? 'true' : 'false');
+    copyButton.addEventListener('click', async () => {
+      const mail = compose();
+      try { await navigator.clipboard.writeText(mail.body); copyButton.textContent = 'Užklausa nukopijuota'; }
+      catch (_) { const helper=doc.createElement('textarea'); helper.value=mail.body; helper.style.cssText='position:fixed;opacity:0'; doc.body.appendChild(helper); helper.select(); doc.execCommand('copy'); helper.remove(); copyButton.textContent='Užklausa nukopijuota'; }
     });
-    if (url) url.textContent = slides[index].dataset.url;
-  };
-
-  const stop = () => window.clearInterval(timer);
-  const play = () => {
-    stop();
-    if (!reduceMotion && !document.hidden) timer = window.setInterval(() => show(index + 1), 6500);
-  };
-
-  carousel.querySelector('.portfolio-next')?.addEventListener('click', () => { show(index + 1); play(); });
-  carousel.querySelector('.portfolio-prev')?.addEventListener('click', () => { show(index - 1); play(); });
-  dots.forEach((dot, dotIndex) => dot.addEventListener('click', () => { show(dotIndex); play(); }));
-  carousel.addEventListener('mouseenter', stop);
-  carousel.addEventListener('mouseleave', play);
-  carousel.addEventListener('focusin', stop);
-  carousel.addEventListener('focusout', play);
-  document.addEventListener('visibilitychange', () => document.hidden ? stop() : play());
-
-  show(0);
-  play();
-})();
-
-// Mobilus CTA pasirodo tik nuslinkus už pagrindinio hero veiksmo, kad neuždengtų pirmo ekrano.
-(() => {
-  const mobileCta = document.querySelector('.mobile-cta');
-  if (!mobileCta) return;
-  const update = () => mobileCta.classList.toggle('visible', window.scrollY > 620);
-  update();
-  window.addEventListener('scroll', update, { passive: true });
+  }
 })();

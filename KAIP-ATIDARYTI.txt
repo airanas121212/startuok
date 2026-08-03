@@ -1,7 +1,0 @@
-KAIP PERŽIŪRĖTI SVETAINĘ
-
-1. Išskleiskite visą ZIP archyvą.
-2. Atidarykite failą index.html, esantį šiame aplanke.
-3. Vidinių puslapių nuorodos dabar veda tiesiai į jų index.html failus, todėl veikia ir atidarius svetainę lokaliai per file://.
-
-Publikavus serveryje nuorodos taip pat veiks įprastai.
