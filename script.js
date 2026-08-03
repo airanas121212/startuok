@@ -43,6 +43,9 @@ document.documentElement.classList.remove('reveal-fallback');
       if (!nav.classList.contains('open') || nav.contains(event.target) || menuButton.contains(event.target)) return;
       closeMenu();
     });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && nav.classList.contains('open')) closeMenu();
+    }, { passive: true });
   }
 
   // Scroll reveal: one calm entrance per element.

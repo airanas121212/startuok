@@ -914,3 +914,80 @@ footer{position:relative;background:linear-gradient(180deg,#fff,#f8faff);border-
   .form-footer small { line-height: 1.6; }
 }
 
+
+
+/* 2026-08-03 mobile navigation fix and Google integration */
+.menu-toggle::before,
+.menu-toggle::after,
+.menu-toggle span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform-origin: center;
+}
+.menu-toggle::before { transform: translate(-50%, -7px); }
+.menu-toggle span { transform: translate(-50%, 0); }
+.menu-toggle::after { transform: translate(-50%, 7px); }
+.menu-toggle[aria-expanded="true"] span {
+  opacity: 0;
+  transform: translate(-50%, 0) scaleX(.25);
+}
+.menu-toggle[aria-expanded="true"]::before { transform: translate(-50%, 0) rotate(45deg); }
+.menu-toggle[aria-expanded="true"]::after { transform: translate(-50%, 0) rotate(-45deg); }
+
+.partner-google-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #3c4043;
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+}
+.partner-logo .partner-google-mark img {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  object-fit: contain;
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .partner-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    position: absolute;
+    inset: auto 0 auto 0;
+    top: 100%;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
+    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100dvh - var(--header-height));
+    justify-content: flex-start;
+    padding: 26px max(26px, env(safe-area-inset-right)) calc(34px + env(safe-area-inset-bottom)) max(26px, env(safe-area-inset-left));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fff;
+    box-shadow: 0 24px 44px rgba(7, 21, 46, .12);
+  }
+  .nav > a:not(.button) { flex: 0 0 auto; }
+  body.nav-open .site-header {
+    background: #fff;
+    backdrop-filter: none;
+  }
+  body.nav-open .mobile-cta {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(130%) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .partner-google-mark { font-size: 18px; gap: 6px; }
+  .partner-logo .partner-google-mark img { width: 23px; height: 23px; flex-basis: 23px; }
+}
