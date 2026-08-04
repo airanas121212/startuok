@@ -9,8 +9,12 @@ document.documentElement.classList.remove('reveal-fallback');
 
   requestAnimationFrame(() => requestAnimationFrame(() => doc.body.classList.add('is-ready')));
 
+  const currentYear = new Date().getFullYear();
   doc.querySelectorAll('[data-current-year]').forEach((year) => {
-    year.textContent = new Date().getFullYear();
+    year.textContent = currentYear;
+  });
+  doc.querySelectorAll('.copyright').forEach((copyright) => {
+    copyright.setAttribute('aria-label', `© ${currentYear} Startuok`);
   });
 
   // Header and menu.

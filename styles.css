@@ -1,4 +1,4 @@
-/* Startuok — brandbook v2.0 */
+/* Startuok — brandbook v2.1 */
 :root {
   --navy: #06142c;
   --navy-2: #0a2046;
@@ -991,3 +991,124 @@ footer{position:relative;background:linear-gradient(180deg,#fff,#f8faff);border-
   .partner-google-mark { font-size: 18px; gap: 6px; }
   .partner-logo .partner-google-mark img { width: 23px; height: 23px; flex-basis: 23px; }
 }
+
+/* --------------------------------------------------------------------------
+   Startuok typography system v2.1 — balanced desktop and mobile
+   Applied globally across homepage, service pages, questionnaire, contact,
+   privacy, 404, navigation, cards, forms, pricing, FAQ and footer.
+   -------------------------------------------------------------------------- */
+:root {
+  --weight-body: 400;
+  --weight-support: 480;
+  --weight-label: 560;
+  --weight-h3: 600;
+  --weight-h2: 620;
+  --weight-h1: 660;
+  --weight-control: 660;
+  --weight-micro: 700;
+}
+
+body { font-weight: var(--weight-body); }
+
+/* Platform logos: all ten fit in one desktop row. */
+@media (min-width: 1201px) {
+  .partner-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 10px; }
+  .partner-logo { min-height: 72px; padding-inline: 10px; }
+}
+
+/* A single, visually coherent copyright lockup. */
+.copyright {
+  display: inline-flex !important;
+  align-items: baseline;
+  gap: .32em;
+  margin: 7px 0 !important;
+  white-space: nowrap;
+  color: #6d7d95 !important;
+  font-weight: var(--weight-support);
+}
+.copyright > span {
+  display: inline !important;
+  margin: 0 !important;
+}
+.copyright-brand { color: #263955; font-weight: var(--weight-label); }
+
+@media (min-width: 901px) {
+  h1 { font-size: clamp(38px, 4.2vw, 55px); font-weight: var(--weight-h1); }
+  h2 { font-size: clamp(28px, 3vw, 36px); font-weight: var(--weight-h2); }
+  h3 { font-size: 21px; font-weight: var(--weight-h3); }
+
+  .hero-lead { font-size: 18px; }
+  .section-lead { font-size: 17px; }
+
+  .nav > a:not(.button) { font-size: 14px; font-weight: 580; }
+  .button, .mobile-cta { font-weight: var(--weight-control); }
+  .text-link { font-weight: var(--weight-h2); }
+  .eyebrow,
+  .partner-strip-kicker,
+  .path-panel-head small,
+  .path-number,
+  .partner-external,
+  .timeline > li > span,
+  .timeline .output,
+  .price-card .tag,
+  .principles span,
+  .service-card .card-number,
+  .result-card .card-number,
+  .when-card .card-number,
+  .scope-item span,
+  .quiz-progress-label,
+  .result-direction small,
+  .project-index,
+  .project-status,
+  .stage-price small,
+  .offer-badge,
+  .quiz-context small { font-weight: var(--weight-micro); }
+
+  .partner-strip-head p { font-size: 15px; font-weight: var(--weight-label); }
+  .partner-strip-note,
+  .project-caption p,
+  .stage-price span,
+  .price-total,
+  .boundary-note,
+  .prefill-note,
+  .form-status,
+  .privacy-toc a { font-weight: var(--weight-support); }
+
+  .clean-list li,
+  .form-aside li { font-weight: var(--weight-support); }
+  summary,
+  .accordion summary { font-weight: 590; }
+  .footer-links strong { font-weight: var(--weight-h2); }
+  .trust-row,
+  .breadcrumbs,
+  .form-field label,
+  .quiz-error,
+  .quiz-back,
+  .direct-email,
+  .form-footer a,
+  .copy-message,
+  .privacy-article a { font-weight: var(--weight-label); }
+
+  .quiz-step legend { font-weight: var(--weight-h2); }
+  .quiz-options b { font-weight: var(--weight-h3); }
+  .first-clients-panel blockquote { font-weight: var(--weight-h2); }
+  .stage-price strong,
+  .price-card h4 { font-weight: var(--weight-h1); }
+}
+
+@media (max-width: 900px) {
+  h1 { font-weight: 680; }
+  h2 { font-weight: 650; }
+  h3 { font-weight: 620; }
+  .nav > a:not(.button) { font-weight: 620; }
+  .button, .mobile-cta { font-weight: 680; }
+  .text-link { font-weight: 620; }
+  .footer-links strong { font-weight: 620; }
+}
+
+@media (max-width: 680px) {
+  h1 { font-size: clamp(38px, 11.4vw, 50px); }
+  h2 { font-size: clamp(29px, 8.6vw, 37px); }
+  .hero-lead { font-size: 16.5px; }
+}
+
