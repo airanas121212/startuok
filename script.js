@@ -96,14 +96,13 @@ document.documentElement.classList.remove('reveal-fallback');
     });
   }
 
-  // Hero showcase: controls, autoplay, swipe and subtle 3D response.
+  // Hero showcase: deliberate manual controls, swipe and subtle 3D response.
   const carousel = doc.querySelector('.portfolio-browser');
   if (carousel) {
     const slides = [...carousel.querySelectorAll('.project-slide')];
     const dots = [...carousel.querySelectorAll('.portfolio-dots button')];
     const url = doc.getElementById('project-url');
     let index = 0;
-    let timer = 0;
     let touchStartX = 0;
     const show = (next) => {
       index = (next + slides.length) % slides.length;
@@ -119,24 +118,14 @@ document.documentElement.classList.remove('reveal-fallback');
       });
       if (url) url.textContent = slides[index]?.dataset.url || '';
     };
-    const stop = () => window.clearInterval(timer);
-    const play = () => {
-      stop();
-      if (!reduceMotion && !doc.hidden) timer = window.setInterval(() => show(index + 1), 7000);
-    };
-    carousel.querySelector('.portfolio-next')?.addEventListener('click', () => { show(index + 1); play(); });
-    carousel.querySelector('.portfolio-prev')?.addEventListener('click', () => { show(index - 1); play(); });
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); play(); }));
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', play);
-    carousel.addEventListener('focusin', stop);
-    carousel.addEventListener('focusout', play);
+    carousel.querySelector('.portfolio-next')?.addEventListener('click', () => show(index + 1));
+    carousel.querySelector('.portfolio-prev')?.addEventListener('click', () => show(index - 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
     carousel.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0]?.clientX || 0; }, { passive: true });
     carousel.addEventListener('touchend', (event) => {
       const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
-      if (Math.abs(distance) > 45) { show(index + (distance < 0 ? 1 : -1)); play(); }
+      if (Math.abs(distance) > 45) show(index + (distance < 0 ? 1 : -1));
     }, { passive: true });
-    doc.addEventListener('visibilitychange', () => doc.hidden ? stop() : play());
     if (finePointer && !reduceMotion) {
       carousel.addEventListener('pointermove', (event) => {
         const rect = carousel.getBoundingClientRect();
@@ -150,7 +139,7 @@ document.documentElement.classList.remove('reveal-fallback');
         carousel.style.setProperty('--tilt-x', '0deg');
       });
     }
-    show(0); play();
+    show(0);
   }
 
   // Timeline emphasis as each real step enters the reading area.

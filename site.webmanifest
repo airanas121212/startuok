@@ -1,7 +1,7 @@
 {
   "name": "Startuok — Shopify stores",
   "short_name": "Startuok",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#07152e",
@@ -19,5 +19,5 @@
   ],
   "description": "Shopify parduotuvių kūrimas, migracija ir integracijos.",
   "lang": "lt-LT",
-  "scope": "/"
+  "scope": "./"
 }
