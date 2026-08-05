@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+  <title id="t">Shopify integracijų vizualas su padidintu tekstu</title>
+  <desc id="d">Shopify sujungtas su mokėjimų, pristatymo, analitikos, el. pašto, sandėlio ir apskaitos sistemomis.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef5ff"/><stop offset="1" stop-color="#dceaff"/></linearGradient>
+    <linearGradient id="cta" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f86ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect x="74" y="62" width="1052" height="636" rx="30" fill="#fff" stroke="#c9d9ee" stroke-width="4"/>
+  <rect x="112" y="98" width="976" height="48" rx="14" fill="#f1f5fb"/>
+  <circle cx="140" cy="122" r="7" fill="#bcc9da"/><circle cx="164" cy="122" r="7" fill="#bcc9da"/><circle cx="188" cy="122" r="7" fill="#bcc9da"/>
+  <rect x="240" y="108" width="390" height="28" rx="10" fill="#fff"/>
+  <g stroke="#bdd2ea" stroke-width="6" fill="none">
+    <path d="M430 300 328 244"/><path d="M430 380 328 380"/><path d="M430 460 328 516"/>
+    <path d="M770 300 872 244"/><path d="M770 380 872 380"/><path d="M770 460 872 516"/>
+  </g>
+  <rect x="430" y="236" width="340" height="288" rx="34" fill="#07152e"/>
+  <rect x="486" y="284" width="228" height="28" rx="12" fill="#55aaff"/>
+  <text x="600" y="370" text-anchor="middle" font-family="Arial,sans-serif" font-size="56" font-weight="800" fill="#fff">Shopify</text>
+  <text x="600" y="410" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#a7c3e5">Pagrindinis prekybos centras</text>
+  <rect x="506" y="448" width="188" height="42" rx="12" fill="url(#cta)"/>
+  <g font-family="Arial,sans-serif" font-weight="700">
+    <g transform="translate(88 184)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#0f86ff" opacity=".16"/><text x="70" y="40" font-size="24" fill="#07152e">Mokėjimai</text><text x="70" y="69" font-size="19" fill="#526681">Būsenos ir</text><text x="70" y="93" font-size="19" fill="#526681">grąžinimai</text></g>
+    <g transform="translate(88 322)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#1f55ff" opacity=".15"/><text x="70" y="40" font-size="24" fill="#07152e">Pristatymas</text><text x="70" y="69" font-size="19" fill="#526681">Tarifai ir</text><text x="70" y="93" font-size="19" fill="#526681">paštomatai</text></g>
+    <g transform="translate(88 460)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#0f86ff" opacity=".16"/><text x="70" y="40" font-size="24" fill="#07152e">El. paštas</text><text x="70" y="69" font-size="19" fill="#526681">Srautai ir</text><text x="70" y="93" font-size="19" fill="#526681">automatizacija</text></g>
+    <g transform="translate(862 184)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#1f55ff" opacity=".15"/><text x="70" y="40" font-size="24" fill="#07152e">Analitika</text><text x="70" y="69" font-size="19" fill="#526681">Įvykiai ir</text><text x="70" y="93" font-size="19" fill="#526681">matavimas</text></g>
+    <g transform="translate(862 322)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#0f86ff" opacity=".16"/><text x="70" y="40" font-size="24" fill="#07152e">Sandėlis</text><text x="70" y="69" font-size="19" fill="#526681">Likučiai ir</text><text x="70" y="93" font-size="19" fill="#526681">užsakymai</text></g>
+    <g transform="translate(862 460)"><rect width="250" height="116" rx="21" fill="#f7faff" stroke="#d7e4f2" stroke-width="3"/><circle cx="37" cy="56" r="24" fill="#1f55ff" opacity=".15"/><text x="70" y="40" font-size="24" fill="#07152e">Apskaita</text><text x="70" y="69" font-size="19" fill="#526681">Duomenys ir</text><text x="70" y="93" font-size="19" fill="#526681">dokumentai</text></g>
+  </g>
+  <g transform="translate(410 602)"><rect width="380" height="58" rx="16" fill="#eaf8f0"/><circle cx="34" cy="29" r="11" fill="#20a765"/><text x="58" y="36" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#13734a">Patikrinta bandomuoju užsakymu</text></g>
+</svg>

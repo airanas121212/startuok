@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Greito mobilaus pirkimo pavyzdys</title>
+  <desc id="desc">Mados parduotuvė su kolekcijos pristatymu, aiškia produkto kortele, dydžių pasirinkimu ir mobilaus pirkimo ekranu.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#edf5ff"/><stop offset="1" stop-color="#dceaff"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f86ff"/><stop offset="1" stop-color="#3157ff"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#173a6c" flood-opacity=".16"/></filter>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect x="40" y="28" width="1120" height="704" rx="32" fill="#fff" stroke="#c8d9ee" stroke-width="3" filter="url(#shadow)"/>
+  <path d="M40 60a32 32 0 0 1 32-32h1056a32 32 0 0 1 32 32v34H40Z" fill="#f2f6fb"/>
+  <circle cx="76" cy="62" r="7" fill="#ff786f"/><circle cx="100" cy="62" r="7" fill="#ffc65a"/><circle cx="124" cy="62" r="7" fill="#52c98b"/>
+  <rect x="176" y="48" width="430" height="28" rx="10" fill="#fff"/>
+  <g font-family="Arial,sans-serif"><text x="72" y="137" fill="#07152e" font-size="32" font-weight="900">SERA</text><text x="694" y="135" fill="#526681" font-size="20" font-weight="700">NAUJIENOS</text><text x="852" y="135" fill="#526681" font-size="20" font-weight="700">MOTERIMS</text><text x="1026" y="135" fill="#526681" font-size="20" font-weight="700">VYRAMS</text></g>
+  <rect x="70" y="164" width="608" height="504" rx="24" fill="#77a5ed"/>
+  <g font-family="Arial,sans-serif"><text x="106" y="220" fill="#fff" font-size="20" font-weight="800" letter-spacing="2">NAUJA KOLEKCIJA</text><text x="106" y="278" fill="#fff" font-size="48" font-weight="800">Miesto ritmui.</text><text x="106" y="318" fill="#eef5ff" font-size="22" font-weight="600">Lengvi sluoksniai kasdieniam judėjimui.</text><rect x="106" y="344" width="184" height="46" rx="12" fill="#fff"/><text x="144" y="374" fill="#07152e" font-size="19" font-weight="800">PIRKTI DABAR</text></g>
+  <circle cx="412" cy="474" r="142" fill="#8fb6ee"/>
+  <circle cx="412" cy="356" r="66" fill="#f3c7a9"/><path d="M344 336q68-96 136 0l-36-12-32 34-32-34Z" fill="#16233a"/><path d="M314 620q30-190 98-202 68 12 98 202Z" fill="#e9f1ff"/>
+  <rect x="702" y="164" width="428" height="504" rx="24" fill="#f8fbff" stroke="#d5e2f1" stroke-width="2"/>
+  <g font-family="Arial,sans-serif"><text x="738" y="216" fill="#526681" font-size="19" font-weight="800" letter-spacing="1.5">PRODUKTO PERŽIŪRA</text><text x="738" y="266" fill="#07152e" font-size="32" font-weight="900">Minkštas vilnos</text><text x="738" y="304" fill="#07152e" font-size="32" font-weight="900">švarkas</text><text x="738" y="340" fill="#526681" font-size="20" font-weight="600">Lengvas sluoksnis kasdienai.</text><text x="738" y="392" fill="#07152e" font-size="30" font-weight="900">119 €</text><text x="738" y="438" fill="#526681" font-size="18" font-weight="800">PASIRINKITE DYDĮ</text></g>
+  <g font-family="Arial,sans-serif" font-size="19" font-weight="800" text-anchor="middle"><rect x="738" y="454" width="60" height="46" rx="12" fill="#fff" stroke="#c8d8eb"/><text x="768" y="484" fill="#07152e">XS</text><rect x="810" y="454" width="60" height="46" rx="12" fill="#07152e"/><text x="840" y="484" fill="#fff">S</text><rect x="882" y="454" width="60" height="46" rx="12" fill="#fff" stroke="#c8d8eb"/><text x="912" y="484" fill="#07152e">M</text><rect x="954" y="454" width="60" height="46" rx="12" fill="#fff" stroke="#c8d8eb"/><text x="984" y="484" fill="#07152e">L</text></g>
+  <rect x="738" y="526" width="356" height="56" rx="15" fill="url(#blue)"/><text x="916" y="562" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="20" font-weight="900">Į KREPŠELĮ</text>
+  <rect x="738" y="600" width="356" height="46" rx="14" fill="#eef7ff"/><text x="760" y="630" fill="#173b68" font-family="Arial,sans-serif" font-size="18" font-weight="800">✓ Nemokamas pristatymas nuo 80 €</text>
+  <g transform="translate(516 412) rotate(-5)" filter="url(#shadow)" font-family="Arial,sans-serif"><rect width="176" height="286" rx="30" fill="#07152e"/><rect x="10" y="12" width="156" height="262" rx="22" fill="#fff"/><rect x="54" y="22" width="68" height="8" rx="4" fill="#d6e1ef"/><rect x="26" y="50" width="124" height="102" rx="16" fill="#dce9ff"/><circle cx="88" cy="101" r="36" fill="#8ab4ef"/><text x="26" y="184" fill="#07152e" font-size="18" font-weight="800">Greitas pirkimas</text><rect x="26" y="202" width="124" height="38" rx="11" fill="#0f86ff"/><text x="88" y="227" text-anchor="middle" fill="#fff" font-size="16" font-weight="900">TĘSTI</text></g>
+</svg>

@@ -217,13 +217,13 @@ document.documentElement.classList.remove('reveal-fallback');
     const copy = doc.querySelector('#quiz-copy');
     const context = doc.querySelector('#quiz-context');
     const contexts = [
-      ['💡','Suprasti dabartinę situaciją','Sprendimas priklauso nuo to, nuo ko pradedate.'],
-      ['🛍️','Apibrėžti pardavimo modelį','Produktas keičia mokėjimo, pristatymo ir produkto puslapio logiką.'],
-      ['🗂️','Įvertinti katalogo mastą','Produktų ir variantų kiekis lemia importą, filtrus ir valdymą.'],
+      ['💡','Suprasti dabartinę situaciją','Tinkamas sprendimas priklauso nuo dabartinės jūsų situacijos.'],
+      ['🛍️','Apibrėžti pardavimo modelį','Nuo pardavimo modelio priklauso produkto puslapis, mokėjimas ir pristatymas.'],
+      ['🗂️','Įvertinti katalogo mastą','Produktų ir variantų kiekis lemia importo būdą, filtrus ir kasdienį valdymą.'],
       ['🌍','Suprasti rinkas','Kalbos, valiutos, mokesčiai ir pristatymas turi būti suplanuoti kartu.'],
       ['🧩','Atskirti tikruosius poreikius','Pažymėkite tik tai, kas turi veikti pirmoje versijoje.'],
       ['✅','Patikrinti pasiruošimą','Turinys ir duomenys dažnai lemia grafiką labiau nei programavimas.'],
-      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal apimtį, prieigas ir jūsų komandos pasiruošimą.']
+      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir jūsų verslo pasiruošimą.']
     ];
     let current = 0;
 
@@ -268,7 +268,7 @@ document.documentElement.classList.remove('reveal-fallback');
       } else if (needs.some((item) => item.includes('integracij'))) {
         serviceCode = 'integracijos'; serviceName = 'Shopify integracijos';
       }
-      const lines = ['Shopify projekto klausimyno santrauka','',`Dabartinė situacija: ${data.get('stage')}`,`Pardavimo modelis: ${data.get('product')}`,`Katalogas: ${data.get('catalog')}`,`Rinkos: ${data.get('market')}`,`Poreikiai: ${needs.join(', ')}`,`Turinio parengtis: ${data.get('readiness')}`,`Pageidaujamas laikas: ${data.get('timing')}`,'',`Pradinė kryptis: ${serviceName}`,'','Papildoma informacija:'];
+      const lines = ['Shopify projekto klausimyno santrauka','',`Dabartinė situacija: ${data.get('stage')}`,`Pardavimo modelis: ${data.get('product')}`,`Katalogas: ${data.get('catalog')}`,`Rinkos: ${data.get('market')}`,`Poreikiai: ${needs.join(', ')}`,`Turinio parengtis: ${data.get('readiness')}`,`Pageidaujama paleidimo data: ${data.get('timing')}`,'',`Rekomenduojama paslaugos kryptis: ${serviceName}`,'','Papildoma informacija:'];
       const text = lines.join('\n');
       try { sessionStorage.setItem('startuokBrief', text); } catch (_) {}
       summary.value = text; direction.textContent = serviceName;
@@ -306,7 +306,7 @@ document.documentElement.classList.remove('reveal-fallback');
       const budget = String(data.get('budget') || '').trim();
       const timing = String(data.get('timing') || '').trim();
       const message = String(data.get('message') || '').trim();
-      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujamas laikas: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
+      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujama paleidimo data: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
       return { name, service, body };
     };
     form.addEventListener('submit', (event) => {

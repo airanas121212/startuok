@@ -13,4 +13,22 @@
 <rect x="774" y="486" width="292" height="54" rx="15" fill="url(#blue)"/><text x="920" y="520" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="#fff">Į KREPŠELĮ</text>
 <rect x="774" y="558" width="292" height="72" rx="17" fill="#fff" stroke="#dbe6f3"/><circle cx="808" cy="594" r="17" fill="#e9f5ff"/><path d="M800 594h16M808 586v16" stroke="#0f86ff" stroke-width="3"/><text x="840" y="590" font-family="Arial,sans-serif" font-size="12" font-weight="800" fill="#07152e">Nemokamas pristatymas</text><text x="840" y="610" font-family="Arial,sans-serif" font-size="10" fill="#60708b">nuo 80 € Lietuvoje</text>
 <g transform="translate(650 410) rotate(-5)" filter="url(#shadow)"><rect width="166" height="284" rx="28" fill="#07152e"/><rect x="9" y="12" width="148" height="260" rx="21" fill="#fff"/><rect x="51" y="21" width="64" height="8" rx="4" fill="#d6e1ef"/><rect x="22" y="49" width="122" height="104" rx="16" fill="#dce9ff"/><circle cx="83" cy="100" r="38" fill="#8ab4ef"/><text x="22" y="181" font-family="Arial,sans-serif" font-size="12" font-weight="800" fill="#07152e">Greitas pirkimas</text><rect x="22" y="198" width="122" height="37" rx="11" fill="#0f86ff"/><text x="83" y="222" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="900" fill="#fff">TĘSTI</text></g>
+<style>
+ text[font-size="10"]{font-size:15px}
+ text[font-size="11"]{font-size:16px}
+ text[font-size="12"]{font-size:17px}
+ text[font-size="13"]{font-size:18px}
+ text[font-size="14"]{font-size:19px}
+ text[font-size="20"]{font-size:24px}
+ text[font-size="22"]{font-size:26px}
+ text[font-size="26"]{font-size:30px}
+ text[font-size="27"]{font-size:31px}
+ text[font-size="41"]{font-size:46px}
+</style>
+<style>
+ text[x="484"]{transform:translateX(-24px)}
+ text[x="590"]{transform:translateX(12px)}
+ text[x="696"]{transform:translateX(28px)}
+ text[x="774"][font-size="27"]{font-size:29px}
+</style>
 </svg>

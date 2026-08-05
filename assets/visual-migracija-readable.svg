@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+  <title id="t">Migracijos į Shopify vizualas su padidintu tekstu</title>
+  <desc id="d">Produktai, klientai, turinys ir URL adresai kontroliuotai perkeliami į Shopify.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef5ff"/><stop offset="1" stop-color="#dceaff"/></linearGradient>
+    <linearGradient id="cta" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f86ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect x="74" y="62" width="1052" height="636" rx="30" fill="#fff" stroke="#c9d9ee" stroke-width="4"/>
+  <rect x="112" y="98" width="976" height="48" rx="14" fill="#f1f5fb"/>
+  <circle cx="140" cy="122" r="7" fill="#bcc9da"/><circle cx="164" cy="122" r="7" fill="#bcc9da"/><circle cx="188" cy="122" r="7" fill="#bcc9da"/>
+  <rect x="240" y="108" width="390" height="28" rx="10" fill="#fff"/>
+  <text x="150" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="800" fill="#07152e">Dabartinė sistema</text>
+  <text x="800" y="210" font-family="Arial,sans-serif" font-size="30" font-weight="800" fill="#07152e">Shopify</text>
+  <g fill="#f6f9fd" stroke="#d7e3f1" stroke-width="3"><rect x="104" y="238" width="300" height="82" rx="18"/><rect x="104" y="338" width="300" height="82" rx="18"/><rect x="104" y="438" width="300" height="82" rx="18"/><rect x="104" y="538" width="300" height="82" rx="18"/></g>
+  <g font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#314966"><text x="136" y="288">Produktai ir variantai</text><text x="136" y="388">Klientai ir užsakymai</text><text x="136" y="488">Turinys ir failai</text><text x="136" y="588">Seni URL adresai</text></g>
+  <g stroke="#c6d8ed" stroke-width="7" stroke-linecap="round"><path d="M452 280h236"/><path d="M452 380h236"/><path d="M452 480h236"/><path d="M452 580h236"/></g>
+  <circle cx="570" cy="430" r="92" fill="#07152e"/><path d="M531 430h75m-25-25 25 25-25 25" fill="none" stroke="#55aaff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="570" y="530" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="800" fill="#6f88aa">AUDITAS · TESTAS</text>
+  <rect x="748" y="238" width="340" height="382" rx="26" fill="#07152e"/>
+  <rect x="786" y="280" width="178" height="24" rx="10" fill="#55aaff"/><rect x="786" y="326" width="250" height="18" rx="9" fill="#fff" opacity=".92"/><rect x="786" y="365" width="218" height="14" rx="7" fill="#a7bad5"/>
+  <g transform="translate(786 410)"><rect width="264" height="58" rx="15" fill="#102a55"/><circle cx="28" cy="29" r="12" fill="#31c37c"/><rect x="52" y="18" width="130" height="12" rx="6" fill="#fff" opacity=".9"/><rect x="52" y="36" width="90" height="8" rx="4" fill="#8299b9"/></g>
+  <g transform="translate(786 484)"><rect width="264" height="58" rx="15" fill="#102a55"/><circle cx="28" cy="29" r="12" fill="#31c37c"/><rect x="52" y="18" width="150" height="12" rx="6" fill="#fff" opacity=".9"/><rect x="52" y="36" width="106" height="8" rx="4" fill="#8299b9"/></g>
+  <rect x="786" y="560" width="150" height="36" rx="11" fill="url(#cta)"/>
+</svg>
