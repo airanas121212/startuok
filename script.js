@@ -185,6 +185,7 @@ document.documentElement.classList.remove('reveal-fallback');
   if (quizForm) initQuiz(quizForm);
   const leadForm = doc.querySelector('#lead-form');
   if (leadForm) initLeadForm(leadForm);
+  initConsentBanner();
 
   const mobileCta = doc.querySelector('.mobile-cta');
   if (mobileCta) {
@@ -311,5 +312,62 @@ document.documentElement.classList.remove('reveal-fallback');
       try { await navigator.clipboard.writeText(mail.body); copyButton.textContent = 'Užklausa nukopijuota'; }
       catch (_) { const helper=doc.createElement('textarea'); helper.value=mail.body; helper.style.cssText='position:fixed;opacity:0'; doc.body.appendChild(helper); helper.select(); doc.execCommand('copy'); helper.remove(); copyButton.textContent='Užklausa nukopijuota'; }
     });
+  }
+
+  // Cookie / analytics consent banner. GA4 is loaded with Consent Mode v2 defaults
+  // set to "denied" in each page's <head>; this banner is the only thing that can
+  // flip analytics_storage etc. to "granted" (see privatumas.html for details).
+  function initConsentBanner() {
+    const STORAGE_KEY = 'startuok_consent';
+    const subfolderPattern = /\/(klausimynas|aptarti-projekta|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//;
+    const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
+    let stored = null;
+    try { stored = localStorage.getItem(STORAGE_KEY); } catch (_) {}
+
+    const banner = doc.createElement('div');
+    banner.className = 'consent-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', 'Slapukų nustatymai');
+    banner.innerHTML = `
+      <div class="consent-banner-text">
+        <strong>Naudojame analitikos slapukus.</strong>
+        <p>Tai padeda suprasti, kaip lankytojai naudojasi svetaine. Įjungiami tik gavus jūsų sutikimą. <a href="${prefix}privatumas.html">Privatumo informacija</a></p>
+      </div>
+      <div class="consent-banner-actions">
+        <button type="button" class="button button-outline button-small" data-consent="reject">Tik būtini</button>
+        <button type="button" class="button button-small" data-consent="accept">Sutinku</button>
+      </div>`;
+    doc.body.appendChild(banner);
+
+    const applyConsent = (value) => {
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          ad_storage: value,
+          ad_user_data: value,
+          ad_personalization: value,
+          analytics_storage: value
+        });
+      }
+      try { localStorage.setItem(STORAGE_KEY, value); } catch (_) {}
+    };
+    const show = () => { banner.classList.add('visible'); doc.body.classList.add('consent-open'); };
+    const hide = () => { banner.classList.remove('visible'); doc.body.classList.remove('consent-open'); };
+
+    banner.querySelector('[data-consent="accept"]').addEventListener('click', () => { applyConsent('granted'); hide(); });
+    banner.querySelector('[data-consent="reject"]').addEventListener('click', () => { applyConsent('denied'); hide(); });
+
+    if (!stored) requestAnimationFrame(() => requestAnimationFrame(show));
+
+    // Let visitors reopen their choice later from the footer, on any page.
+    const footerInfo = doc.querySelector('.footer-links > div:last-child');
+    if (footerInfo) {
+      const manage = doc.createElement('a');
+      manage.href = '#';
+      manage.textContent = 'Slapukų nustatymai';
+      manage.addEventListener('click', (event) => { event.preventDefault(); show(); });
+      const copyrightEl = footerInfo.querySelector('.copyright');
+      if (copyrightEl) footerInfo.insertBefore(manage, copyrightEl);
+      else footerInfo.appendChild(manage);
+    }
   }
 })();

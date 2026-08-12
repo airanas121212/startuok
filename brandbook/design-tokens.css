@@ -1,0 +1,63 @@
+/* Startuok brand tokens v2.1 — 2026-08-04 */
+:root {
+  --startuok-navy: #06142c;
+  --startuok-navy-2: #0b2856;
+  --startuok-blue: #0f86ff;
+  --startuok-blue-2: #3157ff;
+  --startuok-sky: #69b4ff;
+  --startuok-ink: #07152e;
+  --startuok-muted: #61718b;
+  --startuok-line: #d9e4f2;
+  --startuok-soft: #f5f8fd;
+  --startuok-soft-blue: #edf5ff;
+  --startuok-white: #ffffff;
+
+  --startuok-font: Manrope, "Avenir Next", "Segoe UI Variable", Inter,
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --startuok-weight-body: 400;
+  --startuok-weight-support: 480;
+  --startuok-weight-nav-desktop: 580;
+  --startuok-weight-h3-desktop: 600;
+  --startuok-weight-h2-desktop: 620;
+  --startuok-weight-h1-desktop: 660;
+  --startuok-weight-button-desktop: 660;
+  --startuok-weight-eyebrow: 700;
+
+  --startuok-weight-nav-mobile: 620;
+  --startuok-weight-h3-mobile: 620;
+  --startuok-weight-h2-mobile: 650;
+  --startuok-weight-h1-mobile: 680;
+  --startuok-weight-button-mobile: 680;
+
+  --startuok-size-h1-desktop: clamp(38px, 4.2vw, 55px);
+  --startuok-size-h2-desktop: clamp(28px, 3vw, 36px);
+  --startuok-size-h3-desktop: 21px;
+  --startuok-size-h1-mobile: clamp(38px, 11.4vw, 50px);
+  --startuok-size-h2-mobile: clamp(29px, 8.6vw, 37px);
+
+  --startuok-radius-button: 13px;
+  --startuok-radius-input: 11px;
+  --startuok-radius-card: 22px;
+  --startuok-radius-feature: 30px;
+
+  --startuok-shadow-card: 0 16px 45px rgba(18, 55, 104, 0.075);
+  --startuok-shadow-card-hover: 0 28px 70px rgba(18, 65, 133, 0.14);
+  --startuok-shadow-feature: 0 34px 90px rgba(10, 43, 94, 0.16);
+
+  --startuok-ease-premium: cubic-bezier(.22, 1, .36, 1);
+  --startuok-motion-fast: 250ms;
+  --startuok-motion-base: 450ms;
+  --startuok-motion-reveal: 720ms;
+  --startuok-stagger: 75ms;
+
+  --startuok-space-1: 8px;
+  --startuok-space-2: 12px;
+  --startuok-space-3: 18px;
+  --startuok-space-4: 24px;
+  --startuok-space-5: 32px;
+  --startuok-space-6: 48px;
+  --startuok-space-7: 72px;
+  --startuok-space-8: 104px;
+  --startuok-content-width: 1160px;
+}

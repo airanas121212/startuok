@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Startuok brandbook v2.2</title>
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#dfe8f4;color:#07152e;font-family:Manrope,"Avenir Next","Segoe UI Variable",Inter,Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;width:210mm;height:297mm;margin:10mm auto;background:#fff;overflow:hidden;padding:18mm 18mm 15mm;page-break-after:always;box-shadow:0 16px 50px rgba(8,36,78,.14)}
+.page:last-child{page-break-after:auto}.page.dark{color:#fff;background:linear-gradient(145deg,#06142c,#0b2856)}
+.topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:11mm}.logo{width:47mm;height:auto}.dark .logo{padding:2.5mm 4mm;border-radius:4mm;background:#fff}.version{font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#61718b}.dark .version{color:#9db5d5}
+.eyebrow{display:inline-block;margin-bottom:4mm;color:#0f86ff;font-size:8pt;font-weight:700;letter-spacing:.15em;text-transform:uppercase}.dark .eyebrow{color:#69b4ff}
+h1{max-width:165mm;margin:0 0 7mm;font-size:31pt;line-height:1.04;letter-spacing:-.045em;font-weight:660}h2{margin:0 0 5mm;font-size:22pt;line-height:1.08;letter-spacing:-.035em;font-weight:620}h3{margin:0 0 2.5mm;font-size:13.5pt;line-height:1.2;font-weight:600}p{margin:0 0 4mm;color:#61718b;font-size:10.3pt;line-height:1.55}.dark p{color:#b7c9df}.lead{max-width:155mm;font-size:14pt;line-height:1.48}.quote{font-size:19pt;line-height:1.32;letter-spacing:-.025em;color:#07152e}.dark .quote{color:#fff}
+ul{margin:0;padding-left:5mm;color:#52637d;font-size:10pt;line-height:1.55}.dark ul{color:#bfd0e5}li{margin-bottom:2mm}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:3.5mm}.card{padding:5mm;border:1px solid #d9e4f2;border-radius:5mm;background:#fff;box-shadow:0 4mm 12mm rgba(18,55,104,.06)}.dark .card{border-color:rgba(105,180,255,.19);background:rgba(255,255,255,.055);box-shadow:none}.card p:last-child{margin-bottom:0}.card small{display:block;margin-bottom:2mm;color:#0f86ff;font-size:7pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.rule{height:1px;margin:7mm 0;background:#d9e4f2}.dark .rule{background:rgba(255,255,255,.15)}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}.swatch{overflow:hidden;border:1px solid #d9e4f2;border-radius:4mm;background:#fff}.swatch-color{height:25mm}.swatch-label{padding:3mm;font-size:7.8pt;line-height:1.35}.swatch-label b{display:block;font-size:8.5pt}.swatch-label code{color:#61718b}
+.type-sample{padding:5mm 0;border-bottom:1px solid #d9e4f2}.type-sample:last-child{border-bottom:0}.type-sample .meta{color:#0f86ff;font-size:7.5pt;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.type-h1{font-size:28pt;line-height:1.05;letter-spacing:-.045em;font-weight:660}.type-h2{font-size:21pt;line-height:1.1;letter-spacing:-.038em;font-weight:620}.type-body{font-size:11pt;line-height:1.65;color:#61718b}
+.browser{overflow:hidden;border:1px solid #d3e2f3;border-radius:6mm;background:#fff;box-shadow:0 9mm 24mm rgba(14,57,119,.14);transform:rotate(1deg)}.browserbar{display:flex;align-items:center;gap:2mm;height:11mm;padding:0 4mm;border-bottom:1px solid #e0e8f3;background:#f7f9fc}.dot{width:2.4mm;height:2.4mm;border-radius:50%;background:#c9d6e6}.address{width:62%;height:4mm;margin-left:3mm;border-radius:99px;background:#e9eef5}.mock{display:grid;grid-template-columns:1.05fr .95fr;min-height:73mm;padding:8mm;background:linear-gradient(135deg,#fff,#eef6ff)}.mock-copy{display:flex;flex-direction:column;justify-content:center}.mock-copy b{max-width:65mm;font-size:21pt;line-height:1.05;letter-spacing:-.04em}.mock-copy span{margin-top:4mm;color:#61718b;font-size:9pt}.mock-visual{position:relative;border-radius:5mm;background:linear-gradient(145deg,#0f86ff,#3157ff);box-shadow:0 5mm 14mm rgba(15,92,190,.2)}.mock-visual:before,.mock-visual:after{content:"";position:absolute;border-radius:4mm;background:#fff;box-shadow:0 3mm 8mm rgba(6,20,44,.15)}.mock-visual:before{width:38mm;height:52mm;left:9mm;top:10mm;transform:rotate(-5deg)}.mock-visual:after{width:31mm;height:42mm;right:8mm;bottom:8mm;transform:rotate(6deg)}
+.motion-row{display:grid;grid-template-columns:42mm 1fr;gap:6mm;align-items:center;margin-bottom:5mm}.motion-demo{position:relative;height:21mm;border-radius:5mm;background:#edf5ff;overflow:hidden}.motion-demo i{position:absolute;left:8mm;top:6mm;width:27mm;height:9mm;border-radius:3mm;background:linear-gradient(135deg,#0f86ff,#3157ff);box-shadow:0 3mm 7mm rgba(15,88,180,.18)}.motion-demo.stagger i:nth-child(2){left:40mm;opacity:.75}.motion-demo.stagger i:nth-child(3){left:72mm;opacity:.5}.motion-demo.hover i{left:35mm;top:4.5mm;box-shadow:0 5mm 10mm rgba(15,88,180,.25)}
+.flow{display:flex;align-items:center;gap:3mm;flex-wrap:wrap}.flow span{display:inline-flex;align-items:center;min-height:12mm;padding:0 4mm;border:1px solid #d9e4f2;border-radius:4mm;background:#fff;font-size:9pt;font-weight:600}.flow b{color:#0f86ff;font-size:12pt}
+.note{padding:4mm 5mm;border-left:1.2mm solid #0f86ff;border-radius:0 4mm 4mm 0;background:#edf5ff;color:#40536f;font-size:9.5pt;line-height:1.5}.dark .note{background:rgba(105,180,255,.10);color:#d4e1f0}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm 6mm}.check{position:relative;padding-left:7mm;color:#52637d;font-size:9.2pt;line-height:1.45}.check:before{content:"✓";position:absolute;left:0;top:.1mm;display:grid;place-items:center;width:4.5mm;height:4.5mm;border-radius:50%;color:#fff;background:#0f86ff;font-size:7pt;font-weight:800}
+.footer{position:absolute;left:18mm;right:18mm;bottom:7mm;display:flex;justify-content:space-between;color:#8190a5;font-size:7.5pt}.dark .footer{color:#829bbd}.accent{color:#0f86ff}.pill{display:inline-flex;align-items:center;gap:2mm;padding:2.2mm 3.2mm;border:1px solid #cfe1f5;border-radius:99px;background:#fff;color:#2e4565;font-size:8pt;font-weight:700}.emoji{font-size:17pt}
+@media print{html,body{background:#fff}.page{margin:0;box-shadow:none}}
+</style>
+</head>
+<body>
+
+<section class="page dark">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">Brandbook v2.2</span></div>
+  <div style="margin-top:20mm">
+    <span class="eyebrow">Shopify stores</span>
+    <h1>Ramus premium dizainas.<br><span class="accent">Tikslus techninis judesys.</span></h1>
+    <p class="lead">Vizualinė ir komunikacijos sistema, kuri turi atspindėti kruopštumą, tiesioginį bendravimą ir gebėjimą kurti aiškias Shopify parduotuves.</p>
+  </div>
+  <div class="browser" style="margin-top:18mm">
+    <div class="browserbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="address"></i></div>
+    <div class="mock"><div class="mock-copy"><b>Sukurta taip, kad būtų lengva valdyti.</b><span>Aiški struktūra · tvarkinga grafika · matomas progresas</span></div><div class="mock-visual"></div></div>
+  </div>
+  <div class="footer"><span>© 2026 Startuok</span><span>2026-08-04</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">01 · Esmė</span></div>
+  <span class="eyebrow">Prekės ženklo kryptis</span><h2>Praktiškas Shopify partneris be nereikalingo agentūrinio sluoksnio.</h2>
+  <p class="lead">Startuok kuria, perkelia ir su verslo sistemomis sujungia Shopify parduotuves taip, kad jas būtų lengva paleisti, valdyti ir auginti.</p>
+  <div class="rule"></div>
+  <div class="grid3">
+    <article class="card"><small>Paslauga</small><h3>Kūrimas</h3><p>Parduotuvės struktūra, tema, katalogas, mokėjimai, pristatymas, testai ir perdavimas.</p></article>
+    <article class="card"><small>Paslauga</small><h3>Migracija</h3><p>Duomenų žemėlapis, bandomas importas, URL, perjungimas ir patikra po starto.</p></article>
+    <article class="card"><small>Paslauga</small><h3>Integracijos</h3><p>Duomenų taisyklės, sistemos jungtis, scenarijų testai, žurnalai ir perdavimas.</p></article>
+  </div>
+  <div style="margin-top:9mm" class="grid2">
+    <div><span class="eyebrow">Pažadas</span><p class="quote">Apimtis prieš darbus. Matomas progresas. Kontrolė po paleidimo.</p></div>
+    <div><span class="eyebrow">Charakteris</span><ul><li>Ramus, ne triukšmingas.</li><li>Techniškai tikslus, bet suprantamas.</li><li>Tiesioginis ir lankstus.</li><li>Estetiškas, bet funkcija svarbesnė už efektą.</li></ul></div>
+  </div>
+  <div class="footer"><span>Startuok brandbook</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">02 · Balsas</span></div>
+  <span class="eyebrow">Komunikacija</span><h2>Situacija → rezultatas → apimtis → ribos.</h2>
+  <p class="lead">Rašome taip, kaip kalbėtų kruopštus specialistas: be išpūstų pažadų, be gynybinio tono ir be bereikalingo techninio žargono.</p>
+  <div class="grid2" style="margin-top:8mm">
+    <article class="card"><small>Naudoti</small><h3>Konkreti kalba</h3><ul><li>„Sukuriame Shopify parduotuvę, kurią lengva paleisti, valdyti ir auginti.“</li><li>„Pirma taisyklės. Tada technologija.“</li><li>„Apimtį ir kainą patvirtiname prieš darbus.“</li><li>Klientą vadiname „verslu“, „jūsų verslu“ arba „verslo atstovais“.</li></ul></article>
+    <article class="card"><small>Vengti</small><h3>Agentūrinės klišės</h3><ul><li>„Revoliucinis“ ar „unikalus kiekvienam“.</li><li>„Pakelsime pardavimus į kitą lygį“.</li><li>Neįrodomi „geriausi rinkoje“ teiginiai.</li><li>Netikri skaičiai, apdovanojimai ar klientų citatos.</li></ul></article>
+  </div>
+  <div style="margin-top:9mm" class="note"><b>* Pastabų principas.</b> Sąlygos, ribos, techninės išimtys ir paaiškinimai pateikiami kaip antrinis komentaras, prasidedantis žvaigždute. Pastaba neturi konkuruoti su pagrindine žinute.</div>
+  <div style="margin-top:9mm"><span class="eyebrow">Pirmųjų klientų žinutė</span><p class="quote">Daugiau tiesioginio dėmesio. Mažiau sluoksnių tarp klausimo ir sprendimo.</p><p>Komunikuojame konkrečius privalumus: 15 % nuolaida pirmiems 3 klientams, mokėjimas etapais, tiesioginis bendravimas ir 30 dienų pagalba po paleidimo.</p></div>
+  <div class="footer"><span>Startuok brandbook</span><span>03</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">03 · Spalvos</span></div>
+  <span class="eyebrow">Spalvų sistema</span><h2>Balta erdvė, gilus navy ir prasminga mėlyna.</h2>
+  <p class="lead">Mėlyna turi reikšti veiksmą, aktyvumą arba techninį akcentą. Ji nėra foninis triukšmas.</p>
+  <div class="swatches" style="margin-top:8mm">
+    <div class="swatch"><div class="swatch-color" style="background:#06142c"></div><div class="swatch-label"><b>Navy</b><code>#06142C</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0b2856"></div><div class="swatch-label"><b>Navy 2</b><code>#0B2856</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0f86ff"></div><div class="swatch-label"><b>Blue</b><code>#0F86FF</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#3157ff"></div><div class="swatch-label"><b>Blue 2</b><code>#3157FF</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#69b4ff"></div><div class="swatch-label"><b>Sky</b><code>#69B4FF</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#07152e"></div><div class="swatch-label"><b>Ink</b><code>#07152E</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#61718b"></div><div class="swatch-label"><b>Muted</b><code>#61718B</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d9e4f2"></div><div class="swatch-label"><b>Line</b><code>#D9E4F2</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f5f8fd"></div><div class="swatch-label"><b>Soft</b><code>#F5F8FD</code></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#edf5ff"></div><div class="swatch-label"><b>Soft blue</b><code>#EDF5FF</code></div></div>
+  </div>
+  <div class="grid2" style="margin-top:10mm">
+    <article class="card"><small>Šviesi sistema</small><h3>Pagrindinis turinys</h3><p>Baltas fonas, tamsi tipografija, rami pilkai mėlyna antriniam tekstui ir plonos rėmelių linijos.</p></article>
+    <article class="card" style="background:linear-gradient(145deg,#06142c,#0b2856);border:0"><small style="color:#69b4ff">Tamsi sistema</small><h3 style="color:#fff">Procesas ir pasiūlymas</h3><p style="color:#b7c9df">Naudojama koncentruotoms sekcijoms. Akcentai šviesiai mėlyni, tekstas ne grynai pilkas.</p></article>
+  </div>
+  <div class="footer"><span>Startuok brandbook</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">04 · Tipografija</span></div>
+  <span class="eyebrow">Subalansuotas 2 variantas</span><h2>Lengvesnis desktop, tvirtesnis mobile - viena hierarchija visai svetainei.</h2>
+  <div class="type-sample"><span class="meta">Desktop H1 · 660</span><div class="type-h1">Sukuriame Shopify parduotuvę, kurią lengva auginti.</div></div>
+  <div class="type-sample"><span class="meta">Desktop H2 · 620</span><div class="type-h2">Aiškus projektas nuo apimties iki perdavimo.</div></div>
+  <div class="type-sample"><span class="meta">Body · 400</span><div class="type-body">Pagrindinis tekstas išlieka ramus ir skaitomas. Svoris didinamas tik ten, kur reikia aiškios hierarchijos ar valdymo būsenos.</div></div>
+  <div class="grid2" style="margin-top:8mm">
+    <article class="card"><small>Desktop · nuo 901 px</small><ul><li>H1: 660, iki 55 px.</li><li>H2: 620, iki 36 px.</li><li>H3: 600, 21 px.</li><li>Nav: 580, 14 px.</li><li>Button: 660.</li><li>Eyebrow: apie 700.</li></ul></article>
+    <article class="card"><small>Mobile · iki 900 px</small><ul><li>H1: 680.</li><li>H2: 650.</li><li>H3: 620.</li><li>Nav: 620.</li><li>Button: 680.</li><li>Iki 680 px H1 38-50 px.</li></ul></article>
+  </div>
+  <div class="note" style="margin-top:8mm"><b>Taikoma visur.</b> Pagrindiniame ir paslaugų puslapiuose, klausimyne, formose, kainose, DUK, privatumo puslapyje, 404, navigacijoje ir poraštėje. Šriftų failai nekopijuojami.</div>
+  <div class="footer"><span>Startuok brandbook</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">05 · Grafika</span></div>
+  <span class="eyebrow">Grafinio dizaino sistema</span><h2>Rodyti pirkimo patirtį ir techninę logiką, o ne abstrakčią „technologiją“.</h2>
+  <div class="browser" style="margin:7mm 0 9mm">
+    <div class="browserbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="address"></i></div>
+    <div class="mock"><div class="mock-copy"><b>Koncepcija, kuri paaiškina paslaugą.</b><span>Vitrina · mobilus pirkimas · rinkos ir sistemos</span></div><div class="mock-visual"></div></div>
+  </div>
+  <div class="grid2">
+    <article class="card"><small>Naudoti</small><ul><li>Naršyklės langus ir mobilią vitriną.</li><li>Produktų, kolekcijų ir krepšelio UI.</li><li>Duomenų srautus, URL ir integracijų mazgus.</li><li>Vienodą mėlynos, navy ir balto ploto kalbą.</li><li>Aiškią žymą, kad tai iliustracinė koncepcija.</li></ul></article>
+    <article class="card"><small>Vengti</small><ul><li>Netikrų klientų darbų ir dashboardų.</li><li>Generinių žmonių nuotraukų.</li><li>Robotų, smegenų ir futuristinių tunelių.</li><li>Chaotiškų 3D objektų ir neoninių spalvų.</li><li>Kelių nesuderintų iliustracijų stilių.</li></ul></article>
+  </div>
+  <div class="footer"><span>Startuok brandbook</span><span>06</span></div>
+</section>
+
+<section class="page dark">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">06 · Judesys</span></div>
+  <span class="eyebrow">Subtilus techninis judesys</span><h2>Animacija nukreipia žvilgsnį ir paaiškina būseną.</h2>
+  <p class="lead">10/10 įspūdis kuriamas ne judančių elementų kiekiu, o nuoseklumu, greičiu ir pagarba vartotojo dėmesiui.</p>
+  <div style="margin-top:9mm">
+    <div class="motion-row"><div class="motion-demo stagger"><i></i><i></i><i></i></div><div><h3>Reveal ir seka</h3><p>500-720 ms, 70-100 ms kortelių stagger. Tik opacity ir transform.</p></div></div>
+    <div class="motion-row"><div class="motion-demo hover"><i></i></div><div><h3>Hover atsakas</h3><p>3-7 px pakilimas, rėmelio ir šešėlio sustiprėjimas. Jokio vartymo.</p></div></div>
+    <div class="motion-row"><div class="motion-demo"><i style="left:34mm"></i></div><div><h3>Hero kompozicija</h3><p>Subtilus 3D atsakas tik tiksliam žymekliui, automatinis sustabdymas fokusavimo metu.</p></div></div>
+  </div>
+  <div class="grid2" style="margin-top:7mm">
+    <article class="card"><small>Privaloma</small><ul><li>`prefers-reduced-motion`.</li><li>Turinio matomumo fallback be JS.</li><li>Animacija paleidžiama vieną kartą.</li><li>Klaviatūros būsenos lieka aiškios.</li></ul></article>
+    <article class="card"><small>Nenaudoti</small><ul><li>Ilgų intro ir loading ekranų.</li><li>Pulsuojančių CTA.</li><li>Stipraus mobiliojo parallax.</li><li>Nuolat greitai judančių logotipų.</li></ul></article>
+  </div>
+  <div class="footer"><span>Startuok brandbook</span><span>07</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">07 · UI</span></div>
+  <span class="eyebrow">Komponentų sistema</span><h2>Vienodi kampai, šešėliai, fokusas ir sąveikos logika.</h2>
+  <div class="grid2" style="margin-top:8mm">
+    <article class="card"><small>Mygtukai</small><h3>Vienas pagrindinis CTA</h3><p>Mėlynas gradientas, baltas tekstas, bent 52-54 px aukštis ir konkretus veiksmažodis.</p><span class="pill">Aptarti projektą →</span></article>
+    <article class="card"><small>Kortelės</small><h3>Viena idėja viename paviršiuje</h3><p>22 px kampai, plona mėlyno atspalvio linija ir santūrus šešėlis.</p></article>
+    <article class="card"><small>Formos</small><h3>Žyma virš lauko</h3><p>Aiškus fokusas, realus placeholder pavyzdys ir matoma klaidos būsena.</p></article>
+    <article class="card"><small>DUK</small><h3>Sklandus, prieinamas accordion</h3><p>Vienu metu atidarytas vienas klausimas, aiški pliuso/minuso ir fokusavimo būsena.</p></article>
+  </div>
+  <div style="margin-top:9mm"><span class="eyebrow">Numeracija</span><div class="flow"><span>01 Situacijos įvertinimas</span><b>→</b><span>02 Apimtis</span><b>→</b><span>03 Įgyvendinimas</span><b>→</b><span>04 Perdavimo patikra</span></div></div>
+  <div class="note" style="margin-top:7mm"><b>Numeriai tik sekai.</b> Dekoratyviniai 01 / 02 / 03 nenaudojami paslaugų, rezultatų, „kada verta“ ar kitose lygiavertėse kortelėse.</div>
+  <div class="note" style="margin-top:4mm"><b>Platformos ir poraštė.</b> Nuo 1201 px visi 10 logotipų telpa vienoje eilėje. Copyright yra vienas elementas: © [einamieji metai] <b>Startuok</b>, kur prekės ženklas gali būti šiek tiek tamsesnis.<br><b>Emoji:</b> 💡 🛍️ 🗂️ 🌍 🧩 ✅ 🚀 naudojami tik klausimyne orientacijai, ne kaip visos svetainės iliustracijų sistema.</div>
+  <div class="footer"><span>Startuok brandbook</span><span>08</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">08 · Struktūra</span></div>
+  <span class="eyebrow">Puslapių architektūra</span><h2>Pagrindinis puslapis padeda pasirinkti. Paslaugų puslapiai padeda suprasti.</h2>
+  <div class="grid2" style="margin-top:8mm">
+    <article class="card"><small>Pagrindinis puslapis</small><ul><li>Hero ir koncepcijų grafika.</li><li>Platformos ir integracijos.</li><li>Trys paslaugos.</li><li>Bendras procesas.</li><li>Etapais pateikti kainų orientyrai.</li><li>Bendras DUK.</li><li>Pirmųjų klientų pasiūlymas.</li><li>Nuorodos į klausimyną ir formą.</li></ul></article>
+    <article class="card"><small>Paslaugos puslapis</small><ul><li>Konkretus rezultatas.</li><li>Kada paslauga tinka.</li><li>Darbų apimtis ir ribos.</li><li>Reali darbų seka.</li><li>Ką gauna klientas.</li><li>Paslaugai būdingi DUK.</li><li>Projekto formos CTA.</li></ul></article>
+  </div>
+  <div style="margin-top:9mm"><span class="eyebrow">Naudotojo kelias</span><div class="flow"><span>Pagrindinis</span><b>→</b><span>Paslauga arba klausimynas</span><b>→</b><span>Projekto forma</span><b>→</b><span>Rašytinė apimtis</span></div></div>
+  <div class="note" style="margin-top:8mm"><b>Nedubliuoti.</b> Techninės migracijos, kūrimo ar integracijų detalės nepersakomos pagrindiniame puslapyje. Ten paliekama tik sprendimui pasirinkti reikalinga informacija.</div>
+  <div class="footer"><span>Startuok brandbook</span><span>09</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">09 · Kainos</span></div>
+  <span class="eyebrow">Kainodaros pateikimas</span><h2>Parodyti ne tik sumą, bet ir už ką klientas moka.</h2>
+  <p class="lead">Etapo orientyras sumažina pirminę atmetimo reakciją, tačiau bendra projekto vertė lieka matoma ir sąžininga.</p>
+  <div class="grid3" style="margin-top:8mm">
+    <article class="card"><small>Kūrimas</small><h3>Nuo 497 € / etapas</h3><p>3 etapai. Struktūra, temos realizavimas, testai ir perdavimas.</p></article>
+    <article class="card"><small>Migracija</small><h3>Nuo 475 € / etapas</h3><p>4 etapai. Auditas, bandomas perkėlimas, migracija ir perjungimo patikra.</p></article>
+    <article class="card"><small>Integracijos</small><h3>Nuo 325 € / etapas</h3><p>2 etapai. Duomenų taisyklės, realizavimas, testai ir perdavimas.</p></article>
+  </div>
+  <div class="rule"></div>
+  <div class="grid2">
+    <article><span class="eyebrow">Taisyklės</span><ul><li>Etapinis mokėjimas atitinka sutarties eigą.</li><li>Bendra orientacinė vertė rodoma šalia.</li><li>Trečiųjų šalių mokesčiai įvardijami atskirai.</li><li>Galutinė apimtis ir suma patvirtinamos raštu.</li></ul></article>
+    <article><span class="eyebrow">Pirmųjų klientų sąlygos</span><ul><li>15 % nuolaida pirmiems 3 klientams.</li><li>30 dienų pagalba po paleidimo.</li><li>Tiesioginis bendravimas.</li><li>Leidimas darbą rodyti tik abiem pusėms sutikus.</li></ul></article>
+  </div>
+  <div class="footer"><span>Startuok brandbook</span><span>10</span></div>
+</section>
+
+<section class="page dark">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">10 · SEO ir QA</span></div>
+  <span class="eyebrow">Publikavimo standartas</span><h2>Gražus puslapis turi būti randamas, greitas ir patikimas.</h2>
+  <div class="checklist" style="margin-top:8mm">
+    <div class="check">Unikalus title ir meta aprašymas.</div><div class="check">Vienas H1 kiekviename puslapyje.</div>
+    <div class="check">Canonical URL ir `lang="lt"`.</div><div class="check">Open Graph ir Twitter kortelės.</div>
+    <div class="check">1200 x 630 socialiniai vaizdai.</div><div class="check">Prasmingi vaizdų alt tekstai.</div>
+    <div class="check">Organization, WebPage, Service ir FAQ schema.</div><div class="check">Matomas turinys sutampa su JSON-LD.</div>
+    <div class="check">Sitemap ir robots direktyvos.</div><div class="check">404 turi noindex,follow.</div>
+    <div class="check">Vidinės nuorodos į paslaugą ir CTA.</div><div class="check">Nėra sulūžusių vietinių nuorodų.</div>
+    <div class="check">Matomas klaviatūros fokusas.</div><div class="check">Veikiantis skip link ir mobilus meniu.</div>
+    <div class="check">360-390 px nėra horizontalaus slinkimo.</div><div class="check">Reduced motion ir JS fallback.</div>
+    <div class="check">Klausimynas pereina visus 7 žingsnius.</div><div class="check">Forma paruošia teisingą projekto laišką.</div>
+  </div>
+  <div class="note" style="margin-top:9mm"><b>Poraštė.</b> Autorinės teisės visada pateikiamos vienoje eilutėje: © [einamieji metai] Startuok. Svetainėje metai atnaujinami automatiškai.</div>
+  <p class="quote" style="margin-top:14mm">Kruopštumas matomas ne vien hero ekrane. Jis matomas kiekvienoje būsenoje.</p>
+  <div class="footer"><span>Startuok brandbook</span><span>11</span></div>
+</section>
+
+<section class="page">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">11 · Tekstai</span></div>
+  <span class="eyebrow">Aiškios kalbos standartas</span><h2>Techninis tikslumas be vidinio projekto žargono.</h2>
+  <p class="lead">Kiekviena paslaugos skiltis juda ta pačia seka: situacija, rezultatas, darbų apimtis, ko reikės iš verslo, ribos ir kitas veiksmas.</p>
+  <div class="grid2" style="margin-top:7mm">
+    <article class="card"><small>Kliento įvardijimas</small><h3>Verslas, ne bendrinė „komanda“</h3><p>Naudojame „verslas“, „jūsų verslas“ arba „verslo atstovai“. „Komanda“ tinka tik konkrečiai žmonių grupei.</p></article>
+    <article class="card"><small>Sakinio principas</small><h3>Viena mintis ir aiškus veiksmas</h3><p>„Susiejame URL“ yra aiškiau už „atliekamas URL susiejimas“. Antraštė turi būti suprantama ir be pastraipos.</p></article>
+  </div>
+  <div class="grid2" style="margin-top:5mm">
+    <article class="card"><small>Vengti</small><h3>Vidinis žargonas</h3><ul><li>pagrindiniai ekranai</li><li>gyvas perjungimas</li><li>migracijos inventorius</li><li>duomenų kontraktas</li><li>eksploatuojamas procesas</li></ul></article>
+    <article class="card"><small>Naudoti</small><h3>Kliento kalba</h3><ul><li>svarbiausi puslapiai</li><li>galutinis perjungimas</li><li>perkeliamų duomenų sąrašas</li><li>duomenų taisyklių aprašas</li><li>veikiantis ir stebimas procesas</li></ul></article>
+  </div>
+  <div class="note" style="margin-top:7mm"><b>Techninis terminas.</b> Paliekamas tik tada, kai padeda priimti sprendimą, ir pirmą kartą paaiškinamas: „papildomi produktų laukai („metafields“)“.</div>
+  <div class="note" style="margin-top:4mm"><b>Negalima sugalvoti.</b> Klientų, rezultatų, kainų, terminų, integracijų galimybių, garantijų, teisinių ar saugumo pažadų be patvirtinto šaltinio.</div>
+  <div class="footer"><span>Startuok brandbook</span><span>12</span></div>
+</section>
+
+<section class="page dark">
+  <div class="topline"><img class="logo" src="assets/startuok-logo.png" alt="Startuok"><span class="version">12 · Tekstų generavimas</span></div>
+  <span class="eyebrow">Užduoties struktūra</span><h2>Kontekstas prieš juodraštį. Patikra prieš publikavimą.</h2>
+  <div class="grid2" style="margin-top:8mm">
+    <article class="card"><small>Įvestis</small><h3>Ką pateikti</h3><ul><li>Puslapį arba skiltį.</li><li>Paslaugą ir kliento situaciją.</li><li>Norimą rezultatą.</li><li>Patvirtintus faktus ir ribas.</li><li>Ko negalima keisti.</li></ul></article>
+    <article class="card"><small>Išvestis</small><h3>Ko paprašyti</h3><ul><li>Galutinio teksto.</li><li>Trumpo pakeitimų paaiškinimo.</li><li>Neaiškių faktų sąrašo.</li><li>Atnaujintų meta aprašymų.</li><li>Su matomu tekstu sutampančio JSON-LD.</li></ul></article>
+  </div>
+  <div class="note" style="margin-top:7mm"><b>Rašymo užduotis.</b> Išlaikyk ramų, konkretų Startuok toną. Pirma įvardyk situaciją, tada rezultatą, darbų apimtį ir ribas. Klientą vadink verslu. Venk klišių ir nepaaiškinto žargono. Neišgalvok faktų. Išlaikyk panašų teksto ilgį, kad nesikeistų maketas.</div>
+  <div style="margin-top:8mm"><span class="eyebrow">Patikra prieš publikavimą</span></div>
+  <div class="checklist">
+    <div class="check">Antraštė aiški be papildomo konteksto.</div><div class="check">Aišku, ką gaus klientas.</div>
+    <div class="check">„Apimtis“ reiškia darbų apimtį.</div><div class="check">Klientas nevadinamas bendrine „komanda“.</div>
+    <div class="check">Techniniai terminai paaiškinti.</div><div class="check">Nėra nepagrįstų pažadų.</div>
+    <div class="check">CTA nurodo konkretų veiksmą.</div><div class="check">DUK sutampa su JSON-LD.</div>
+    <div class="check">Meta aprašymai atitinka puslapį.</div><div class="check">Maketas patikrintas mobile ir desktop.</div>
+  </div>
+  <p class="quote" style="margin-top:12mm">Pilnas kopijuojamas užduoties šablonas pateiktas BRANDBOOK.md faile.</p>
+  <div class="footer"><span>Startuok brandbook</span><span>13</span></div>
+</section>
+
+</body>
+</html>

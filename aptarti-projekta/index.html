@@ -4,6 +4,25 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function(){
+  var consent = 'denied';
+  try { if (localStorage.getItem('startuok_consent') === 'granted') consent = 'granted'; } catch (e) {}
+  gtag('consent', 'default', {
+    'ad_storage': consent,
+    'ad_user_data': consent,
+    'ad_personalization': consent,
+    'analytics_storage': consent
+  });
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DPJJV85L0E"></script>
+<script>
+gtag('js', new Date());
+gtag('config', 'G-DPJJV85L0E');
+</script>
 <meta content="Aprašykite Shopify parduotuvės kūrimo, migracijos arba integracijų situaciją. Forma paruoš laišką jūsų el. pašto programoje." name="description"/>
 <meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="robots"/>
 <meta content="Startuok" name="author"/>

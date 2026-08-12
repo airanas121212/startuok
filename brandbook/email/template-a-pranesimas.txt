@@ -1,0 +1,46 @@
+EmailJS Šablonas A — „Nauja užklausa" (pranešimas tau)
+=======================================================
+Vidinis, ne klientui skirtas laiškas — todėl paprastas tekstas, be brand'o.
+
+To Email:
+labas@startuok.online
+
+Reply To:
+{{email}}
+
+Subject:
+[Startuok] Nauja užklausa – {{name}} ({{source}})
+
+Content:
+-------------------------------------------------------
+Šaltinis: {{source}}
+
+Vardas: {{name}}
+El. paštas: {{email}}
+Telefonas: {{phone}}
+Įmonė / svetainė: {{company}}
+Paslauga: {{service}}
+Biudžeto orientyras: {{budget}}
+Pageidaujama data: {{timing}}
+
+Žinutė / klausimyno santrauka:
+{{message}}
+
+Gauta: {{submitted_at}}
+-------------------------------------------------------
+
+Kintamieji (turi sutapti su Šablonu B ir vėliau su svetainės kodu):
+- source          – "Klausimynas" arba "Aptarti projektą"
+- name            – kliento vardas
+- email           – kliento el. paštas (gali būti tuščias, jei paliktas tik telefonas)
+- phone           – kliento telefonas (gali būti tuščias, jei paliktas tik el. paštas)
+- company         – įmonė / svetainė (neprivaloma)
+- service         – paslaugos kryptis (rekomenduota arba pasirinkta) — TAS PATS kintamasis kaip Šablone B
+- budget          – biudžeto orientyras (neprivaloma)
+- timing          – pageidaujama data (neprivaloma)
+- message         – laisvo teksto žinutė arba klausimyno santrauka
+- submitted_at    – data/laikas
+
+Kai svetainės kode sukursime EmailJS send() iškvietimą, jis siųs VIENĄ tą patį
+parametrų rinkinį — Šablonas A panaudos visus laukus, Šablonas B (klientui)
+panaudos tik {{name}} ir {{service}}, likusius tiesiog ignoruos.
