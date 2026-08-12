@@ -395,7 +395,12 @@ details p { max-width: 760px; margin: -2px 54px 22px 0; font-size: 15px; }
 .quiz-progress { height: 7px; margin: 12px 0 18px; overflow: hidden; border-radius: 20px; background: #dfe9f5; }
 .quiz-progress span { display: block; width: 14.285%; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--blue),var(--blue-2)); transition: width .25s ease; }
 .quiz-meta p { margin: 0; font-size: 12px; }
-.quiz-card { grid-column: 2; min-height: 560px; padding: 38px; border: 1px solid var(--line); border-radius: var(--radius-feature); background: var(--white); box-shadow: var(--shadow-card); }
+.quiz-card { grid-column: 2; display: flex; flex-direction: column; min-height: 560px; padding: 38px; border: 1px solid var(--line); border-radius: var(--radius-feature); background: var(--white); box-shadow: var(--shadow-card); }
+.quiz-card > form { display: flex; flex: 1; flex-direction: column; }
+/* min-height is set from JS to the tallest step, so the card never resizes
+   between a question and the summary; the nav row stays pinned to the base. */
+.quiz-steps { position: relative; display: flex; flex-direction: column; justify-content: center; }
+.quiz-nav { margin-top: auto; }
 .quiz-step { display: none; margin: 0; padding: 0; border: 0; }
 .quiz-step.active { display: block; }
 .quiz-step legend { margin: 0 0 8px; padding: 0; font-size: 30px; font-weight: 830; letter-spacing: -.035em; line-height: 1.18; }
@@ -419,19 +424,48 @@ details p { max-width: 760px; margin: -2px 54px 22px 0; font-size: 15px; }
 /* Closing step. It is a .quiz-step like every question, so it lives in the same
    card, keeps the sidebar and progress bar on screen, and is reached through the
    same nav row — no separate result view. */
-.quiz-final-head { display: flex; align-items: center; gap: 13px; margin: 0 0 8px; }
+.quiz-final-head { display: flex; align-items: center; gap: 13px; margin: 0 0 16px; }
 .quiz-final-head .eyebrow { display: block; margin-bottom: 3px; }
 .quiz-final-head h2 { margin: 0; font-size: 30px; font-weight: 830; letter-spacing: -.035em; line-height: 1.18; }
-.result-direction { margin: 22px 0; padding: 22px; border-radius: 16px; color: var(--white); background: linear-gradient(135deg,var(--navy),var(--navy-2)); }
-.result-direction small, .result-direction strong { display: block; }
-.result-direction small { color: #69b4ff; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
-.result-direction strong { margin-top: 7px; font-size: 22px; }
-.quiz-summary-field { margin-top: 22px; }
-.quiz-summary { width: 100%; min-height: 190px; resize: vertical; background: var(--soft); border-color: var(--line); font-size: 13.5px; line-height: 1.65; }
-.quiz-final.is-sent > .quiz-hint,
+
+/* Recommendation banner: one line, so the closing step stays the same height as
+   a question step. */
+.result-direction { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 0 0 18px; padding: 14px 20px; border-radius: 16px; color: var(--white); background: linear-gradient(135deg,var(--navy),var(--navy-2)); }
+.result-direction small { color: #69b4ff; font-weight: 850; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+.result-direction strong { font-size: 19px; letter-spacing: -.02em; }
+
+.quiz-final-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: 26px; align-items: start; }
+.quiz-col-head { margin-bottom: 12px; }
+.quiz-col-head h3 { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 15px; letter-spacing: -.01em; }
+.quiz-col-head span { display: block; margin-top: 3px; color: var(--muted); font-size: 11.5px; }
+
+/* Answer review. Each row opens its own choices in place, so correcting an
+   answer never sends the visitor back through the earlier steps. */
+.quiz-review { display: grid; gap: 5px; }
+.review-item { border: 1px solid var(--line); border-radius: 13px; background: var(--white); transition: border-color .25s ease, box-shadow .25s ease; }
+.review-item.is-open { border-color: #9cc8f7; box-shadow: 0 12px 28px rgba(20,72,137,.08); }
+.review-head { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; align-items: center; gap: 10px; width: 100%; padding: 6px 12px; border: 0; border-radius: inherit; background: transparent; cursor: pointer; text-align: left; touch-action: manipulation; }
+.review-icon { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--soft-blue); font-size: 13px; }
+.review-text { min-width: 0; }
+.review-text small { display: block; color: var(--muted); font-size: 10.5px; line-height: 1.35; }
+.review-text strong { display: block; overflow: hidden; color: var(--ink); font-size: 13px; font-weight: 700; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.review-action { color: var(--blue); font-size: 11px; font-weight: 800; }
+.review-item.is-open .review-action::after { content: " ▴"; }
+.review-item:not(.is-open) .review-action::after { content: " ▾"; }
+.review-options { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 12px 11px 48px; }
+.review-options[hidden] { display: none; }
+.review-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--white); cursor: pointer; font-size: 12px; font-weight: 700; touch-action: manipulation; transition: border-color .2s ease, background .2s ease; }
+.review-chip b { font-weight: inherit; }
+.review-chip.is-active { border-color: var(--blue); color: var(--blue); background: var(--soft-blue); box-shadow: inset 0 0 0 1px var(--blue); }
+.review-chip:focus-visible { outline: 3px solid rgba(15,134,255,.25); outline-offset: 2px; }
+
+.quiz-contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.quiz-contact-fields input, .quiz-contact-fields textarea { padding-inline: 13px; font-size: 14px; }
+.quiz-contact-fields label { font-size: 12.5px; }
+.quiz-contact-fields .form-field.full { grid-column: 1 / -1; }
+.quiz-contact textarea { min-height: 58px; resize: vertical; line-height: 1.5; }
 .quiz-final.is-sent .result-direction,
-.quiz-final.is-sent .quiz-summary-field,
-.quiz-final.is-sent .quiz-contact { display: none; }
+.quiz-final.is-sent .quiz-final-grid { display: none; }
 .quiz-sent { margin-top: 24px; padding: 30px 26px; border: 1px solid #bcdcc9; border-radius: var(--radius-card); background: linear-gradient(155deg,#fff,#f0faf3); }
 .quiz-sent:focus { outline: none; }
 .quiz-sent-mark { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 16px; border-radius: 16px; color: #fff; background: linear-gradient(135deg,#2f9d63,#1f7b4c); box-shadow: 0 16px 34px rgba(31,123,76,.22); font-size: 24px; font-weight: 800; }
@@ -589,9 +623,10 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
   .quiz-final-head { align-items: flex-start; }
   .quiz-final-head h2 { font-size: 25px; }
   .quiz-final-head .step-emoji { width: 40px; height: 40px; flex-basis: 40px; font-size: 19px; }
-  .quiz-contact { padding: 20px; }
-  .quiz-contact h3 { align-items: flex-start; font-size: 18px; }
+  .quiz-contact { padding: 18px; }
   .quiz-sent { padding: 24px 20px; }
+  .review-options { padding-left: 12px; }
+  .quiz-final-grid { grid-template-columns: 1fr; gap: 20px; }
   .form-field.full { grid-column: auto; }
   .form-footer { align-items: stretch; flex-direction: column; }
   .form-footer .button { width: 100%; }
@@ -855,7 +890,7 @@ body.is-ready .hero-reveal{animation:heroEnter .75s var(--ease-premium) forwards
 .quiz-shell{grid-template-columns:270px minmax(0,1fr)}
 .quiz-meta{overflow:hidden;border-color:#cbdff4;background:linear-gradient(155deg,#fff,#edf5ff);box-shadow:0 18px 45px rgba(20,68,130,.075)}
 .quiz-context{margin-top:22px;padding-top:20px;border-top:1px solid #d7e4f2}.quiz-context-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:14px;border-radius:13px;background:#fff;box-shadow:0 10px 25px rgba(15,87,170,.09);font-size:20px}.quiz-context small,.quiz-context strong{display:block}.quiz-context small{color:var(--blue);font-size:9px;font-weight:760;letter-spacing:.11em;text-transform:uppercase}.quiz-context strong{margin-top:6px;font-size:14px;line-height:1.35}.quiz-context p{margin:6px 0 0;font-size:11px;line-height:1.55}
-.quiz-card{box-shadow:0 30px 80px rgba(14,57,119,.12);border-color:#cbdff4}.quiz-step.active{display:block;animation:quizStepIn .48s var(--ease-premium)}
+.quiz-card{box-shadow:0 30px 80px rgba(14,57,119,.12);border-color:#cbdff4}.quiz-step.active{animation:quizStepIn .48s var(--ease-premium)}
 @keyframes quizStepIn{from{opacity:0;transform:translateX(13px)}to{opacity:1;transform:none}}
 .quiz-step legend{display:flex;align-items:center;gap:13px;font-weight:680}.step-emoji{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:linear-gradient(145deg,#fff,#e9f4ff);box-shadow:0 10px 24px rgba(15,84,166,.09);font-size:22px}
 .quiz-options label>span{position:relative;display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;column-gap:14px;align-content:center;min-height:112px;padding:17px 18px;border-radius:17px;transition:transform .35s var(--ease-premium),border-color .3s ease,background .3s ease,box-shadow .3s ease}
@@ -1167,9 +1202,18 @@ body { font-weight: var(--weight-body); }
   --weight-control: 700;
 }
 
-.button,
+/* Brand rule (brandbook 5.1): a dark button surface never carries near-black
+   type, and a light button surface never carries white type. `.button-outline`
+   is excluded here on purpose — without :not() this later rule would repaint it
+   with the blue gradient while it kept its dark --ink label. */
+.button:not(.button-outline),
 .mobile-cta {
+  color: var(--white);
   background: linear-gradient(135deg, var(--action-blue), var(--action-blue-2));
+}
+.button-outline {
+  color: var(--ink);
+  background: var(--white);
 }
 
 @media (min-width: 981px) {
@@ -2124,7 +2168,7 @@ body { font-weight: var(--weight-body); }
 
 /* Quiz contact capture — styled as the natural final step of the quiz, echoing
    the same icon-badge + eyebrow language used for each question and the sidebar. */
-.quiz-contact { margin-top: 30px; padding: 26px; border-radius: var(--radius-card); border: 1px solid var(--line); background: linear-gradient(155deg,#fff,var(--soft)); }
+.quiz-contact { padding: 18px; border-radius: var(--radius-card); border: 1px solid var(--line); background: linear-gradient(155deg,#fff,var(--soft)); }
 .quiz-contact h3 { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; font-size: 19px; }
 .quiz-contact-icon { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 13px; background: #fff; box-shadow: 0 10px 24px rgba(15,84,166,.09); font-size: 19px; }
 .quiz-contact .quiz-hint { margin-bottom: 22px; }

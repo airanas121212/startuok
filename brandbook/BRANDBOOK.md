@@ -73,6 +73,19 @@ Naudojamas originalus `assets/startuok-logo.png`.
 
 Mėlyna naudojama prasmingai: vienam pagrindiniam veiksmui, aktyviai būsenai, sekos numeriui arba vienam žodiniam akcentui.
 
+### 5.1. Mygtukų kontrasto taisyklė
+
+Mygtuko paviršius ir jo tekstas visada priešingi pagal šviesumą:
+
+- **Tamsus paviršius** (Navy, Navy 2, Blue, Blue 2 arba jų gradientas) — **tik baltas** tekstas. Juodas, Ink `#07152E` ar bet kuris kitas tamsus šriftas ant tamsaus mygtuko nenaudojamas niekada.
+- **Šviesus paviršius** (White, Soft, Soft blue, permatomas) — **tik tamsus** tekstas: Ink `#07152E` arba Blue `#0F86FF`. Baltas šriftas ant šviesaus mygtuko nenaudojamas niekada.
+
+Minimalus teksto ir mygtuko fono kontrastas — 4,5:1.
+
+Taisyklė galioja visoms būsenoms: įprastai, hover, focus, active, disabled, mobiliajame CTA ir tamsiose sekcijose.
+
+**Techninė sąlyga.** Mygtuko `background` ir `color` visada nurodomi kartu, toje pačioje CSS taisyklėje. Bendra taisyklė, perpiešianti visų `.button` foną, negali paliesti šviesių variantų — naudojamas `:not(.button-outline)` atrankiklis. Priešingu atveju vėliau faile esanti fono taisyklė perpiešia šviesų mygtuką tamsiu gradientu, o `color` lieka tamsus ir gaunamas 2,7:1 kontrastas.
+
 ## 6. Tipografija
 
 Šriftų sistema:
@@ -226,6 +239,7 @@ Kiekvienas indeksuojamas puslapis privalo turėti:
 - Mygtukai ir laukai turi aiškias žymas.
 - DUK veikia klaviatūra.
 - Kontrastas ir pagrindinis šriftas išlieka patogūs.
+- Mygtukų teksto ir fono poros patikrintos pagal 5.1 taisyklę: nė vieno tamsaus mygtuko su tamsiu tekstu ir nė vieno šviesaus su baltu.
 - Nėra horizontalaus slinkimo 360 px ekrane.
 - Animacijos naudoja daugiausia `transform` ir `opacity`.
 - Tikrinama 390 px, planšetė ir 1280-1440 px darbalaukis.

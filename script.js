@@ -202,12 +202,13 @@ document.documentElement.classList.remove('reveal-fallback');
   }
 
   function initQuiz(form) {
-    // One continuous flow: the seven question steps and the closing summary +
+    // One continuous flow: the seven question steps and the closing review +
     // contact panel are all steps inside the same card, driven by one showStep()
-    // and one primary button. Nothing is hidden or swapped out for a separate
-    // "result" view, so the sidebar, progress bar and card frame never disappear.
+    // and one primary button. The card keeps a constant height on desktop, so
+    // nothing resizes or jumps between the questions and the summary.
     const questions = [...form.querySelectorAll('fieldset.quiz-step')];
     const finalStep = form.querySelector('.quiz-final');
+    const stepsWrap = form.querySelector('.quiz-steps');
     const steps = finalStep ? [...questions, finalStep] : questions;
     const finalIndex = finalStep ? steps.length - 1 : -1;
     const next = form.querySelector('.quiz-next');
@@ -219,8 +220,9 @@ document.documentElement.classList.remove('reveal-fallback');
     const progressText = doc.querySelector('#quiz-progress-text');
     const progressPrefix = doc.querySelector('#quiz-progress-prefix');
     const context = doc.querySelector('#quiz-context');
-    const summary = doc.querySelector('#quiz-summary');
+    const review = doc.querySelector('#quiz-review');
     const direction = doc.querySelector('#quiz-direction');
+    const note = doc.querySelector('#quiz-note');
     const contactName = doc.querySelector('#quiz-name');
     const contactEmail = doc.querySelector('#quiz-email');
     const contactPhone = doc.querySelector('#quiz-phone');
@@ -233,17 +235,142 @@ document.documentElement.classList.remove('reveal-fallback');
       ['🧩','Atskirti tikruosius poreikius','Pažymėkite tik tai, kas turi veikti pirmoje versijoje.'],
       ['✅','Patikrinti pasiruošimą','Turinys ir duomenys dažnai lemia grafiką labiau nei programavimas.'],
       ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir jūsų verslo pasiruošimą.'],
-      ['📩','Peržiūrėti ir išsiųsti','Santrauką galite pakoreguoti prieš siunčiant. Atsakysime asmeniškai.']
+      ['📩','Peržiūrėti ir išsiųsti','Atsakymus galite pakeisti čia pat — grįžti atgal nereikia.']
     ];
+    const sentContext = ['✅','Užklausa gauta','Netrukus atsakysime jūsų nurodytu kontaktu.'];
     let current = 0;
-    let generated = '';
     let serviceName = '';
     let sending = false;
     let submitted = false;
 
     const onFinal = () => current === finalIndex;
 
-    const sentContext = ['✅', 'Užklausa gauta', 'Netrukus atsakysime jūsų nurodytu kontaktu.'];
+    // Read the questions straight out of the markup, so the review list can never
+    // drift out of sync with the steps above it.
+    const schema = questions.map((step) => {
+      const legend = step.querySelector('legend');
+      const emoji = legend?.querySelector('.step-emoji')?.textContent || '•';
+      const title = [...(legend?.childNodes || [])]
+        .filter((n) => n.nodeType === 3 || !n.classList?.contains('step-emoji'))
+        .map((n) => n.textContent).join('').trim();
+      const inputs = [...step.querySelectorAll('input')];
+      return {
+        step, emoji, title,
+        name: inputs[0]?.name || '',
+        multiple: inputs[0]?.type === 'checkbox',
+        options: inputs.map((input) => ({
+          input,
+          value: input.value,
+          label: input.closest('label')?.querySelector('b')?.textContent?.trim() || input.value,
+          icon: input.closest('label')?.querySelector('.quiz-emoji')?.textContent || ''
+        }))
+      };
+    });
+
+    const chosen = (entry) => entry.options.filter((option) => option.input.checked);
+    const answerText = (entry) => chosen(entry).map((option) => option.label).join(', ');
+
+    const recommend = () => {
+      const stage = schema.find((entry) => entry.name === 'stage');
+      const needsEntry = schema.find((entry) => entry.name === 'needs');
+      const stageValue = chosen(stage || { options: [] })[0]?.value || '';
+      const needs = chosen(needsEntry || { options: [] }).map((option) => option.value);
+      if (stageValue === 'Noriu persikelti į Shopify' || needs.includes('Duomenų perkėlimo')) return 'Migracija į Shopify';
+      if (needs.some((item) => item.includes('integracij'))) return 'Shopify integracijos';
+      return 'Shopify parduotuvės kūrimas';
+    };
+
+    const brief = () => {
+      const lines = ['Shopify projekto klausimyno santrauka', ''];
+      schema.forEach((entry) => lines.push(`${entry.title} ${answerText(entry)}`));
+      lines.push('', `Rekomenduojama paslaugos kryptis: ${serviceName}`);
+      const extra = (note?.value || '').trim();
+      if (extra) lines.push('', 'Papildoma informacija:', extra);
+      return lines.join('\n');
+    };
+
+    const syncDirection = () => {
+      serviceName = recommend();
+      if (direction) direction.textContent = serviceName;
+      try { sessionStorage.setItem('startuokBrief', brief()); } catch (_) {}
+    };
+
+    // Review list. Every answer is a row that opens its own options in place —
+    // editing never sends the visitor back through the earlier steps.
+    const closePanels = (except) => {
+      review?.querySelectorAll('.review-item.is-open').forEach((item) => {
+        if (item === except) return;
+        item.classList.remove('is-open');
+        item.querySelector('.review-head')?.setAttribute('aria-expanded', 'false');
+        item.querySelector('.review-options')?.setAttribute('hidden', '');
+      });
+    };
+
+    const buildReview = () => {
+      if (!review) return;
+      review.textContent = '';
+      schema.forEach((entry, index) => {
+        const item = doc.createElement('div');
+        item.className = 'review-item';
+
+        const head = doc.createElement('button');
+        head.type = 'button';
+        head.className = 'review-head';
+        head.setAttribute('aria-expanded', 'false');
+        head.innerHTML = `<span aria-hidden="true" class="review-icon"></span><span class="review-text"><small></small><strong></strong></span><span aria-hidden="true" class="review-action">Keisti</span>`;
+        head.querySelector('.review-icon').textContent = entry.emoji;
+        head.querySelector('small').textContent = entry.title;
+
+        const panel = doc.createElement('div');
+        panel.className = 'review-options';
+        panel.hidden = true;
+        entry.options.forEach((option) => {
+          const chip = doc.createElement('button');
+          chip.type = 'button';
+          chip.className = 'review-chip';
+          chip.innerHTML = '<span aria-hidden="true"></span><b></b>';
+          chip.firstChild.textContent = option.icon;
+          chip.querySelector('b').textContent = option.label;
+          chip.addEventListener('click', () => {
+            if (entry.multiple) {
+              if (option.input.checked && chosen(entry).length === 1) return;
+              option.input.checked = !option.input.checked;
+            } else {
+              entry.options.forEach((other) => { other.input.checked = false; });
+              option.input.checked = true;
+            }
+            paintRow(index);
+            syncDirection();
+            if (!entry.multiple) closePanels();
+          });
+          panel.appendChild(chip);
+        });
+
+        head.addEventListener('click', () => {
+          const open = item.classList.contains('is-open');
+          closePanels(item);
+          item.classList.toggle('is-open', !open);
+          head.setAttribute('aria-expanded', String(!open));
+          panel.hidden = open;
+        });
+
+        item.append(head, panel);
+        review.appendChild(item);
+      });
+      schema.forEach((_, index) => paintRow(index));
+    };
+
+    function paintRow(index) {
+      const item = review?.children[index];
+      if (!item) return;
+      const entry = schema[index];
+      item.querySelector('.review-text strong').textContent = answerText(entry) || '—';
+      const selected = new Set(chosen(entry).map((option) => option.value));
+      [...item.querySelectorAll('.review-chip')].forEach((chip, i) => {
+        chip.classList.toggle('is-active', selected.has(entry.options[i].value));
+        chip.setAttribute('aria-pressed', String(selected.has(entry.options[i].value)));
+      });
+    }
 
     const updateContext = () => {
       if (!context) return;
@@ -265,6 +392,24 @@ document.documentElement.classList.remove('reveal-fallback');
       if (progressText) progressText.textContent = last ? (submitted ? 'Užklausa išsiųsta' : 'Paskutinis žingsnis') : `${current + 1} iš ${questions.length}`;
     };
 
+    // Equal height for every step, so the card never grows or shrinks as the
+    // visitor moves through it. Skipped on phones, where the closing step is a
+    // single column and the page scrolls anyway.
+    const equalise = () => {
+      if (!stepsWrap) return;
+      stepsWrap.style.minHeight = '';
+      if (window.innerWidth <= 680) return;
+      closePanels();
+      let tallest = 0;
+      steps.forEach((step) => {
+        const active = step.classList.contains('active');
+        if (!active) step.style.cssText = 'display:block;position:absolute;visibility:hidden;left:0;right:0;top:0';
+        tallest = Math.max(tallest, step.offsetHeight);
+        if (!active) step.style.cssText = '';
+      });
+      if (tallest) stepsWrap.style.minHeight = `${tallest}px`;
+    };
+
     // Keep the card anchored under the header instead of jumping the page:
     // scroll only when the top of the card has drifted out of view.
     const keepInView = () => {
@@ -278,18 +423,13 @@ document.documentElement.classList.remove('reveal-fallback');
       current = Math.max(0, Math.min(index, steps.length - 1));
       steps.forEach((step, i) => step.classList.toggle('active', i === current));
       back.hidden = current === 0 || submitted;
-      next.textContent = onFinal() ? 'Siųsti užklausą' : (current === questions.length - 1 ? 'Rodyti santrauką →' : 'Toliau →');
+      next.textContent = onFinal() ? 'Siųsti užklausą' : (current === questions.length - 1 ? 'Peržiūrėti santrauką →' : 'Toliau →');
       error.textContent = '';
       updateProgress();
       updateContext();
       if (options.scroll) keepInView();
-      if (onFinal()) {
-        // scrollHeight only reads true once the step is on screen.
-        autoSize();
-        if (options.focus !== false) finalStep.focus({ preventScroll: true });
-        return;
-      }
       if (options.focus === false) return;
+      if (onFinal()) { finalStep.focus({ preventScroll: true }); return; }
       const checked = steps[current].querySelector('input:checked');
       (checked || steps[current].querySelector('input'))?.focus({ preventScroll: true });
     };
@@ -301,51 +441,6 @@ document.documentElement.classList.remove('reveal-fallback');
       return false;
     };
 
-    // Rebuilt every time the summary step is opened, so going back and changing an
-    // answer is reflected. Anything the visitor appended below the generated block
-    // is carried over.
-    const syncSummary = () => {
-      const data = new FormData(form);
-      const needs = data.getAll('needs');
-      let service = 'Shopify parduotuvės kūrimas';
-      if (data.get('stage') === 'Noriu persikelti į Shopify' || needs.includes('Duomenų perkėlimo')) {
-        service = 'Migracija į Shopify';
-      } else if (needs.some((item) => item.includes('integracij'))) {
-        service = 'Shopify integracijos';
-      }
-      const text = [
-        'Shopify projekto klausimyno santrauka','',
-        `Dabartinė situacija: ${data.get('stage')}`,
-        `Pardavimo modelis: ${data.get('product')}`,
-        `Katalogas: ${data.get('catalog')}`,
-        `Rinkos: ${data.get('market')}`,
-        `Poreikiai: ${needs.join(', ')}`,
-        `Turinio parengtis: ${data.get('readiness')}`,
-        `Pageidaujama paleidimo data: ${data.get('timing')}`,'',
-        `Rekomenduojama paslaugos kryptis: ${service}`,'',
-        'Papildoma informacija:'
-      ].join('\n');
-      const tail = generated && summary.value.startsWith(generated) ? summary.value.slice(generated.length) : '';
-      summary.value = text + tail;
-      generated = text;
-      serviceName = service;
-      if (direction) direction.textContent = service;
-      autoSize();
-      try { sessionStorage.setItem('startuokBrief', summary.value); } catch (_) {}
-    };
-
-    // Grow the summary box to fit its content so the whole brief stays readable
-    // without a scrollbar nested inside the card.
-    function autoSize() {
-      if (!summary) return;
-      summary.style.height = 'auto';
-      summary.style.height = `${Math.max(summary.scrollHeight + 2, 190)}px`;
-    }
-    summary?.addEventListener('input', () => {
-      autoSize();
-      try { sessionStorage.setItem('startuokBrief', summary.value); } catch (_) {}
-    });
-
     const markSent = () => {
       submitted = true;
       error.textContent = '';
@@ -353,6 +448,7 @@ document.documentElement.classList.remove('reveal-fallback');
       const sent = doc.querySelector('#quiz-sent');
       if (sent) sent.hidden = false;
       if (navRow) navRow.hidden = true;
+      if (stepsWrap) stepsWrap.style.minHeight = '';
       const emoji = doc.querySelector('#quiz-final-emoji');
       const eyebrow = doc.querySelector('#quiz-final-eyebrow');
       const title = doc.querySelector('#quiz-final-title');
@@ -376,7 +472,7 @@ document.documentElement.classList.remove('reveal-fallback');
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { error.textContent = 'Patikrinkite el. pašto adresą.'; contactEmail?.focus(); return; }
       if (contactHp && contactHp.value) { markSent(); return; }
       if (!window.emailjs) {
-        error.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Nukopijuokite santrauką ir atsiųskite ją adresu labas@startuok.online.';
+        error.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Parašykite mums adresu labas@startuok.online.';
         return;
       }
       sending = true;
@@ -390,7 +486,7 @@ document.documentElement.classList.remove('reveal-fallback');
           service: serviceName,
           budget: '',
           timing: '',
-          message: summary?.value || generated,
+          message: brief(),
           submitted_at: new Date().toLocaleString('lt-LT')
         });
         markSent();
@@ -407,15 +503,15 @@ document.documentElement.classList.remove('reveal-fallback');
       if (submitted) return;
       if (onFinal()) return send();
       if (!validStep()) return;
-      if (current === questions.length - 1) syncSummary();
+      if (current === questions.length - 1) { schema.forEach((_, i) => paintRow(i)); syncDirection(); }
       showStep(current + 1, { scroll: true });
     };
 
     next.addEventListener('click', advance);
-    back.addEventListener('click', () => showStep(current - 1, { scroll: true }));
+    back.addEventListener('click', () => { closePanels(); showStep(current - 1, { scroll: true }); });
 
-    // The contact fields now live inside the quiz form, so keep Enter useful
-    // instead of letting it reload the page.
+    // The contact fields live inside the quiz form, so keep Enter useful instead
+    // of letting it reload the page.
     form.addEventListener('submit', (event) => { event.preventDefault(); advance(); });
     form.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' || event.shiftKey) return;
@@ -424,8 +520,17 @@ document.documentElement.classList.remove('reveal-fallback');
       event.preventDefault();
       advance();
     });
+    note?.addEventListener('input', () => { try { sessionStorage.setItem('startuokBrief', brief()); } catch (_) {} });
 
+    buildReview();
+    syncDirection();
     showStep(0, { focus: false });
+    requestAnimationFrame(equalise);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(equalise, 160);
+    }, { passive: true });
   }
 
   function initLeadForm(form) {
