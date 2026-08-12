@@ -7,6 +7,14 @@ document.documentElement.classList.remove('reveal-fallback');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
+  // EmailJS: one service, one "owner" template. The owner template's Auto-Reply
+  // (configured in the EmailJS dashboard) sends the client-facing confirmation —
+  // sending() below only ever calls the owner template directly.
+  const EMAILJS_PUBLIC_KEY = 'pBvtjfxx2nfJ3EDbX';
+  const EMAILJS_SERVICE_ID = 'service_wecyxbs';
+  const EMAILJS_TEMPLATE_OWNER = 'template_a23adxe';
+  if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
   requestAnimationFrame(() => requestAnimationFrame(() => doc.body.classList.add('is-ready')));
 
   const currentYear = new Date().getFullYear();
@@ -206,6 +214,15 @@ document.documentElement.classList.remove('reveal-fallback');
     const formLink = doc.querySelector('#quiz-form-link');
     const copy = doc.querySelector('#quiz-copy');
     const context = doc.querySelector('#quiz-context');
+    const contactName = doc.querySelector('#quiz-name');
+    const contactEmail = doc.querySelector('#quiz-email');
+    const contactPhone = doc.querySelector('#quiz-phone');
+    const contactHp = doc.querySelector('input[name="quiz_hp"]');
+    const contactError = doc.querySelector('.quiz-contact-error');
+    const contactStatus = doc.querySelector('.quiz-contact-status');
+    const sendButton = doc.querySelector('#quiz-send');
+    let lastSummary = '';
+    let lastServiceName = '';
     const contexts = [
       ['💡','Suprasti dabartinę situaciją','Tinkamas sprendimas priklauso nuo dabartinės jūsų situacijos.'],
       ['🛍️','Apibrėžti pardavimo modelį','Nuo pardavimo modelio priklauso produkto puslapis, mokėjimas ir pristatymas.'],
@@ -262,6 +279,7 @@ document.documentElement.classList.remove('reveal-fallback');
       const text = lines.join('\n');
       try { sessionStorage.setItem('startuokBrief', text); } catch (_) {}
       summary.value = text; direction.textContent = serviceName;
+      lastSummary = text; lastServiceName = serviceName;
       formLink.href = `../aptarti-projekta/index.html?from=klausimynas&service=${serviceCode}`;
       form.hidden = true; doc.querySelector('.quiz-meta').hidden = true; result.classList.add('active');
       result.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
@@ -271,14 +289,56 @@ document.documentElement.classList.remove('reveal-fallback');
       try { await navigator.clipboard.writeText(summary.value); copy.textContent = 'Nukopijuota'; }
       catch (_) { summary.select(); doc.execCommand('copy'); copy.textContent = 'Nukopijuota'; }
     });
+
+    if (sendButton) {
+      sendButton.addEventListener('click', async () => {
+        const name = (contactName?.value || '').trim();
+        const email = (contactEmail?.value || '').trim();
+        const phone = (contactPhone?.value || '').trim();
+        if (contactError) contactError.textContent = '';
+        if (!name) { if (contactError) contactError.textContent = 'Įveskite vardą.'; contactName?.focus(); return; }
+        if (!email && !phone) { if (contactError) contactError.textContent = 'Nurodykite el. paštą arba telefoną.'; contactEmail?.focus(); return; }
+        if (contactHp && contactHp.value) {
+          if (contactStatus) contactStatus.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
+          return;
+        }
+        if (!window.emailjs) {
+          if (contactStatus) contactStatus.textContent = 'Nepavyko išsiųsti. Naudokite „Pildyti pilną formą“ arba nukopijuokite santrauką.';
+          return;
+        }
+        sendButton.disabled = true;
+        if (contactStatus) contactStatus.textContent = 'Siunčiama…';
+        try {
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
+            source: 'Klausimynas',
+            name, email, phone,
+            company: '',
+            service: lastServiceName,
+            budget: '',
+            timing: '',
+            message: lastSummary,
+            submitted_at: new Date().toLocaleString('lt-LT')
+          });
+          if (contactStatus) contactStatus.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
+          if (contactName) contactName.disabled = true;
+          if (contactEmail) contactEmail.disabled = true;
+          if (contactPhone) contactPhone.disabled = true;
+        } catch (_) {
+          sendButton.disabled = false;
+          if (contactStatus) contactStatus.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba naudokite „Pildyti pilną formą“.';
+        }
+      });
+    }
     showStep(0);
   }
 
   function initLeadForm(form) {
     const status = form.querySelector('.form-status');
     const copyButton = form.querySelector('.copy-message');
+    const submitButton = form.querySelector('button[type="submit"]');
     const messageField = form.elements.message;
     const serviceField = form.elements.service;
+    const hpField = form.elements.lead_hp;
     const prefillNote = doc.querySelector('.prefill-note');
     const params = new URLSearchParams(window.location.search);
     const serviceMap = { kurimas:'Shopify parduotuvės kūrimas', migracija:'Migracija į Shopify', integracijos:'Shopify integracijos', kita:'Kita situacija' };
@@ -291,21 +351,46 @@ document.documentElement.classList.remove('reveal-fallback');
       const data = new FormData(form);
       const name = String(data.get('name') || '').trim();
       const email = String(data.get('email') || '').trim();
+      const phone = String(data.get('phone') || '').trim();
       const company = String(data.get('company') || '').trim();
       const service = String(data.get('service') || '').trim();
       const budget = String(data.get('budget') || '').trim();
       const timing = String(data.get('timing') || '').trim();
       const message = String(data.get('message') || '').trim();
-      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujama paleidimo data: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
-      return { name, service, body };
+      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,phone ? `Telefonas: ${phone}` : '',company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujama paleidimo data: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
+      return { name, email, phone, company, service, budget, timing, message, body };
     };
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); status.textContent='Patikrinkite privalomus laukus.'; return; }
-      const mail = compose(); const subject = `[Startuok] ${mail.service} – ${mail.name}`;
-      status.textContent = 'Paruoštas laiškas. Jeigu el. pašto programa neatsidarė, nukopijuokite užklausą.';
-      copyButton.hidden = false;
-      window.location.href = `mailto:labas@startuok.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mail.body)}`;
+      const mail = compose();
+      if (hpField && hpField.value) {
+        status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
+        return;
+      }
+      if (!window.emailjs) {
+        status.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Nukopijuokite užklausą ir atsiųskite ją tiesiogiai.';
+        copyButton.hidden = false;
+        return;
+      }
+      submitButton.disabled = true;
+      status.textContent = 'Siunčiama…';
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
+          source: 'Aptarti projektą',
+          name: mail.name, email: mail.email, phone: mail.phone, company: mail.company,
+          service: mail.service, budget: mail.budget, timing: mail.timing, message: mail.message,
+          submitted_at: new Date().toLocaleString('lt-LT')
+        });
+        status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
+        copyButton.hidden = true;
+      } catch (_) {
+        submitButton.disabled = false;
+        status.textContent = 'Nepavyko išsiųsti. Atidaromas jūsų el. pašto laiškas — jei neatsidarys, nukopijuokite užklausą.';
+        copyButton.hidden = false;
+        const subject = `[Startuok] ${mail.service} – ${mail.name}`;
+        window.location.href = `mailto:labas@startuok.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mail.body)}`;
+      }
     });
     copyButton.addEventListener('click', async () => {
       const mail = compose();

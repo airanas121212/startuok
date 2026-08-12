@@ -381,6 +381,6 @@ El. pašto programos (ypač Outlook darbalaukyje) nepalaiko CSS kintamųjų (`va
 | `{{name}}` | Kliento vardas |
 | `{{service}}` | Rekomenduojama (iš klausimyno) arba pasirinkta (formoje) paslaugos kryptis — tas pats kintamasis naudojamas ir vidiniame pranešimo šablone (žr. `email/template-a-pranesimas.txt`), kad abu šablonai gautų tą pačią reikšmę iš vieno siuntimo iškvietimo. |
 
-### 19.7. Šaltinio failas
+### 19.7. Šaltinio failai
 
-Paruoštas HTML: `email/patvirtinimo-laiskas.html` (šiame pakete). Įklijuojamas į siuntimo įrankio šablono kodo redaktorių (pvz. EmailJS „Code Editor“ režimą) tiksliai toks, koks yra — kintamieji pakeičiami automatiškai siuntimo metu.
+Klientui skirtas laiškas (Šablonas B): `email/patvirtinimo-laiskas.html`. Vidinis pranešimo laiškas (Šablonas A) turi du variantus — `email/template-a-pranesimas.txt` (paprastas tekstas) ir `email/template-a-pranesimas.html` (tos pačios struktūros HTML, patogesnis kopijuoti tiesiai į EmailJS HTML/Code Editor). Abu variantai naudoja tuos pačius kintamuosius, tad galima rinktis bet kurį. Visi failai įklijuojami į siuntimo įrankio šablono redaktorių tiksliai tokie, kokie yra — kintamieji pakeičiami automatiškai siuntimo metu. To Email, Reply To ir Subject laukai nustatomi atskirai EmailJS šablono nustatymuose, ne HTML turinyje — reikšmės nurodytos `.txt` faile.

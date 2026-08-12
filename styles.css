@@ -2070,3 +2070,20 @@ body { font-weight: var(--weight-body); }
   .consent-banner-actions { width: 100%; }
   .consent-banner-actions .button { flex: 1; }
 }
+
+/* Honeypot spam trap — hidden from sighted users, still present for bots */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Quiz contact capture */
+.quiz-contact { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.quiz-contact h3 { margin: 0 0 16px; font-size: 19px; }
+.quiz-contact-error { min-height: 20px; margin: 12px 0 0; color: #a03030; font-size: 13px; font-weight: 750; }
+.quiz-contact-status { min-height: 20px; margin: 10px 0 0; color: #2b5d43; font-size: 13px; font-weight: 750; }
+.quiz-contact-hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.quiz-contact-actions { margin-top: 16px; }
