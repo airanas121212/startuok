@@ -211,8 +211,6 @@ document.documentElement.classList.remove('reveal-fallback');
     const result = doc.querySelector('.quiz-result');
     const summary = doc.querySelector('#quiz-summary');
     const direction = doc.querySelector('#quiz-direction');
-    const formLink = doc.querySelector('#quiz-form-link');
-    const copy = doc.querySelector('#quiz-copy');
     const context = doc.querySelector('#quiz-context');
     const contactName = doc.querySelector('#quiz-name');
     const contactEmail = doc.querySelector('#quiz-email');
@@ -268,27 +266,20 @@ document.documentElement.classList.remove('reveal-fallback');
       if (current < steps.length - 1) return showStep(current + 1);
       const data = new FormData(form);
       const needs = data.getAll('needs');
-      let serviceCode = 'kurimas';
       let serviceName = 'Shopify parduotuvės kūrimas';
       if (data.get('stage') === 'Noriu persikelti į Shopify' || needs.includes('Duomenų perkėlimo')) {
-        serviceCode = 'migracija'; serviceName = 'Migracija į Shopify';
+        serviceName = 'Migracija į Shopify';
       } else if (needs.some((item) => item.includes('integracij'))) {
-        serviceCode = 'integracijos'; serviceName = 'Shopify integracijos';
+        serviceName = 'Shopify integracijos';
       }
       const lines = ['Shopify projekto klausimyno santrauka','',`Dabartinė situacija: ${data.get('stage')}`,`Pardavimo modelis: ${data.get('product')}`,`Katalogas: ${data.get('catalog')}`,`Rinkos: ${data.get('market')}`,`Poreikiai: ${needs.join(', ')}`,`Turinio parengtis: ${data.get('readiness')}`,`Pageidaujama paleidimo data: ${data.get('timing')}`,'',`Rekomenduojama paslaugos kryptis: ${serviceName}`,'','Papildoma informacija:'];
       const text = lines.join('\n');
-      try { sessionStorage.setItem('startuokBrief', text); } catch (_) {}
       summary.value = text; direction.textContent = serviceName;
       lastSummary = text; lastServiceName = serviceName;
-      formLink.href = `../aptarti-projekta/index.html?from=klausimynas&service=${serviceCode}`;
       form.hidden = true; doc.querySelector('.quiz-meta').hidden = true; result.classList.add('active');
       result.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
     back.addEventListener('click', () => showStep(current - 1));
-    copy.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(summary.value); copy.textContent = 'Nukopijuota'; }
-      catch (_) { summary.select(); doc.execCommand('copy'); copy.textContent = 'Nukopijuota'; }
-    });
 
     if (sendButton) {
       sendButton.addEventListener('click', async () => {
@@ -386,10 +377,8 @@ document.documentElement.classList.remove('reveal-fallback');
         copyButton.hidden = true;
       } catch (_) {
         submitButton.disabled = false;
-        status.textContent = 'Nepavyko išsiųsti. Atidaromas jūsų el. pašto laiškas — jei neatsidarys, nukopijuokite užklausą.';
+        status.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba nukopijuokite užklausą ir atsiųskite ją tiesiogiai.';
         copyButton.hidden = false;
-        const subject = `[Startuok] ${mail.service} – ${mail.name}`;
-        window.location.href = `mailto:labas@startuok.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mail.body)}`;
       }
     });
     copyButton.addEventListener('click', async () => {
