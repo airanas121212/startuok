@@ -202,25 +202,29 @@ document.documentElement.classList.remove('reveal-fallback');
   }
 
   function initQuiz(form) {
-    const steps = [...form.querySelectorAll('.quiz-step')];
+    // One continuous flow: the seven question steps and the closing summary +
+    // contact panel are all steps inside the same card, driven by one showStep()
+    // and one primary button. Nothing is hidden or swapped out for a separate
+    // "result" view, so the sidebar, progress bar and card frame never disappear.
+    const questions = [...form.querySelectorAll('fieldset.quiz-step')];
+    const finalStep = form.querySelector('.quiz-final');
+    const steps = finalStep ? [...questions, finalStep] : questions;
+    const finalIndex = finalStep ? steps.length - 1 : -1;
     const next = form.querySelector('.quiz-next');
     const back = form.querySelector('.quiz-back');
+    const navRow = form.querySelector('.quiz-nav');
     const error = form.querySelector('.quiz-error');
+    const card = form.closest('.quiz-card') || form;
     const progress = doc.querySelector('.quiz-progress span');
     const progressText = doc.querySelector('#quiz-progress-text');
-    const result = doc.querySelector('.quiz-result');
+    const progressPrefix = doc.querySelector('#quiz-progress-prefix');
+    const context = doc.querySelector('#quiz-context');
     const summary = doc.querySelector('#quiz-summary');
     const direction = doc.querySelector('#quiz-direction');
-    const context = doc.querySelector('#quiz-context');
     const contactName = doc.querySelector('#quiz-name');
     const contactEmail = doc.querySelector('#quiz-email');
     const contactPhone = doc.querySelector('#quiz-phone');
-    const contactHp = doc.querySelector('input[name="quiz_hp"]');
-    const contactError = doc.querySelector('.quiz-contact-error');
-    const contactStatus = doc.querySelector('.quiz-contact-status');
-    const sendButton = doc.querySelector('#quiz-send');
-    let lastSummary = '';
-    let lastServiceName = '';
+    const contactHp = form.querySelector('input[name="quiz_hp"]');
     const contexts = [
       ['💡','Suprasti dabartinę situaciją','Tinkamas sprendimas priklauso nuo dabartinės jūsų situacijos.'],
       ['🛍️','Apibrėžti pardavimo modelį','Nuo pardavimo modelio priklauso produkto puslapis, mokėjimas ir pristatymas.'],
@@ -228,99 +232,200 @@ document.documentElement.classList.remove('reveal-fallback');
       ['🌍','Suprasti rinkas','Kalbos, valiutos, mokesčiai ir pristatymas turi būti suplanuoti kartu.'],
       ['🧩','Atskirti tikruosius poreikius','Pažymėkite tik tai, kas turi veikti pirmoje versijoje.'],
       ['✅','Patikrinti pasiruošimą','Turinys ir duomenys dažnai lemia grafiką labiau nei programavimas.'],
-      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir jūsų verslo pasiruošimą.']
+      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir jūsų verslo pasiruošimą.'],
+      ['📩','Peržiūrėti ir išsiųsti','Santrauką galite pakoreguoti prieš siunčiant. Atsakysime asmeniškai.']
     ];
     let current = 0;
+    let generated = '';
+    let serviceName = '';
+    let sending = false;
+    let submitted = false;
+
+    const onFinal = () => current === finalIndex;
+
+    const sentContext = ['✅', 'Užklausa gauta', 'Netrukus atsakysime jūsų nurodytu kontaktu.'];
 
     const updateContext = () => {
       if (!context) return;
-      const [icon,title,text] = contexts[current];
-      const iconEl=context.querySelector('.quiz-context-icon');
-      const strong=context.querySelector('strong');
-      const p=context.querySelector('p');
-      if(iconEl) iconEl.textContent=icon;
-      if(strong) strong.textContent=title;
-      if(p) p.textContent=text;
+      const entry = submitted ? sentContext : contexts[current];
+      if (!entry) return;
+      const [icon, title, text] = entry;
+      const iconEl = context.querySelector('.quiz-context-icon');
+      const strong = context.querySelector('strong');
+      const p = context.querySelector('p');
+      if (iconEl) iconEl.textContent = icon;
+      if (strong) strong.textContent = title;
+      if (p) p.textContent = text;
     };
-    const showStep = (index) => {
+
+    const updateProgress = () => {
+      const last = onFinal();
+      if (progress) progress.style.width = last ? '100%' : `${((current + 1) / questions.length) * 100}%`;
+      if (progressPrefix) progressPrefix.hidden = last;
+      if (progressText) progressText.textContent = last ? (submitted ? 'Užklausa išsiųsta' : 'Paskutinis žingsnis') : `${current + 1} iš ${questions.length}`;
+    };
+
+    // Keep the card anchored under the header instead of jumping the page:
+    // scroll only when the top of the card has drifted out of view.
+    const keepInView = () => {
+      const top = card.getBoundingClientRect().top;
+      const offset = (header?.offsetHeight || 0) + 18;
+      if (top >= offset - 1) return;
+      window.scrollTo({ top: Math.max(window.scrollY + top - offset, 0), behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    const showStep = (index, options = {}) => {
       current = Math.max(0, Math.min(index, steps.length - 1));
       steps.forEach((step, i) => step.classList.toggle('active', i === current));
-      back.hidden = current === 0;
-      next.textContent = current === steps.length - 1 ? 'Rodyti santrauką →' : 'Toliau →';
+      back.hidden = current === 0 || submitted;
+      next.textContent = onFinal() ? 'Siųsti užklausą' : (current === questions.length - 1 ? 'Rodyti santrauką →' : 'Toliau →');
       error.textContent = '';
-      if (progress) progress.style.width = `${((current + 1) / steps.length) * 100}%`;
-      if (progressText) progressText.textContent = `${current + 1} iš ${steps.length}`;
+      updateProgress();
       updateContext();
+      if (options.scroll) keepInView();
+      if (onFinal()) {
+        // scrollHeight only reads true once the step is on screen.
+        autoSize();
+        if (options.focus !== false) finalStep.focus({ preventScroll: true });
+        return;
+      }
+      if (options.focus === false) return;
       const checked = steps[current].querySelector('input:checked');
-      const firstInput = checked || steps[current].querySelector('input');
-      if (firstInput) firstInput.focus({ preventScroll: true });
+      (checked || steps[current].querySelector('input'))?.focus({ preventScroll: true });
     };
+
     const validStep = () => {
       if (steps[current].querySelectorAll('input:checked').length) return true;
       error.textContent = 'Pasirinkite bent vieną atsakymą.';
-      steps[current].animate?.([{transform:'translateX(0)'},{transform:'translateX(-7px)'},{transform:'translateX(7px)'},{transform:'translateX(0)'}],{duration:260});
+      steps[current].animate?.([{ transform: 'translateX(0)' }, { transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(0)' }], { duration: 260 });
       return false;
     };
-    next.addEventListener('click', () => {
-      if (!validStep()) return;
-      if (current < steps.length - 1) return showStep(current + 1);
+
+    // Rebuilt every time the summary step is opened, so going back and changing an
+    // answer is reflected. Anything the visitor appended below the generated block
+    // is carried over.
+    const syncSummary = () => {
       const data = new FormData(form);
       const needs = data.getAll('needs');
-      let serviceName = 'Shopify parduotuvės kūrimas';
+      let service = 'Shopify parduotuvės kūrimas';
       if (data.get('stage') === 'Noriu persikelti į Shopify' || needs.includes('Duomenų perkėlimo')) {
-        serviceName = 'Migracija į Shopify';
+        service = 'Migracija į Shopify';
       } else if (needs.some((item) => item.includes('integracij'))) {
-        serviceName = 'Shopify integracijos';
+        service = 'Shopify integracijos';
       }
-      const lines = ['Shopify projekto klausimyno santrauka','',`Dabartinė situacija: ${data.get('stage')}`,`Pardavimo modelis: ${data.get('product')}`,`Katalogas: ${data.get('catalog')}`,`Rinkos: ${data.get('market')}`,`Poreikiai: ${needs.join(', ')}`,`Turinio parengtis: ${data.get('readiness')}`,`Pageidaujama paleidimo data: ${data.get('timing')}`,'',`Rekomenduojama paslaugos kryptis: ${serviceName}`,'','Papildoma informacija:'];
-      const text = lines.join('\n');
-      summary.value = text; direction.textContent = serviceName;
-      lastSummary = text; lastServiceName = serviceName;
-      form.hidden = true; doc.querySelector('.quiz-meta').hidden = true; result.classList.add('active');
-      result.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    });
-    back.addEventListener('click', () => showStep(current - 1));
+      const text = [
+        'Shopify projekto klausimyno santrauka','',
+        `Dabartinė situacija: ${data.get('stage')}`,
+        `Pardavimo modelis: ${data.get('product')}`,
+        `Katalogas: ${data.get('catalog')}`,
+        `Rinkos: ${data.get('market')}`,
+        `Poreikiai: ${needs.join(', ')}`,
+        `Turinio parengtis: ${data.get('readiness')}`,
+        `Pageidaujama paleidimo data: ${data.get('timing')}`,'',
+        `Rekomenduojama paslaugos kryptis: ${service}`,'',
+        'Papildoma informacija:'
+      ].join('\n');
+      const tail = generated && summary.value.startsWith(generated) ? summary.value.slice(generated.length) : '';
+      summary.value = text + tail;
+      generated = text;
+      serviceName = service;
+      if (direction) direction.textContent = service;
+      autoSize();
+      try { sessionStorage.setItem('startuokBrief', summary.value); } catch (_) {}
+    };
 
-    if (sendButton) {
-      sendButton.addEventListener('click', async () => {
-        const name = (contactName?.value || '').trim();
-        const email = (contactEmail?.value || '').trim();
-        const phone = (contactPhone?.value || '').trim();
-        if (contactError) contactError.textContent = '';
-        if (!name) { if (contactError) contactError.textContent = 'Įveskite vardą.'; contactName?.focus(); return; }
-        if (!email && !phone) { if (contactError) contactError.textContent = 'Nurodykite el. paštą arba telefoną.'; contactEmail?.focus(); return; }
-        if (contactHp && contactHp.value) {
-          if (contactStatus) contactStatus.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
-          return;
-        }
-        if (!window.emailjs) {
-          if (contactStatus) contactStatus.textContent = 'Nepavyko išsiųsti. Naudokite „Pildyti pilną formą“ arba nukopijuokite santrauką.';
-          return;
-        }
-        sendButton.disabled = true;
-        if (contactStatus) contactStatus.textContent = 'Siunčiama…';
-        try {
-          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
-            source: 'Klausimynas',
-            name, email, phone,
-            company: '',
-            service: lastServiceName,
-            budget: '',
-            timing: '',
-            message: lastSummary,
-            submitted_at: new Date().toLocaleString('lt-LT')
-          });
-          if (contactStatus) contactStatus.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
-          if (contactName) contactName.disabled = true;
-          if (contactEmail) contactEmail.disabled = true;
-          if (contactPhone) contactPhone.disabled = true;
-        } catch (_) {
-          sendButton.disabled = false;
-          if (contactStatus) contactStatus.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba naudokite „Pildyti pilną formą“.';
-        }
-      });
+    // Grow the summary box to fit its content so the whole brief stays readable
+    // without a scrollbar nested inside the card.
+    function autoSize() {
+      if (!summary) return;
+      summary.style.height = 'auto';
+      summary.style.height = `${Math.max(summary.scrollHeight + 2, 190)}px`;
     }
-    showStep(0);
+    summary?.addEventListener('input', () => {
+      autoSize();
+      try { sessionStorage.setItem('startuokBrief', summary.value); } catch (_) {}
+    });
+
+    const markSent = () => {
+      submitted = true;
+      error.textContent = '';
+      finalStep.classList.add('is-sent');
+      const sent = doc.querySelector('#quiz-sent');
+      if (sent) sent.hidden = false;
+      if (navRow) navRow.hidden = true;
+      const emoji = doc.querySelector('#quiz-final-emoji');
+      const eyebrow = doc.querySelector('#quiz-final-eyebrow');
+      const title = doc.querySelector('#quiz-final-title');
+      if (emoji) emoji.textContent = '📬';
+      if (eyebrow) eyebrow.textContent = 'Baigta';
+      if (title) title.textContent = 'Ačiū — užklausa išsiųsta';
+      doc.querySelector('.quiz-meta')?.classList.add('is-sent');
+      updateProgress();
+      updateContext();
+      if (sent) sent.focus?.({ preventScroll: true });
+    };
+
+    const send = async () => {
+      if (sending || submitted) return;
+      const name = (contactName?.value || '').trim();
+      const email = (contactEmail?.value || '').trim();
+      const phone = (contactPhone?.value || '').trim();
+      error.textContent = '';
+      if (!name) { error.textContent = 'Įveskite vardą.'; contactName?.focus(); return; }
+      if (!email && !phone) { error.textContent = 'Nurodykite el. paštą arba telefoną.'; contactEmail?.focus(); return; }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { error.textContent = 'Patikrinkite el. pašto adresą.'; contactEmail?.focus(); return; }
+      if (contactHp && contactHp.value) { markSent(); return; }
+      if (!window.emailjs) {
+        error.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Nukopijuokite santrauką ir atsiųskite ją adresu labas@startuok.online.';
+        return;
+      }
+      sending = true;
+      next.disabled = true;
+      next.textContent = 'Siunčiama…';
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
+          source: 'Klausimynas',
+          name, email, phone,
+          company: '',
+          service: serviceName,
+          budget: '',
+          timing: '',
+          message: summary?.value || generated,
+          submitted_at: new Date().toLocaleString('lt-LT')
+        });
+        markSent();
+      } catch (_) {
+        error.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba parašykite adresu labas@startuok.online.';
+        next.textContent = 'Siųsti užklausą';
+      } finally {
+        sending = false;
+        next.disabled = submitted;
+      }
+    };
+
+    const advance = () => {
+      if (submitted) return;
+      if (onFinal()) return send();
+      if (!validStep()) return;
+      if (current === questions.length - 1) syncSummary();
+      showStep(current + 1, { scroll: true });
+    };
+
+    next.addEventListener('click', advance);
+    back.addEventListener('click', () => showStep(current - 1, { scroll: true }));
+
+    // The contact fields now live inside the quiz form, so keep Enter useful
+    // instead of letting it reload the page.
+    form.addEventListener('submit', (event) => { event.preventDefault(); advance(); });
+    form.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.shiftKey) return;
+      const target = event.target;
+      if (!target || target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON') return;
+      event.preventDefault();
+      advance();
+    });
+
+    showStep(0, { focus: false });
   }
 
   function initLeadForm(form) {

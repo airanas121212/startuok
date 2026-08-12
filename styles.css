@@ -125,8 +125,9 @@ p { color: var(--muted); }
   font-weight: 850;
   line-height: 1.2;
   transition: transform .2s ease, box-shadow .2s ease;
+  /* Kill the 300ms tap delay / double-tap-zoom gesture so one tap = one click. */
+  touch-action: manipulation;
 }
-.button:hover { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(31, 85, 255, .28); }
 .button-small { min-height: 48px; padding-inline: 22px; }
 .button-outline {
   color: var(--ink);
@@ -134,7 +135,13 @@ p { color: var(--muted); }
   background: var(--white);
   box-shadow: none;
 }
-.button-outline:hover { border-color: #a9c8ec; box-shadow: var(--shadow-card); }
+/* Hover lift is gated to real pointers. On touch, the first tap only resolves
+   :hover — the button then slides out from under the finger and the click is
+   never dispatched, so the visitor has to tap a second time. */
+@media (hover:hover) and (pointer:fine) {
+  .button:hover { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(31, 85, 255, .28); }
+  .button-outline:hover { border-color: #a9c8ec; box-shadow: var(--shadow-card); }
+}
 .text-link {
   display: inline-flex;
   align-items: center;
@@ -405,15 +412,35 @@ details p { max-width: 760px; margin: -2px 54px 22px 0; font-size: 15px; }
 .quiz-options.multi label > span { min-height: auto; }
 .quiz-error { min-height: 24px; margin: 18px 0 0; color: #a03030; font-size: 13px; font-weight: 750; }
 .quiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 20px; }
-.quiz-back { min-height: 48px; padding: 0 10px; border: 0; background: transparent; cursor: pointer; font-weight: 800; }
-.quiz-result { display: none; }
-.quiz-result.active { display: block; }
-.quiz-result h2 { font-size: 34px; }
+.quiz-back { min-height: 48px; padding: 0 10px; border: 0; background: transparent; cursor: pointer; font-weight: 800; touch-action: manipulation; }
+.quiz-nav[hidden] { display: none; }
+.quiz-options label { touch-action: manipulation; }
+
+/* Closing step. It is a .quiz-step like every question, so it lives in the same
+   card, keeps the sidebar and progress bar on screen, and is reached through the
+   same nav row — no separate result view. */
+.quiz-final-head { display: flex; align-items: center; gap: 13px; margin: 0 0 8px; }
+.quiz-final-head .eyebrow { display: block; margin-bottom: 3px; }
+.quiz-final-head h2 { margin: 0; font-size: 30px; font-weight: 830; letter-spacing: -.035em; line-height: 1.18; }
 .result-direction { margin: 22px 0; padding: 22px; border-radius: 16px; color: var(--white); background: linear-gradient(135deg,var(--navy),var(--navy-2)); }
 .result-direction small, .result-direction strong { display: block; }
 .result-direction small { color: #69b4ff; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
 .result-direction strong { margin-top: 7px; font-size: 22px; }
-.quiz-summary { width: 100%; min-height: 220px; resize: vertical; background: var(--soft); border-color: var(--line); font-size: 13.5px; line-height: 1.65; }
+.quiz-summary-field { margin-top: 22px; }
+.quiz-summary { width: 100%; min-height: 190px; resize: vertical; background: var(--soft); border-color: var(--line); font-size: 13.5px; line-height: 1.65; }
+.quiz-final.is-sent > .quiz-hint,
+.quiz-final.is-sent .result-direction,
+.quiz-final.is-sent .quiz-summary-field,
+.quiz-final.is-sent .quiz-contact { display: none; }
+.quiz-sent { margin-top: 24px; padding: 30px 26px; border: 1px solid #bcdcc9; border-radius: var(--radius-card); background: linear-gradient(155deg,#fff,#f0faf3); }
+.quiz-sent:focus { outline: none; }
+.quiz-sent-mark { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 16px; border-radius: 16px; color: #fff; background: linear-gradient(135deg,#2f9d63,#1f7b4c); box-shadow: 0 16px 34px rgba(31,123,76,.22); font-size: 24px; font-weight: 800; }
+.quiz-sent strong { display: block; font-size: 20px; letter-spacing: -.02em; }
+.quiz-sent p { margin: 8px 0 0; font-size: 14px; }
+.quiz-sent a { color: var(--blue); font-weight: 800; }
+.quiz-card:has(.quiz-final.is-sent) { min-height: 0; }
+.quiz-meta.is-sent > p { display: none; }
+.quiz-meta.is-sent .quiz-context { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* Project form */
 .form-section { padding: 76px 0 104px; }
@@ -559,6 +586,12 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
   .quiz-options { grid-template-columns: 1fr; }
   .quiz-options label > span { min-height: 0; }
   .quiz-step legend { font-size: 26px; }
+  .quiz-final-head { align-items: flex-start; }
+  .quiz-final-head h2 { font-size: 25px; }
+  .quiz-final-head .step-emoji { width: 40px; height: 40px; flex-basis: 40px; font-size: 19px; }
+  .quiz-contact { padding: 20px; }
+  .quiz-contact h3 { align-items: flex-start; font-size: 18px; }
+  .quiz-sent { padding: 24px 20px; }
   .form-field.full { grid-column: auto; }
   .form-footer { align-items: stretch; flex-direction: column; }
   .form-footer .button { width: 100%; }
@@ -709,7 +742,7 @@ p{font-weight:400}
 .nav>a:not(.button){font-weight:650;letter-spacing:-.01em}
 .button{font-weight:730;letter-spacing:-.012em;position:relative;isolation:isolate;overflow:hidden;transition:transform .35s var(--ease-premium),box-shadow .35s var(--ease-premium),filter .35s ease}
 .button::before{content:"";position:absolute;inset:-2px auto -2px -45%;width:34%;transform:skewX(-22deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);transition:left .65s var(--ease-premium);z-index:-1}
-.button:hover::before{left:120%}.button:hover{transform:translateY(-3px);filter:saturate(1.08);box-shadow:0 22px 45px rgba(31,85,255,.26)}
+@media (hover:hover) and (pointer:fine){.button:hover::before{left:120%}.button:hover{transform:translateY(-3px);filter:saturate(1.08);box-shadow:0 22px 45px rgba(31,85,255,.26)}}
 .button-outline::before{display:none}.text-link{font-weight:700}
 .comment-note,.fine-print{font-weight:440}
 
@@ -833,7 +866,7 @@ body.is-ready .hero-reveal{animation:heroEnter .75s var(--ease-premium) forwards
 .quiz-options input:checked+span .quiz-emoji{transform:scale(1.08) rotate(-3deg);background:#fff}
 .quiz-options b{grid-column:2;font-size:14px;font-weight:680;padding-right:22px}.quiz-options em{grid-column:2;margin-top:4px;font-size:11px}
 .quiz-options.multi label>span{min-height:78px}.quiz-progress span{box-shadow:0 0 16px rgba(15,134,255,.35)}
-.quiz-result-mark{display:grid;place-items:center;width:58px;height:58px;margin-bottom:20px;border-radius:18px;background:linear-gradient(145deg,#fff,#eaf5ff);box-shadow:0 16px 36px rgba(15,87,175,.12);font-size:26px}
+.quiz-final{outline:none}.quiz-final-head h2{font-weight:680}.quiz-final .step-emoji{background:linear-gradient(145deg,#fff,#eaf5ff)}
 
 /* Hover-only enhancements for quiz option cards — scoped to real pointer/hover devices.
    On touch devices (iOS Safari in particular), an unconditional :hover rule on a
@@ -2092,11 +2125,7 @@ body { font-weight: var(--weight-body); }
 /* Quiz contact capture — styled as the natural final step of the quiz, echoing
    the same icon-badge + eyebrow language used for each question and the sidebar. */
 .quiz-contact { margin-top: 30px; padding: 26px; border-radius: var(--radius-card); border: 1px solid var(--line); background: linear-gradient(155deg,#fff,var(--soft)); }
-.quiz-contact .quiz-progress-label { display: block; margin-bottom: 10px; }
 .quiz-contact h3 { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; font-size: 19px; }
 .quiz-contact-icon { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 13px; background: #fff; box-shadow: 0 10px 24px rgba(15,84,166,.09); font-size: 19px; }
 .quiz-contact .quiz-hint { margin-bottom: 22px; }
-.quiz-contact-error { min-height: 20px; margin: 12px 0 0; color: #a03030; font-size: 13px; font-weight: 750; }
-.quiz-contact-status { min-height: 20px; margin: 10px 0 0; color: #2b5d43; font-size: 13px; font-weight: 750; }
-.quiz-contact-hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
-.quiz-contact-actions { margin-top: 16px; }
+.quiz-contact-hint { margin: 16px 0 0; color: var(--muted); font-size: 12px; }
