@@ -121,7 +121,7 @@ Manrope, "Avenir Next", "Segoe UI Variable", Inter, system-ui,
 
 - Turinio plotis: iki 1160 px.
 - Horizontalus tarpas: 40 px desktop, 26 px mobile.
-- Sekcijos vertikalus tarpas: apie 104 px desktop, 82 px mobile.
+- Sekcijos vertikalus tarpas: apie 92 px desktop, 76 px planšetėje ir 64 px mobile. Ilgesnis turinys skaidomas ritmu, o ne dirbtiniu `min-height`.
 - Mygtukų kampai: 13 px.
 - Įvesties laukų kampai: 11 px.
 - Kortelių kampai: 22 px.
@@ -148,15 +148,17 @@ Vengti generinių žmonių nuotraukų, netikrų dashboardų, chaotiškų 3D obje
 Judesys turi paaiškinti hierarchiją ir sąveiką.
 
 - Bazinis easing: `cubic-bezier(.22, 1, .36, 1)`.
-- Skilčių reveal: 500-720 ms, `opacity` ir `transform`, 70-100 ms kortelių seka.
-- Hero elementai: nuoseklus pasirodymas, ne ilgesnis nei apie 900 ms iki pagrindinio CTA.
-- Kortelių hover: 3-7 px pakilimas, rėmelio ir šešėlio sustiprėjimas.
+- Mikrovaldikliai: 180 ms; kortelių ir būsenų sąveikos: 280 ms; skilčių reveal: 560 ms.
+- Reveal naudoja tik `opacity` ir iki 18 px `transform`; kortelių seka — 60 ms.
+- Hero elementai pasirodo per maždaug 620 ms, o pagrindinis CTA tampa matomas ne vėliau kaip per 700 ms.
+- Kortelių hover: 2-4 px pakilimas, rėmelio ir šešėlio sustiprėjimas.
 - Hero kompozicija: subtilus 3D atsakas tik tiksliam žymekliui ir tik dideliame ekrane.
 - DUK: sklandus išsiskleidimas ir aiški aktyvi būsena.
 - Procesas: aktyvus etapas paryškinamas tik tada, kai jis skaitomas.
 - Nenaudoti nuolat pulsuojančių CTA, ilgų intro, stipraus parallax ar efektų ant kiekvienos teksto eilutės.
 - `prefers-reduced-motion` palaikymas yra privalomas.
 - Turinys privalo likti matomas, jei JavaScript neužsikrauna.
+- Mobiliajame ir liečiamuose ekranuose hover transformacijos išjungiamos, kad veiksmui užtektų vieno paspaudimo.
 
 ## 10. Numeracija ir emoji
 

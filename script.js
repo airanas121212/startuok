@@ -227,7 +227,7 @@ document.documentElement.classList.remove('reveal-fallback');
           const start = item.offsetHeight;
           if (opening) item.open = true;
           const end = summary.offsetHeight + (opening ? wrapper.scrollHeight : 0);
-          const animation = item.animate({ height: [`${start}px`, `${end}px`] }, { duration: 330, easing: 'cubic-bezier(.22,1,.36,1)' });
+          const animation = item.animate({ height: [`${start}px`, `${end}px`] }, { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)' });
           animation.onfinish = () => { if (!opening) item.open = false; item.style.height = ''; };
         });
       }
@@ -653,16 +653,16 @@ document.documentElement.classList.remove('reveal-fallback');
       if (progressText) progressText.textContent = last ? (submitted ? 'Užklausa išsiųsta' : 'Paskutinis žingsnis') : `${current + 1} iš ${questions.length}`;
     };
 
-    // Equal height for every step, so the card never grows or shrinks as the
-    // visitor moves through it. Skipped on phones, where the closing step is a
-    // single column and the page scrolls anyway.
+    // Keep question steps equally tall without sizing every question to the much
+    // larger final review. The review may grow naturally and the page can scroll.
+    // On phones every step uses its own content height.
     const equalise = () => {
       if (!stepsWrap) return;
       stepsWrap.style.minHeight = '';
       if (window.innerWidth <= 680) return;
       closePanels();
       let tallest = 0;
-      steps.forEach((step) => {
+      questions.forEach((step) => {
         const active = step.classList.contains('active');
         if (!active) step.style.cssText = 'display:block;position:absolute;visibility:hidden;left:0;right:0;top:0';
         tallest = Math.max(tallest, step.offsetHeight);
@@ -698,7 +698,7 @@ document.documentElement.classList.remove('reveal-fallback');
     const validStep = () => {
       if (steps[current].querySelectorAll('input:checked').length) return true;
       error.textContent = 'Pasirinkite bent vieną atsakymą.';
-      steps[current].animate?.([{ transform: 'translateX(0)' }, { transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'translateX(0)' }], { duration: 260 });
+      steps[current].animate?.([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 220 });
       return false;
     };
 
