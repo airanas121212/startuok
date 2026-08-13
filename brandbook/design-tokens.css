@@ -1,4 +1,4 @@
-/* Startuok brand tokens v2.1 — 2026-08-04 */
+/* Startuok brand tokens v2.4 — 2026-08-13 */
 :root {
   --startuok-navy: #06142c;
   --startuok-navy-2: #0b2856;
@@ -11,6 +11,9 @@
   --startuok-soft: #f5f8fd;
   --startuok-soft-blue: #edf5ff;
   --startuok-white: #ffffff;
+  --startuok-action-blue: #0868d7;
+  --startuok-action-blue-2: #284bd8;
+  --startuok-button-text: #ffffff;
 
   --startuok-font: Manrope, "Avenir Next", "Segoe UI Variable", Inter,
     system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;

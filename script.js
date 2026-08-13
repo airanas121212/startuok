@@ -260,7 +260,7 @@ document.documentElement.classList.remove('reveal-fallback');
         { name: 'Papildomas puslapio šablonas', price: 'nuo 180 €/vnt.', note: 'Atskiras turinio, kolekcijos ar produkto išdėstymas.' },
         { name: 'Produktų importas', price: 'nuo 120 €/100 produktų', note: 'Kai duomenys pateikti sutartu, tvarkingu formatu.' },
         { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos nustatymai, domeno logika ir pagrindinės patikros.' },
-        { name: 'Trečiosios šalies programėlė', price: 'nuo 120 €', note: 'Vienos programėlės diegimas, konfigūravimas ir patikra.' }
+        { name: 'Trečiosios šalies programėlė', price: 'nuo 120 €', note: 'Vienos programėlės diegimas, nustatymas ir patikra.' }
       ],
       boundary: 'Neįskaičiuoti Shopify planas, mokama tema, programėlių mokesčiai, fotografija, tekstų rašymas ir didelės apimties duomenų tvarkymas.',
       service: 'kurimas',
@@ -270,17 +270,17 @@ document.documentElement.classList.remove('reveal-fallback');
     migration: {
       eyebrow: 'Migracijos kainoraštis',
       title: 'Migracija į Shopify',
-      lead: 'Kainą lemia ne tik produktų skaičius. Vertiname duomenų kokybę, atkuriamas funkcijas, istoriją, URL ir galutinio perjungimo riziką.',
+      lead: 'Kainą lemia ne tik produktų skaičius. Vertiname duomenų kokybę, atkuriamas funkcijas, istoriją, puslapių adresus ir galutinio perjungimo riziką.',
       baseLabel: 'Bazinis projektas nuo',
       basePrice: '1 900 €',
       baseNote: 'Vienai parduotuvei, kai duomenys prieinami eksportu ir nereikia atkurti sudėtingų individualių funkcijų.',
       compositionTitle: 'Bazinio projekto darbų sudėtis',
       compositionNote: 'Galutinė apimtis patvirtinama tik peržiūrėjus senos platformos duomenų pavyzdį.',
       composition: [
-        { name: 'Duomenų ir funkcijų auditas', price: 'nuo 300 €', note: 'Perkeliamų objektų, funkcijų, URL ir rizikų sąrašas.' },
+        { name: 'Duomenų ir funkcijų peržiūra', price: 'nuo 300 €', note: 'Perkeliamų duomenų, funkcijų, puslapių adresų ir rizikų sąrašas.' },
         { name: 'Shopify parduotuvės pagrindo atkūrimas', price: 'nuo 590 €', note: 'Reikalinga pirkimo patirtis atkuriama Shopify temoje.' },
         { name: 'Bandomas importas ir sutikrinimas', price: 'nuo 420 €', note: 'Laukų susiejimas, importo bandymas ir neatitikimų sąrašas.' },
-        { name: 'URL ir SEO paruošimas', price: 'nuo 250 €', note: 'Svarbiausių adresų susiejimas ir 301 nukreipimai.' },
+        { name: 'Puslapių adresų ir paieškos paruošimas', price: 'nuo 250 €', note: 'Svarbiausių adresų susiejimas ir nuolatiniai nukreipimai.' },
         { name: 'Galutinis importas ir perjungimas', price: 'nuo 340 €', note: 'Paskutinis atnaujinimas, domenas, patikra ir perdavimas.' }
       ],
       extrasTitle: 'Dažniausi papildomi darbai',
@@ -289,7 +289,7 @@ document.documentElement.classList.remove('reveal-fallback');
         { name: 'Klientų arba užsakymų istorija', price: 'nuo 250 €/objektų tipui', note: 'Apimtis priklauso nuo laukų, kiekio ir šaltinio ribojimų.' },
         { name: 'Duomenų valymas ir transformacijos', price: 'nuo 180 €', note: 'Dublikatai, trūkstamos reikšmės ir nevienodi formatai.' },
         { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos struktūra, domenai ir pagrindinės patikros.' },
-        { name: 'Papildomas duomenų srautas', price: 'nuo 650 €', note: 'Apskaita, ERP, sandėlis ar kita išorinė sistema.' }
+        { name: 'Papildomas duomenų perdavimas', price: 'nuo 650 €', note: 'Apskaitos, sandėlio ar kita išorinė sistema.' }
       ],
       boundary: 'Neįskaičiuoti išorinių sistemų mokesčiai, rankinis trūkstamų duomenų atkūrimas ir individualių senos platformos funkcijų perprogramavimas.',
       service: 'migracija',
@@ -299,27 +299,27 @@ document.documentElement.classList.remove('reveal-fallback');
     integration: {
       eyebrow: 'Integracijų kainoraštis',
       title: 'Shopify integracijos',
-      lead: '650 € orientyras taikomas paprastai vienkryptei automatizacijai. Esamos programėlės konfigūravimas ir individuali API jungtis yra skirtingos apimties darbai.',
+      lead: '650 € orientyras taikomas paprastam automatiniam duomenų perdavimui viena kryptimi. Esamos programėlės nustatymas ir individualiai kuriama jungtis yra skirtingos apimties darbai.',
       baseLabel: 'Paprasta automatizacija nuo',
       basePrice: '650 €',
-      baseNote: 'Vienas aiškus duomenų srautas, viena kryptis ir standartiniai klaidų scenarijai.',
+      baseNote: 'Vienas aiškus duomenų perdavimas, viena kryptis ir įprastos klaidų situacijos.',
       compositionTitle: 'Paprastos automatizacijos sudėtis',
       compositionNote: 'Pavyzdžiui, perduoti apmokėtą Shopify užsakymą į vieną išorinę sistemą.',
       composition: [
         { name: 'Proceso ir duomenų taisyklės', price: 'nuo 150 €', note: 'Šaltinis, gavėjas, laukai, būsenos ir išimtys.' },
-        { name: 'Sprendimo konfigūravimas', price: 'nuo 250 €', note: 'Programėlė arba automatizavimo platforma pagal sutartą scenarijų.' },
-        { name: 'Testai ir klaidų scenarijai', price: 'nuo 150 €', note: 'Įprasta eiga, neteisingi duomenys ir pakartojimas.' },
-        { name: 'Dokumentacija ir perdavimas', price: 'nuo 100 €', note: 'Nustatymų, atsakomybių ir veiksmų sutrikus suvestinė.' }
+        { name: 'Sprendimo nustatymas', price: 'nuo 250 €', note: 'Programėlė arba automatizavimo įrankis pagal sutartą eigą.' },
+        { name: 'Testai ir klaidų situacijos', price: 'nuo 150 €', note: 'Įprasta eiga, neteisingi duomenys ir pakartojimas.' },
+        { name: 'Naudojimo aprašas ir perdavimas', price: 'nuo 100 €', note: 'Nustatymų, atsakomybių ir veiksmų sutrikus suvestinė.' }
       ],
       extrasTitle: 'Sprendimo lygiai ir papildomi darbai',
       extras: [
-        { name: 'Esamos Shopify programėlės konfigūravimas', price: 'nuo 250 €', note: 'Kai patikima programėlė jau sprendžia reikalingą procesą.' },
-        { name: 'Vienkryptė automatizacija', price: 'nuo 650 €', note: 'Vienas apibrėžtas duomenų srautas per automatizavimo platformą.' },
-        { name: 'Individuali vienkryptė API jungtis', price: 'nuo 1 900 €', note: 'Kai standartinės programėlės ar automatizavimo nepakanka.' },
-        { name: 'Dvikryptė sinchronizacija', price: 'nuo 2 900 €', note: 'Su konfliktų, dubliavimo ir pagrindinės sistemos taisyklėmis.' },
-        { name: 'Stebėjimas ir įspėjimai', price: 'nuo 220 €', note: 'Klaidų žurnalas, pranešimai ir pakartojimo veiksmai.' }
+        { name: 'Esamos Shopify programėlės nustatymas', price: 'nuo 250 €', note: 'Kai patikima programėlė jau atlieka reikalingą darbą.' },
+        { name: 'Automatinis perdavimas viena kryptimi', price: 'nuo 650 €', note: 'Vienas apibrėžtas duomenų perdavimas per automatizavimo įrankį.' },
+        { name: 'Individuali jungtis viena kryptimi', price: 'nuo 1 900 €', note: 'Kai standartinės programėlės ar automatizavimo nepakanka.' },
+        { name: 'Duomenų perdavimas abiem kryptimis', price: 'nuo 2 900 €', note: 'Su neatitikimų, pasikartojančių įrašų ir pagrindinės sistemos taisyklėmis.' },
+        { name: 'Stebėjimas ir įspėjimai', price: 'nuo 220 €', note: 'Klaidų įrašai, pranešimai ir pakartojimo veiksmai.' }
       ],
-      boundary: 'Neįskaičiuotos programėlių, automatizavimo platformų ir išorinių sistemų licencijos. API kokybė ir tiekėjų ribojimai įvertinami prieš pasiūlymą.',
+      boundary: 'Neįskaičiuotos programėlių, automatizavimo įrankių ir išorinių sistemų licencijos. Sistemų sujungimo galimybės ir tiekėjų ribojimai įvertinami prieš pasiūlymą.',
       service: 'integracijos',
       formValue: 'Shopify integracijos',
       detailPath: 'shopify-integracijos/index.html'
@@ -506,7 +506,7 @@ document.documentElement.classList.remove('reveal-fallback');
       ['🌍','Suprasti rinkas','Kalbos, valiutos, mokesčiai ir pristatymas turi būti suplanuoti kartu.'],
       ['🧩','Atskirti tikruosius poreikius','Pažymėkite tik tai, kas turi veikti pirmoje versijoje.'],
       ['✅','Patikrinti pasiruošimą','Turinys ir duomenys dažnai lemia grafiką labiau nei programavimas.'],
-      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir jūsų verslo pasiruošimą.'],
+      ['🚀','Suderinti realų startą','Terminas tikrinamas pagal darbų apimtį, prieigas ir tai, ar turite reikalingą turinį bei sprendimus.'],
       ['📩','Peržiūrėti ir išsiųsti','Atsakymus galite pakeisti čia pat — grįžti atgal nereikia.']
     ];
     const sentContext = ['✅','Užklausa gauta','Netrukus atsakysime jūsų nurodytu kontaktu.'];
@@ -905,7 +905,7 @@ document.documentElement.classList.remove('reveal-fallback');
         <p>Tai padeda suprasti, kaip lankytojai naudojasi svetaine. Įjungiami tik gavus jūsų sutikimą. <a href="${prefix}privatumas.html">Privatumo informacija</a></p>
       </div>
       <div class="consent-banner-actions">
-        <button type="button" class="button button-outline button-small" data-consent="reject">Tik būtini</button>
+        <button type="button" class="consent-secondary" data-consent="reject">Tik būtini slapukai</button>
         <button type="button" class="button button-small" data-consent="accept">Sutinku</button>
       </div>`;
     doc.body.appendChild(banner);

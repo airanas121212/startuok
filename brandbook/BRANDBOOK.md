@@ -1,13 +1,13 @@
 # Startuok brandbook
 
-**Versija:** 2.3  
-**Data:** 2026-08-12
+**Versija:** 2.4
+**Data:** 2026-08-13
 
 ## 1. Prekės ženklo esmė
 
-**Startuok** kuria, perkelia ir su verslo sistemomis sujungia Shopify parduotuves taip, kad jas būtų lengva paleisti, valdyti ir auginti.
+**Startuok** kuria, perkelia ir su apskaitos, sandėlio bei kitomis sistemomis sujungia Shopify parduotuves taip, kad jas būtų lengva paleisti, valdyti ir auginti.
 
-**Pozicionavimas:** praktiškas Shopify partneris mažiems ir augantiems verslams, kuriems reikia tiesioginio bendravimo, aiškios apimties ir tvarkingo perdavimo - be nereikalingo agentūrinio sluoksnio.
+**Pozicionavimas:** praktiškas Shopify partneris savarankiškai pradedantiems, kūrėjams ir augančioms įmonėms, kuriems reikia tiesioginio bendravimo, aiškios apimties ir tvarkingo perdavimo - be nereikalingo agentūrinio sluoksnio.
 
 **Pažadas:** apimtis prieš darbus. Matomas progresas. Kontrolė po paleidimo.
 
@@ -30,7 +30,7 @@
 
 Rašome trumpai ir konkrečiai. Pirma įvardijame kliento situaciją, tada rezultatą, darbų apimtį ir ribas.
 
-Kalbėdami apie kliento organizaciją pirmenybę teikiame žodžiams **„verslas“**, **„jūsų verslas“** arba **„verslo atstovai“**. Žodį „komanda“ vartojame tik tada, kai tikrai kalbame apie konkrečią vidinę žmonių grupę, o ne apie klientą apskritai.
+Į skaitytoją kreipiamės **„jūs“**. Pagal situaciją vartojame **„jūsų projektas“**, **„jūsų parduotuvė“** arba **„jūsų veikla“**. Žodis **„verslas“** tinka tik tada, kai kalbama apie būtent įmonei būdingą faktą, o **„komanda“** — tik apie realią žmonių grupę. Bendriniu kliento pavadinimu šių žodžių nenaudojame.
 
 **Naudoti:**
 
@@ -75,16 +75,17 @@ Mėlyna naudojama prasmingai: vienam pagrindiniam veiksmui, aktyviai būsenai, s
 
 ### 5.1. Mygtukų kontrasto taisyklė
 
-Mygtuko paviršius ir jo tekstas visada priešingi pagal šviesumą:
+Visi CTA mygtukai naudoja tą patį mėlyną gradientą ir baltą tekstą. Balta užpildyto CTA variacija nenaudojama. Antriniam veiksmui naudojama tekstinė nuoroda, o ne konkuruojantis antras mygtukas.
 
-- **Tamsus paviršius** (Navy, Navy 2, Blue, Blue 2 arba jų gradientas) — **tik baltas** tekstas. Juodas, Ink `#07152E` ar bet kuris kitas tamsus šriftas ant tamsaus mygtuko nenaudojamas niekada.
-- **Šviesus paviršius** (White, Soft, Soft blue, permatomas) — **tik tamsus** tekstas: Ink `#07152E` arba Blue `#0F86FF`. Baltas šriftas ant šviesaus mygtuko nenaudojamas niekada.
+- **CTA paviršius:** Blue / Blue 2 gradientas.
+- **CTA tekstas:** tik baltas.
+- **Antrinis veiksmas:** tekstinė nuoroda Ink arba Blue spalva, priklausomai nuo fono.
 
 Minimalus teksto ir mygtuko fono kontrastas — 4,5:1.
 
 Taisyklė galioja visoms būsenoms: įprastai, hover, focus, active, disabled, mobiliajame CTA ir tamsiose sekcijose.
 
-**Techninė sąlyga.** Mygtuko `background` ir `color` visada nurodomi kartu, toje pačioje CSS taisyklėje. Bendra taisyklė, perpiešianti visų `.button` foną, negali paliesti šviesių variantų — naudojamas `:not(.button-outline)` atrankiklis. Priešingu atveju vėliau faile esanti fono taisyklė perpiešia šviesų mygtuką tamsiu gradientu, o `color` lieka tamsus ir gaunamas 2,7:1 kontrastas.
+**Techninė sąlyga.** Kiekviena `.button` taisyklė kartu nurodo mėlyną `background` ir baltą `color`. Ankstesnė `.button-outline` klasė nelaikoma atskira balta variacija. Antriniams veiksmams naudojama `.text-link` arba semantiškai atitinkama tekstinė nuoroda.
 
 ## 6. Tipografija
 
@@ -135,7 +136,7 @@ Pagrindinė kryptis - realistiškos, bet iliustracinės e. parduotuvės ir siste
 
 - naršyklės langai ir mobilios vitrinos;
 - produktų, kolekcijų ir pirkimo kelio elementai;
-- duomenų srautai, URL žemėlapiai ir integracijų mazgai;
+- duomenų perdavimo, puslapių adresų susiejimo ir sistemų sujungimo vaizdai;
 - aiškiai pažymėtos koncepcijos, ne pristatomos kaip klientų darbai;
 - švelnios mėlynos šviesos, tinklelis ir mikrodetalės;
 - baltas plotas turi išlikti pagrindine dizaino dalimi.
@@ -171,12 +172,12 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 2. Platformos ir integracijos juosta.
 3. Trys paslaugos su situacija, apimtimi ir kainos orientyru vienoje kortelėje.
 4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
-5. Bendras procesas.
-6. Bendras DUK.
-7. Pirmųjų klientų pasiūlymas / darbo požiūris.
-8. Trumpa kontaktų forma ir antrinė nuoroda į išsamesnį klausimyną.
+5. Matomas klausimyno kvietimas lankytojui, kuris dar nežino tinkamos paslaugos.
+6. Bendra skiltis **„Kaip dirbame“**, jungianti projekto eigą ir pirmųjų projektų pasiūlymą.
+7. Trumpas DUK su aiškia nuoroda į pilną DUK puslapį.
+8. EmailJS kontaktų forma.
 
-Trumpa kontaktų forma yra pagrindinio puslapio skiltyje „Kontaktai“. Klausimynas lieka atskirame puslapyje lankytojui, kuris dar nežino, kokios paslaugos reikia. Pagrindiniai CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas`, tačiau kontaktų forma lieka „Kontaktų“ skiltyje kaip alternatyva.
+EmailJS kontaktų forma pagrindinio puslapio skiltyje „Kontaktai“ yra pagrindinis užklausos kelias. Klausimynas lieka atskirame puslapyje ir yra aiškiai matomas lankytojui, kuris dar nežino, kokios paslaugos reikia. Kalendoriaus nuoroda gali būti tik antrinis, kontekstinis veiksmas.
 
 ## 12. Paslaugų puslapių principas
 
@@ -241,7 +242,7 @@ Kiekvienas indeksuojamas puslapis privalo turėti:
 - Mygtukai ir laukai turi aiškias žymas.
 - DUK veikia klaviatūra.
 - Kontrastas ir pagrindinis šriftas išlieka patogūs.
-- Mygtukų teksto ir fono poros patikrintos pagal 5.1 taisyklę: nė vieno tamsaus mygtuko su tamsiu tekstu ir nė vieno šviesaus su baltu.
+- Visi CTA mygtukai patikrinti pagal 5.1 taisyklę: mėlynas gradientas, baltas tekstas ir bent 4,5:1 kontrastas.
 - Nėra horizontalaus slinkimo 360 px ekrane.
 - Animacijos naudoja daugiausia `transform` ir `opacity`.
 - Tikrinama 390 px, planšetė ir 1280-1440 px darbalaukis.
@@ -259,14 +260,14 @@ Kiekviena paslaugos skiltis turi atsakyti į klausimus tokia tvarka:
 1. Kokia kliento situacija?
 2. Koks konkretus rezultatas?
 3. Kas bus padaryta?
-4. Ko reikės iš kliento verslo?
+4. Ko reikės iš jūsų?
 5. Kokios ribos, priklausomybės ar rizikos?
 6. Koks kitas veiksmas?
 
 ### 17.2. Sakinių taisyklės
 
 - Viename sakinyje viena pagrindinė mintis.
-- Pirmenybė teikiama veiksmažodžiui: „susiejame URL“, o ne „atliekamas URL susiejimas“.
+- Pirmenybė teikiama veiksmažodžiui: „susiejame puslapių adresus“, o ne „atliekamas URL susiejimas“.
 - Vengiama abstrakčių žodžių be paaiškinimo: „objektai“, „sluoksnis“, „architektūra“, „sprendimo lygis“, „gyvas startas“.
 - Jei techninis terminas būtinas, iš karto įvardijamas jo praktinis rezultatas.
 - Antraštė turi būti suprantama ir be po ja esančios pastraipos.
@@ -277,7 +278,7 @@ Kiekviena paslaugos skiltis turi atsakyti į klausimus tokia tvarka:
 
 | Vengti | Naudoti |
 |---|---|
-| komanda | verslas, jūsų verslas, verslo atstovai |
+| komanda / jūsų verslas / verslo atstovai | jūs, jūsų projektas, jūsų parduotuvė, jūsų veikla |
 | pagrindiniai ekranai | svarbiausi puslapiai |
 | mobilus pirkimo kelias suskaidytas | apsipirkti telefonu nepatogu |
 | apimtis pagal ekranus | aiški darbų apimtis |
@@ -287,6 +288,8 @@ Kiekviena paslaugos skiltis turi atsakyti į klausimus tokia tvarka:
 | duomenų kontraktas | duomenų taisyklių aprašas |
 | eksploatuojamas procesas | veikiantis ir stebimas procesas |
 | metafields | papildomi produktų laukai („metafields“) |
+| API jungtis | individualiai kuriama sistemų jungtis; API galima paaiškinti skliaustuose |
+| URL / 301 nukreipimai | puslapių adresai / nuolatiniai nukreipimai |
 
 ### 17.4. Ko negalima sugalvoti
 
@@ -315,7 +318,7 @@ Negalima keisti: [maketas, HTML struktūra, CTA, nuorodos ar kiti elementai]
 Rašymo taisyklės:
 - išlaikyk ramų, konkretų ir žmogišką Startuok toną;
 - pirmiausia įvardyk situaciją, tada rezultatą, darbų apimtį ir ribas;
-- klientą vadink „verslu“, „jūsų verslu“ arba „verslo atstovais“;
+- į skaitytoją kreipkis „jūs“; pagal situaciją vartok „jūsų projektas“, „jūsų parduotuvė“ arba „jūsų veikla“;
 - venk agentūrinių klišių ir nepaaiškinto techninio žargono;
 - techninį terminą paaiškink paprastais žodžiais;
 - viename sakinyje pateik vieną pagrindinę mintį;
@@ -336,7 +339,7 @@ Prieš publikuojant patikrinti:
 - ar antraštė suprantama be papildomo konteksto;
 - ar aišku, ką gaus klientas;
 - ar „apimtis“ visur reiškia „darbų apimtį“;
-- ar neliko žodžio „komanda“, kai kalbama apie kliento verslą;
+- ar „verslas“ arba „komanda“ nevartojami kaip bendrinis kliento pavadinimas;
 - ar techniniai terminai paaiškinti;
 - ar nėra nepagrįstų pažadų;
 - ar CTA aiškiai nurodo veiksmą;
