@@ -1,6 +1,6 @@
 # Startuok brandbook
 
-**Versija:** 2.4
+**Versija:** 2.5
 **Data:** 2026-08-13
 
 ## 1. Prekės ženklo esmė
@@ -162,7 +162,7 @@ Judesys turi paaiškinti hierarchiją ir sąveiką.
 
 **Numeracija paliekama tik tada, kai rodo tikrą seką:** procesas, migracijos perjungimas, klausimyno progresas.
 
-Dekoratyviniai `01 / 02 / 03` nenaudojami paslaugų, rezultatų, „kada verta“ ar kitose lygiavertėse kortelėse.
+Sekos numeriai rašomi be nulių priekyje: `1 / 2 / 3`. Dekoratyvinė numeracija nenaudojama paslaugų, rezultatų, „kada verta“ ar kitose lygiavertėse kortelėse.
 
 Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elementai. Jie nėra pagrindinė prekės ženklo iliustracijų sistema ir nenaudojami visose sekcijose.
 
@@ -174,10 +174,9 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
 5. Matomas klausimyno kvietimas lankytojui, kuris dar nežino tinkamos paslaugos.
 6. Bendra skiltis **„Kaip dirbame“**, jungianti projekto eigą ir pirmųjų projektų pasiūlymą.
-7. Trumpas DUK su aiškia nuoroda į pilną DUK puslapį.
-8. EmailJS kontaktų forma.
+7. Pagrindinis „Cal.com“ rezervavimo CTA ir alternatyvi EmailJS kontaktų forma.
 
-EmailJS kontaktų forma pagrindinio puslapio skiltyje „Kontaktai“ yra pagrindinis užklausos kelias. Klausimynas lieka atskirame puslapyje ir yra aiškiai matomas lankytojui, kuris dar nežino, kokios paslaugos reikia. Kalendoriaus nuoroda gali būti tik antrinis, kontekstinis veiksmas.
+Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. EmailJS kontaktų forma pagrindinio puslapio skiltyje „Kontaktai“ lieka alternatyva norintiems parašyti, o klausimyno pabaigoje per ją siunčiama paruošta atsakymų santrauka. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
 
 ## 12. Paslaugų puslapių principas
 
@@ -188,8 +187,8 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - darbų apimtis ir ribos;
 - reali darbų seka;
 - ką gauna klientas ir ko reikia iš jo;
-- paslaugai būdingi DUK;
-- nuoroda į kontaktų skiltį arba prijungtą rezervavimo kalendorių.
+- nuoroda į vieną bendrą DUK centrą navigacijoje ir poraštėje;
+- pagrindinis rezervavimo kalendoriaus CTA ir antrinė nuoroda į EmailJS kontaktų formą.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
@@ -343,7 +342,7 @@ Prieš publikuojant patikrinti:
 - ar techniniai terminai paaiškinti;
 - ar nėra nepagrįstų pažadų;
 - ar CTA aiškiai nurodo veiksmą;
-- ar matomas DUK tekstas sutampa su JSON-LD;
+- ar vienintelio DUK centro matomas tekstas sutampa su jo JSON-LD;
 - ar meta ir socialinių kortelių aprašymai atitinka puslapį;
 - ar teksto pakeitimai nesugadino mobiliojo ir darbalaukio maketo.
 

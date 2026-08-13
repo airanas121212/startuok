@@ -359,8 +359,8 @@ document.documentElement.classList.remove('reveal-fallback');
           <a class="pricing-detail-link" data-pricing-detail href="#">Visa paslaugos apimtis <span>→</span></a>
         </div>
         <footer class="pricing-panel-footer">
-          <div><strong>Tiksli kaina po trumpo įvertinimo</strong><span>Užpildykite trumpą formą — atsakysime asmeniškai.</span></div>
-          <a class="button" data-pricing-contact data-track="estimate_cta_click" data-track-location="pricing_panel" href="#">Gauti projekto įvertinimą</a>
+          <div><strong>Tiksli kaina po trumpo aptarimo</strong><span>Rezervuokite 20 min. pokalbį — techninio plano nereikia.</span></div>
+          <a class="button" data-pricing-contact data-track="booking_cta_click" data-track-location="pricing_panel" href="https://cal.com/startuok/shopify-projekto-aptarimas">Rezervuoti pokalbį</a>
         </footer>
       </article>`;
     doc.body.appendChild(dialog);
@@ -393,7 +393,7 @@ document.documentElement.classList.remove('reveal-fallback');
       detailLink.href = currentServicePage ? '#apimtis' : `${prefix}${data.detailPath}`;
       detailLink.dataset.scrollTarget = currentServicePage ? 'apimtis' : '';
       detailLink.innerHTML = currentServicePage ? 'Peržiūrėti darbų apimtį <span>↓</span>' : 'Visa paslaugos apimtis <span>→</span>';
-      dialog.querySelector('[data-pricing-contact]').href = `${prefix}index.html?service=${data.service}#lead-form`;
+      dialog.querySelector('[data-pricing-contact]').href = 'https://cal.com/startuok/shopify-projekto-aptarimas';
       dialog.querySelector('[data-pricing-contact]').dataset.service = data.service;
       dialog.querySelector('.pricing-panel-scroll').scrollTop = 0;
     };
