@@ -234,6 +234,239 @@ document.documentElement.classList.remove('reveal-fallback');
     });
   });
 
+  // Contextual pricing: one accessible panel is reused by all service cards and
+  // service pages. Desktop receives a right-side drawer; phones receive a
+  // full-height bottom sheet through CSS, without duplicating the price copy.
+  const pricingCatalog = {
+    build: {
+      eyebrow: 'Kūrimo kainoraštis',
+      title: 'Shopify parduotuvės kūrimas',
+      lead: 'Bazinis projektas apima veikiančios parduotuvės pagrindą. Žemiau matoma orientacinė jo darbų sudėtis ir dažniausi papildomi darbai.',
+      baseLabel: 'Bazinis projektas nuo',
+      basePrice: '1 490 €',
+      baseNote: 'Vienai rinkai, naudojant patikimą Shopify temą ir aiškiai paruoštą turinį.',
+      compositionTitle: 'Bazinio projekto darbų sudėtis',
+      compositionNote: 'Šios dalys planuojamos kaip vienas projektas, o ne užsakomos atskirai.',
+      composition: [
+        { name: 'Struktūra ir baziniai nustatymai', price: 'nuo 250 €', note: 'Navigacija, kolekcijos, puslapiai ir projekto ribos.' },
+        { name: 'Shopify temos pritaikymas', price: 'nuo 490 €', note: 'Spalvos, tipografija ir pagrindiniai temos blokai.' },
+        { name: 'Katalogas ir pirkimo puslapiai', price: 'nuo 350 €', note: 'Kolekcija, produktas, krepšelis ir svarbiausi vaizdai telefone.' },
+        { name: 'Mokėjimai ir pristatymas', price: 'nuo 200 €', note: 'Vienas mokėjimų ir vienas siuntų tiekėjas, tarifai ir bandomas užsakymas.' },
+        { name: 'Testai, paleidimas ir mokymas', price: 'nuo 200 €', note: 'Domenas, pagrindinės patikros, perdavimas ir mokymas.' }
+      ],
+      extrasTitle: 'Dažniausi papildomi darbai',
+      extras: [
+        { name: 'Individuali temos sekcija', price: 'nuo 160 €/vnt.', note: 'Naujas administruojamas blokas, kurio nėra pasirinktoje temoje.' },
+        { name: 'Papildomas puslapio šablonas', price: 'nuo 180 €/vnt.', note: 'Atskiras turinio, kolekcijos ar produkto išdėstymas.' },
+        { name: 'Produktų importas', price: 'nuo 120 €/100 produktų', note: 'Kai duomenys pateikti sutartu, tvarkingu formatu.' },
+        { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos nustatymai, domeno logika ir pagrindinės patikros.' },
+        { name: 'Trečiosios šalies programėlė', price: 'nuo 120 €', note: 'Vienos programėlės diegimas, konfigūravimas ir patikra.' }
+      ],
+      boundary: 'Neįskaičiuoti Shopify planas, mokama tema, programėlių mokesčiai, fotografija, tekstų rašymas ir didelės apimties duomenų tvarkymas.',
+      service: 'kurimas',
+      formValue: 'Shopify parduotuvės kūrimas',
+      detailPath: 'shopify-parduotuviu-kurimas/index.html'
+    },
+    migration: {
+      eyebrow: 'Migracijos kainoraštis',
+      title: 'Migracija į Shopify',
+      lead: 'Kainą lemia ne tik produktų skaičius. Vertiname duomenų kokybę, atkuriamas funkcijas, istoriją, URL ir galutinio perjungimo riziką.',
+      baseLabel: 'Bazinis projektas nuo',
+      basePrice: '1 900 €',
+      baseNote: 'Vienai parduotuvei, kai duomenys prieinami eksportu ir nereikia atkurti sudėtingų individualių funkcijų.',
+      compositionTitle: 'Bazinio projekto darbų sudėtis',
+      compositionNote: 'Galutinė apimtis patvirtinama tik peržiūrėjus senos platformos duomenų pavyzdį.',
+      composition: [
+        { name: 'Duomenų ir funkcijų auditas', price: 'nuo 300 €', note: 'Perkeliamų objektų, funkcijų, URL ir rizikų sąrašas.' },
+        { name: 'Shopify parduotuvės pagrindo atkūrimas', price: 'nuo 590 €', note: 'Reikalinga pirkimo patirtis atkuriama Shopify temoje.' },
+        { name: 'Bandomas importas ir sutikrinimas', price: 'nuo 420 €', note: 'Laukų susiejimas, importo bandymas ir neatitikimų sąrašas.' },
+        { name: 'URL ir SEO paruošimas', price: 'nuo 250 €', note: 'Svarbiausių adresų susiejimas ir 301 nukreipimai.' },
+        { name: 'Galutinis importas ir perjungimas', price: 'nuo 340 €', note: 'Paskutinis atnaujinimas, domenas, patikra ir perdavimas.' }
+      ],
+      extrasTitle: 'Dažniausi papildomi darbai',
+      extras: [
+        { name: 'Papildomi produktai', price: 'nuo 180 €/1 000', note: 'Kai šaltinio duomenys tvarkingi ir vienodos struktūros.' },
+        { name: 'Klientų arba užsakymų istorija', price: 'nuo 250 €/objektų tipui', note: 'Apimtis priklauso nuo laukų, kiekio ir šaltinio ribojimų.' },
+        { name: 'Duomenų valymas ir transformacijos', price: 'nuo 180 €', note: 'Dublikatai, trūkstamos reikšmės ir nevienodi formatai.' },
+        { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos struktūra, domenai ir pagrindinės patikros.' },
+        { name: 'Papildomas duomenų srautas', price: 'nuo 650 €', note: 'Apskaita, ERP, sandėlis ar kita išorinė sistema.' }
+      ],
+      boundary: 'Neįskaičiuoti išorinių sistemų mokesčiai, rankinis trūkstamų duomenų atkūrimas ir individualių senos platformos funkcijų perprogramavimas.',
+      service: 'migracija',
+      formValue: 'Migracija į Shopify',
+      detailPath: 'migracija-i-shopify/index.html'
+    },
+    integration: {
+      eyebrow: 'Integracijų kainoraštis',
+      title: 'Shopify integracijos',
+      lead: '650 € orientyras taikomas paprastai vienkryptei automatizacijai. Esamos programėlės konfigūravimas ir individuali API jungtis yra skirtingos apimties darbai.',
+      baseLabel: 'Paprasta automatizacija nuo',
+      basePrice: '650 €',
+      baseNote: 'Vienas aiškus duomenų srautas, viena kryptis ir standartiniai klaidų scenarijai.',
+      compositionTitle: 'Paprastos automatizacijos sudėtis',
+      compositionNote: 'Pavyzdžiui, perduoti apmokėtą Shopify užsakymą į vieną išorinę sistemą.',
+      composition: [
+        { name: 'Proceso ir duomenų taisyklės', price: 'nuo 150 €', note: 'Šaltinis, gavėjas, laukai, būsenos ir išimtys.' },
+        { name: 'Sprendimo konfigūravimas', price: 'nuo 250 €', note: 'Programėlė arba automatizavimo platforma pagal sutartą scenarijų.' },
+        { name: 'Testai ir klaidų scenarijai', price: 'nuo 150 €', note: 'Įprasta eiga, neteisingi duomenys ir pakartojimas.' },
+        { name: 'Dokumentacija ir perdavimas', price: 'nuo 100 €', note: 'Nustatymų, atsakomybių ir veiksmų sutrikus suvestinė.' }
+      ],
+      extrasTitle: 'Sprendimo lygiai ir papildomi darbai',
+      extras: [
+        { name: 'Esamos Shopify programėlės konfigūravimas', price: 'nuo 250 €', note: 'Kai patikima programėlė jau sprendžia reikalingą procesą.' },
+        { name: 'Vienkryptė automatizacija', price: 'nuo 650 €', note: 'Vienas apibrėžtas duomenų srautas per automatizavimo platformą.' },
+        { name: 'Individuali vienkryptė API jungtis', price: 'nuo 1 900 €', note: 'Kai standartinės programėlės ar automatizavimo nepakanka.' },
+        { name: 'Dvikryptė sinchronizacija', price: 'nuo 2 900 €', note: 'Su konfliktų, dubliavimo ir pagrindinės sistemos taisyklėmis.' },
+        { name: 'Stebėjimas ir įspėjimai', price: 'nuo 220 €', note: 'Klaidų žurnalas, pranešimai ir pakartojimo veiksmai.' }
+      ],
+      boundary: 'Neįskaičiuotos programėlių, automatizavimo platformų ir išorinių sistemų licencijos. API kokybė ir tiekėjų ribojimai įvertinami prieš pasiūlymą.',
+      service: 'integracijos',
+      formValue: 'Shopify integracijos',
+      detailPath: 'shopify-integracijos/index.html'
+    }
+  };
+
+  function initPricingPanels() {
+    const triggers = [...doc.querySelectorAll('[data-pricing-open]')];
+    if (!triggers.length || typeof HTMLDialogElement === 'undefined') return;
+
+    const nestedPage = /\/(migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//.test(location.pathname);
+    const prefix = nestedPage ? '../' : '';
+    const dialog = doc.createElement('dialog');
+    dialog.className = 'pricing-dialog';
+    dialog.setAttribute('aria-labelledby', 'pricing-dialog-title');
+    dialog.innerHTML = `
+      <article class="pricing-panel">
+        <header class="pricing-panel-head">
+          <div><span class="eyebrow" data-pricing-eyebrow></span><h2 id="pricing-dialog-title" data-pricing-title></h2></div>
+          <button aria-label="Uždaryti kainoraštį" class="pricing-close" type="button">×</button>
+        </header>
+        <div class="pricing-panel-scroll">
+          <p class="pricing-lead" data-pricing-lead></p>
+          <section class="pricing-summary" aria-label="Kainos pradžia">
+            <div><small data-pricing-base-label></small><strong data-pricing-base-price></strong></div>
+            <p data-pricing-base-note></p>
+          </section>
+          <section class="pricing-group">
+            <div class="pricing-group-head"><h3 data-pricing-composition-title></h3><p data-pricing-composition-note></p></div>
+            <div class="pricing-lines" data-pricing-composition></div>
+          </section>
+          <section class="pricing-group">
+            <div class="pricing-group-head"><h3 data-pricing-extras-title></h3></div>
+            <div class="pricing-lines" data-pricing-extras></div>
+          </section>
+          <p class="pricing-boundary-note" data-pricing-boundary></p>
+          <a class="pricing-detail-link" data-pricing-detail href="#">Visa paslaugos apimtis <span>→</span></a>
+        </div>
+        <footer class="pricing-panel-footer">
+          <div><strong>Tiksli kaina po trumpo įvertinimo</strong><span>Užpildykite trumpą formą — atsakysime asmeniškai.</span></div>
+          <a class="button" data-pricing-contact data-track="estimate_cta_click" data-track-location="pricing_panel" href="#">Gauti projekto įvertinimą</a>
+        </footer>
+      </article>`;
+    doc.body.appendChild(dialog);
+
+    const rowMarkup = (items) => items.map((item) => `
+      <div class="pricing-line">
+        <div><strong>${item.name}</strong><span>${item.note}</span></div>
+        <b>${item.price}</b>
+      </div>`).join('');
+    let activeData = null;
+    let lastTrigger = null;
+    let closeTimer = null;
+
+    const render = (data) => {
+      dialog.querySelector('[data-pricing-eyebrow]').textContent = data.eyebrow;
+      dialog.querySelector('[data-pricing-title]').textContent = data.title;
+      dialog.querySelector('[data-pricing-lead]').textContent = data.lead;
+      dialog.querySelector('[data-pricing-base-label]').textContent = data.baseLabel;
+      dialog.querySelector('[data-pricing-base-price]').textContent = data.basePrice;
+      dialog.querySelector('[data-pricing-base-note]').textContent = data.baseNote;
+      dialog.querySelector('[data-pricing-composition-title]').textContent = data.compositionTitle;
+      dialog.querySelector('[data-pricing-composition-note]').textContent = data.compositionNote;
+      dialog.querySelector('[data-pricing-composition]').innerHTML = rowMarkup(data.composition);
+      dialog.querySelector('[data-pricing-extras-title]').textContent = data.extrasTitle;
+      dialog.querySelector('[data-pricing-extras]').innerHTML = rowMarkup(data.extras);
+      dialog.querySelector('[data-pricing-boundary]').textContent = data.boundary;
+      const detailLink = dialog.querySelector('[data-pricing-detail]');
+      const servicePath = `/${data.detailPath.replace('index.html', '')}`;
+      const currentServicePage = nestedPage && location.pathname.endsWith(servicePath);
+      detailLink.href = currentServicePage ? '#apimtis' : `${prefix}${data.detailPath}`;
+      detailLink.dataset.scrollTarget = currentServicePage ? 'apimtis' : '';
+      detailLink.innerHTML = currentServicePage ? 'Peržiūrėti darbų apimtį <span>↓</span>' : 'Visa paslaugos apimtis <span>→</span>';
+      dialog.querySelector('[data-pricing-contact]').href = `${prefix}index.html?service=${data.service}#lead-form`;
+      dialog.querySelector('[data-pricing-contact]').dataset.service = data.service;
+      dialog.querySelector('.pricing-panel-scroll').scrollTop = 0;
+    };
+
+    const finishClose = (returnFocus = true) => {
+      clearTimeout(closeTimer);
+      if (dialog.open) dialog.close();
+      dialog.classList.remove('is-open', 'is-closing');
+      doc.body.classList.remove('pricing-open');
+      if (returnFocus && lastTrigger?.isConnected) lastTrigger.focus();
+    };
+    const closePanel = (returnFocus = true) => {
+      if (!dialog.open || dialog.classList.contains('is-closing')) return;
+      dialog.classList.remove('is-open');
+      dialog.classList.add('is-closing');
+      if (reduceMotion) finishClose(returnFocus);
+      else closeTimer = setTimeout(() => finishClose(returnFocus), 240);
+    };
+    const openPanel = (trigger, key) => {
+      const data = pricingCatalog[key];
+      if (!data) return;
+      activeData = data;
+      lastTrigger = trigger;
+      render(data);
+      dialog.classList.remove('is-closing');
+      if (!dialog.open) dialog.showModal();
+      doc.body.classList.add('pricing-open');
+      requestAnimationFrame(() => {
+        dialog.classList.add('is-open');
+        dialog.querySelector('.pricing-close')?.focus({ preventScroll: true });
+      });
+      trackEvent('pricing_panel_open', { service: data.service });
+    };
+
+    triggers.forEach((trigger) => trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      openPanel(trigger, trigger.dataset.pricingOpen);
+    }));
+    dialog.querySelector('.pricing-close').addEventListener('click', () => closePanel());
+    dialog.addEventListener('cancel', (event) => { event.preventDefault(); closePanel(); });
+    doc.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !dialog.open) return;
+      event.preventDefault();
+      closePanel();
+    });
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) closePanel(); });
+    dialog.querySelector('[data-pricing-detail]').addEventListener('click', (event) => {
+      const target = doc.getElementById(event.currentTarget.dataset.scrollTarget || '');
+      if (!target) return;
+      event.preventDefault();
+      history.pushState(null, '', '#apimtis');
+      closePanel(false);
+      setTimeout(() => target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }), reduceMotion ? 0 : 250);
+    });
+    dialog.querySelector('[data-pricing-contact]').addEventListener('click', (event) => {
+      const form = doc.querySelector('#lead-form');
+      if (!form || !activeData) return;
+      event.preventDefault();
+      if (form.elements.service) form.elements.service.value = activeData.formValue;
+      const nextUrl = new URL(location.href);
+      nextUrl.searchParams.set('service', activeData.service);
+      nextUrl.hash = 'lead-form';
+      history.pushState(null, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+      closePanel(false);
+      setTimeout(() => {
+        form.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        setTimeout(() => form.elements.name?.focus({ preventScroll: true }), reduceMotion ? 0 : 480);
+      }, reduceMotion ? 0 : 250);
+    });
+  }
+
+  initPricingPanels();
+
   const quizForm = doc.querySelector('#quiz-form');
   if (quizForm) initQuiz(quizForm);
   const leadForm = doc.querySelector('#lead-form');
