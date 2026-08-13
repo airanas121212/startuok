@@ -13,7 +13,52 @@ document.documentElement.classList.remove('reveal-fallback');
   const EMAILJS_PUBLIC_KEY = 'pBvtjfxx2nfJ3EDbX';
   const EMAILJS_SERVICE_ID = 'service_wecyxbs';
   const EMAILJS_TEMPLATE_OWNER = 'template_a23adxe';
-  if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  let emailJsPromise = null;
+  let emailJsInitialised = false;
+  const initialiseEmailJs = () => {
+    if (!window.emailjs || emailJsInitialised) return;
+    window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    emailJsInitialised = true;
+  };
+  const loadEmailJs = () => {
+    if (window.emailjs) {
+      initialiseEmailJs();
+      return Promise.resolve(window.emailjs);
+    }
+    if (emailJsPromise) return emailJsPromise;
+    emailJsPromise = new Promise((resolve, reject) => {
+      const script = doc.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      script.async = true;
+      script.onload = () => { initialiseEmailJs(); resolve(window.emailjs); };
+      script.onerror = () => { emailJsPromise = null; reject(new Error('EmailJS failed to load')); };
+      doc.head.appendChild(script);
+    });
+    return emailJsPromise;
+  };
+
+  const analyticsConsentGranted = () => {
+    try { return localStorage.getItem('startuok_consent') === 'granted'; }
+    catch (_) { return false; }
+  };
+  const trackEvent = (name, parameters = {}) => {
+    if (!analyticsConsentGranted() || typeof window.gtag !== 'function') return;
+    window.gtag('event', name, {
+      page_path: `${location.pathname}${location.hash}`,
+      ...parameters
+    });
+  };
+
+  doc.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('[data-track]');
+    if (!link) return;
+    trackEvent(link.dataset.track, {
+      link_text: link.textContent.trim().replace(/\s+/g, ' '),
+      cta_location: link.dataset.trackLocation || 'page',
+      service: link.dataset.service || undefined
+    });
+  });
 
   requestAnimationFrame(() => requestAnimationFrame(() => doc.body.classList.add('is-ready')));
 
@@ -195,12 +240,6 @@ document.documentElement.classList.remove('reveal-fallback');
   if (leadForm) initLeadForm(leadForm);
   initConsentBanner();
 
-  const mobileCta = doc.querySelector('.mobile-cta');
-  if (mobileCta) {
-    const update = () => doc.body.classList.toggle('mobile-cta-visible', window.scrollY > 620);
-    update(); window.addEventListener('scroll', update, { passive: true });
-  }
-
   function initQuiz(form) {
     // One continuous flow: the seven question steps and the closing review +
     // contact panel are all steps inside the same card, driven by one showStep()
@@ -242,6 +281,12 @@ document.documentElement.classList.remove('reveal-fallback');
     let serviceName = '';
     let sending = false;
     let submitted = false;
+    let quizStarted = false;
+    form.addEventListener('change', () => {
+      if (quizStarted) return;
+      quizStarted = true;
+      trackEvent('quiz_start');
+    });
 
     const onFinal = () => current === finalIndex;
 
@@ -471,14 +516,11 @@ document.documentElement.classList.remove('reveal-fallback');
       if (!email && !phone) { error.textContent = 'Nurodykite el. paštą arba telefoną.'; contactEmail?.focus(); return; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { error.textContent = 'Patikrinkite el. pašto adresą.'; contactEmail?.focus(); return; }
       if (contactHp && contactHp.value) { markSent(); return; }
-      if (!window.emailjs) {
-        error.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Parašykite mums adresu labas@startuok.online.';
-        return;
-      }
       sending = true;
       next.disabled = true;
       next.textContent = 'Siunčiama…';
       try {
+        await loadEmailJs();
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
           source: 'Klausimynas',
           name, email, phone,
@@ -489,6 +531,7 @@ document.documentElement.classList.remove('reveal-fallback');
           message: brief(),
           submitted_at: new Date().toLocaleString('lt-LT')
         });
+        trackEvent('quiz_complete', { service: serviceName });
         markSent();
       } catch (_) {
         error.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba parašykite adresu labas@startuok.online.';
@@ -548,6 +591,20 @@ document.documentElement.classList.remove('reveal-fallback');
     if (params.get('from') === 'klausimynas') {
       try { const brief = sessionStorage.getItem('startuokBrief'); if (brief && !messageField.value) { messageField.value = brief; prefillNote?.classList.add('active'); } } catch (_) {}
     }
+    let formStarted = false;
+    form.addEventListener('focusin', () => {
+      if (formStarted) return;
+      formStarted = true;
+      trackEvent('contact_form_start', { form_location: form.dataset.formLocation || 'page' });
+    });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        trackEvent('contact_form_view', { form_location: form.dataset.formLocation || 'page' });
+        observer.disconnect();
+      }, { threshold: .35 });
+      observer.observe(form);
+    }
     const compose = () => {
       const data = new FormData(form);
       const name = String(data.get('name') || '').trim();
@@ -569,22 +626,19 @@ document.documentElement.classList.remove('reveal-fallback');
         status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
         return;
       }
-      if (!window.emailjs) {
-        status.textContent = 'Nepavyko prisijungti prie siuntimo paslaugos. Nukopijuokite užklausą ir atsiųskite ją tiesiogiai.';
-        copyButton.hidden = false;
-        return;
-      }
       submitButton.disabled = true;
       status.textContent = 'Siunčiama…';
       try {
+        await loadEmailJs();
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
-          source: 'Aptarti projektą',
+          source: form.dataset.formSource || 'Kontaktų forma',
           name: mail.name, email: mail.email, phone: mail.phone, company: mail.company,
           service: mail.service, budget: mail.budget, timing: mail.timing, message: mail.message,
           submitted_at: new Date().toLocaleString('lt-LT')
         });
         status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
         copyButton.hidden = true;
+        trackEvent('contact_form_submit', { service: mail.service, form_location: form.dataset.formLocation || 'page' });
       } catch (_) {
         submitButton.disabled = false;
         status.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba nukopijuokite užklausą ir atsiųskite ją tiesiogiai.';

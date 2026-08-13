@@ -508,6 +508,10 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 .copy-message { margin-top: 8px; border: 0; color: var(--blue); background: transparent; cursor: pointer; font-size: 13px; font-weight: 800; }
 .prefill-note { display: none; margin-bottom: 20px; padding: 14px 17px; border-radius: 13px; color: #24567e; background: #eaf4ff; font-size: 13px; font-weight: 700; }
 .prefill-note.active { display: block; }
+.contact-section { background: linear-gradient(180deg, #f5f8fd 0%, #fff 100%); }
+.contact-section .project-form { background: rgba(255,255,255,.96); }
+.contact-quiz-link { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.contact-quiz-link a { display: inline-block; margin-top: 7px; color: #0968c7; font-weight: 750; }
 
 /* Privacy and 404 */
 .privacy-layout { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 64px; align-items: start; }
@@ -536,8 +540,6 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
 .footer-links strong { display: block; margin-bottom: 10px; font-size: 12px; }
 .footer-links a, .footer-links span { display: block; margin: 7px 0; color: var(--muted); font-size: 12px; }
 .footer-links a:hover { color: var(--blue); }
-.mobile-cta { display: none; }
-
 @media (max-width: 1050px) {
   .nav { gap: 22px; }
   .nav > a:not(.button) { font-size: 14px; }
@@ -631,33 +633,6 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
   .form-footer { align-items: stretch; flex-direction: column; }
   .form-footer .button { width: 100%; }
   .footer-links { grid-template-columns: 1fr 1fr; }
-  .mobile-cta {
-    position: fixed;
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    z-index: 90;
-    display: flex;
-    min-height: 54px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    border-radius: 14px;
-    color: #fff;
-    background: linear-gradient(135deg,var(--blue),var(--blue-2));
-    box-shadow: 0 16px 38px rgba(15,84,190,.35);
-    font-weight: 850;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(130%);
-    transition: opacity .2s ease, transform .2s ease;
-  }
-  body.mobile-cta-visible .mobile-cta {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-  body.has-mobile-cta footer { padding-bottom: 100px; }
   .partner-strip{padding:30px 0 28px}.partner-strip-head{margin-bottom:20px}.partner-strip-head p{font-size:14px;line-height:1.5}.partner-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.partner-logo{min-height:64px;padding:14px 12px}.partner-logo img{height:24px}.partner-strip-note{font-size:11px;line-height:1.5;margin-top:15px}.partner-logo img[alt="Montonio"]{height:35px;max-width:120px}.partner-logo img[alt="Omniva"]{height:38px;max-width:130px}
 }
 
@@ -1055,11 +1030,6 @@ footer{position:relative;background:linear-gradient(180deg,#fff,#f8faff);border-
     background: #fff;
     backdrop-filter: none;
   }
-  body.nav-open .mobile-cta {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: translateY(130%) !important;
-  }
 }
 
 @media (max-width: 680px) {
@@ -1116,7 +1086,7 @@ body { font-weight: var(--weight-body); }
   .section-lead { font-size: 17px; }
 
   .nav > a:not(.button) { font-size: 14px; font-weight: 580; }
-  .button, .mobile-cta { font-weight: var(--weight-control); }
+  .button { font-weight: var(--weight-control); }
   .text-link { font-weight: var(--weight-h2); }
   .eyebrow,
   .partner-strip-kicker,
@@ -1176,7 +1146,7 @@ body { font-weight: var(--weight-body); }
   h2 { font-weight: 650; }
   h3 { font-weight: 620; }
   .nav > a:not(.button) { font-weight: 620; }
-  .button, .mobile-cta { font-weight: 680; }
+  .button { font-weight: 680; }
   .text-link { font-weight: 620; }
   .footer-links strong { font-weight: 620; }
 }
@@ -1206,8 +1176,7 @@ body { font-weight: var(--weight-body); }
    type, and a light button surface never carries white type. `.button-outline`
    is excluded here on purpose — without :not() this later rule would repaint it
    with the blue gradient while it kept its dark --ink label. */
-.button:not(.button-outline),
-.mobile-cta {
+.button:not(.button-outline) {
   color: var(--white);
   background: linear-gradient(135deg, var(--action-blue), var(--action-blue-2));
 }
@@ -1230,8 +1199,7 @@ body { font-weight: var(--weight-body); }
 
 @media (max-width: 900px) {
   h1,
-  .button,
-  .mobile-cta { font-weight: 700; }
+  .button { font-weight: 700; }
   h2,
   h3,
   .nav > a:not(.button),
@@ -2146,11 +2114,10 @@ body { font-weight: var(--weight-body); }
 .consent-banner.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .consent-banner-text { flex: 1 1 320px; }
 .consent-banner-text strong { display: block; margin-bottom: 4px; font-size: 15px; }
-.consent-banner-text p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
-.consent-banner-text a { color: var(--blue); font-weight: 800; }
+.consent-banner-text p { margin: 0; color: #4c5f7b; font-size: 13px; line-height: 1.55; }
+.consent-banner-text a { color: #0968c7; font-weight: 800; }
 .consent-banner-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .consent-banner-actions .button { min-height: 44px; padding-inline: 18px; font-size: 13px; }
-.consent-open .mobile-cta { display: none !important; }
 @media (max-width: 680px) {
   .consent-banner { left: 12px; right: 12px; bottom: 12px; padding: 20px; gap: 16px; }
   .consent-banner-actions { width: 100%; }

@@ -174,9 +174,9 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 5. Paslaugomis paremti kainų orientyrai ir etapai.
 6. Bendras DUK.
 7. Pirmųjų klientų pasiūlymas / darbo požiūris.
-8. Aiškus pasirinkimas tarp klausimyno ir projekto formos.
+8. Trumpa kontaktų forma ir antrinė nuoroda į išsamesnį klausimyną.
 
-Klausimynas ir projekto forma turi atskirus puslapius. Pagrindiniame puslapyje paliekamos tik nuorodos.
+Trumpa kontaktų forma yra pagrindinio puslapio skiltyje „Kontaktai“. Klausimynas lieka atskirame puslapyje lankytojui, kuris dar nežino, kokios paslaugos reikia. Kai prijungiama rezervavimo sistema, pagrindiniai CTA gali vesti į kalendorių, tačiau kontaktų forma lieka „Kontaktų“ skiltyje kaip alternatyva.
 
 ## 12. Paslaugų puslapių principas
 
@@ -188,15 +188,15 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - reali darbų seka;
 - ką gauna klientas ir ko reikia iš jo;
 - paslaugai būdingi DUK;
-- nuoroda į projekto formą.
+- nuoroda į kontaktų skiltį arba prijungtą rezervavimo kalendorių.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
 ## 13. Kainodara
 
 - Kainos rodomos pagal realią paslaugą ir projekto etapus.
-- Pirmiausia rodomas etapo orientyras, šalia - etapų skaičius ir bendra orientacinė vertė.
-- Aiškiai paaiškinama, už kokį rezultatą mokama kiekviename etape.
+- Pirmiausia rodomas aiškus visos paslaugos kainos orientyras ir svarbiausia į jį įtraukta apimtis.
+- Mokėjimų etapai paaiškinami be dirbtinio kainos dalijimo, kol nėra patvirtinta konkreti projekto apimtis.
 - Etapinis mokėjimas turi atitikti realią sutarties ir darbų eigą.
 - Galutinė apimtis, kaina ir trečiųjų šalių išlaidos patvirtinamos raštu.
 - Kainos neslepiamos, bet didelė suma nepateikiama be konteksto.
@@ -268,7 +268,7 @@ Kiekviena paslaugos skiltis turi atsakyti į klausimus tokia tvarka:
 - Vengiama abstrakčių žodžių be paaiškinimo: „objektai“, „sluoksnis“, „architektūra“, „sprendimo lygis“, „gyvas startas“.
 - Jei techninis terminas būtinas, iš karto įvardijamas jo praktinis rezultatas.
 - Antraštė turi būti suprantama ir be po ja esančios pastraipos.
-- CTA prasideda aiškiu veiksmu: „Aprašyti projektą“, „Peržiūrėti apimtį“, „Pridėti prie projekto formos“.
+- CTA prasideda aiškiu veiksmu: „Susisiekti dėl projekto“, „Peržiūrėti kainų orientyrus“, „Siųsti užklausą“.
 - Nežadami pardavimų, SEO pozicijų, terminų ar rezultatų garantai, kurių negalima pagrįsti.
 
 ### 17.3. Rekomenduojami pakeitimai
