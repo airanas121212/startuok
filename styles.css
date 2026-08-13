@@ -306,8 +306,8 @@ p { color: var(--muted); }
 .service-card-actions .button { width: 100%; }
 .service-card-actions .text-link { justify-content: center; margin-top: 0; padding-top: 0; text-align: center; }
 .pricing-boundary { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 28px; align-items: start; margin-top: 22px; padding: 24px 28px; border: 1px solid #cfe0f3; border-radius: 18px; background: #f5f9ff; }
-.pricing-boundary strong { display: flex; gap: 11px; align-items: center; color: var(--ink); font-size: 14px; }
-.pricing-boundary-icon { display: grid; flex: 0 0 38px; place-items: center; width: 38px; height: 38px; border: 1px solid #c8def5; border-radius: 12px; background: #e8f3ff; box-shadow: 0 8px 18px rgba(15, 104, 199, .10); font-size: 20px; line-height: 1; }
+.pricing-boundary strong { display: flex; gap: 6px; align-items: center; color: var(--ink); font-size: 14px; white-space: nowrap; }
+.pricing-boundary-icon { flex: 0 0 auto; font-size: 18px; line-height: 1; }
 .pricing-boundary p { margin: 0; color: #51637e; font-size: 13px; line-height: 1.65; }
 
 .process-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: 72px; align-items: start; }
@@ -2492,9 +2492,15 @@ body.pricing-open { overflow: hidden; }
 .faq-hero-arrow { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #cbdff3; border-radius: 50%; color: var(--blue); background: #f5faff; transition: transform .3s var(--ease-premium), background .3s ease; }
 .faq-hero-quiz:hover .faq-hero-arrow { transform: translateX(4px); background: #eaf5ff; }
 
-.faq-hub-section { padding: 78px 0 112px; background: #fff; }
+.faq-hub-section {
+  padding: 78px 0 112px;
+  background:
+    radial-gradient(circle at 94% 5%, rgba(255, 210, 92, .12), transparent 20%),
+    radial-gradient(circle at 5% 42%, rgba(15, 134, 255, .07), transparent 23%),
+    linear-gradient(180deg, #f7fbff 0%, #fff 29%, #f8fbff 100%);
+}
 .faq-category-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 94px; }
-.faq-category-nav a { position: relative; display: grid; grid-template-columns: 38px 1fr; column-gap: 13px; align-items: center; min-height: 91px; padding: 18px; border: 1px solid var(--line); border-radius: 17px; color: inherit; background: #fff; box-shadow: 0 10px 28px rgba(18, 62, 117, .045); transition: transform .3s var(--ease-premium), border-color .3s ease, box-shadow .3s ease; }
+.faq-category-nav a { position: relative; display: grid; grid-template-columns: 38px 1fr; column-gap: 13px; align-items: center; min-height: 91px; padding: 18px; border: 1px solid #d2e3f4; border-radius: 17px; color: inherit; background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(242,248,255,.94)); box-shadow: 0 10px 28px rgba(18, 62, 117, .055); transition: transform .3s var(--ease-premium), border-color .3s ease, box-shadow .3s ease; }
 .faq-category-nav a:hover { transform: translateY(-4px); border-color: #a9cff4; box-shadow: 0 17px 36px rgba(18, 62, 117, .085); }
 .faq-category-nav a > span { grid-row: 1 / 3; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; color: #0864bd; background: #edf6ff; font-size: 11px; font-weight: 760; }
 .faq-category-nav strong, .faq-category-nav small { grid-column: 2; }
@@ -2508,7 +2514,8 @@ body.pricing-open { overflow: hidden; }
 .faq-category-head h2 { margin: 7px 0 10px; font-size: clamp(26px, 2.6vw, 34px); }
 .faq-category-head p { margin: 0; color: var(--muted); font-size: 13px; }
 .faq-category-accordion { gap: 11px; border: 0; }
-.faq-category-accordion details { border: 1px solid var(--line); }
+.faq-category-accordion details { border: 1px solid #d5e4f3; background: rgba(255,255,255,.9); box-shadow: 0 8px 24px rgba(18, 62, 117, .035); }
+.faq-category-accordion details[open] { background: linear-gradient(145deg, #fff, #f7fbff); }
 .faq-category-accordion .details-content { padding-bottom: 23px; }
 .faq-category-accordion .details-content p { margin: 0; }
 .faq-category-accordion .details-content p + p { margin-top: 11px; }
