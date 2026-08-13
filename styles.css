@@ -306,7 +306,8 @@ p { color: var(--muted); }
 .service-card-actions .button { width: 100%; }
 .service-card-actions .text-link { justify-content: center; margin-top: 0; padding-top: 0; text-align: center; }
 .pricing-boundary { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 28px; align-items: start; margin-top: 22px; padding: 24px 28px; border: 1px solid #cfe0f3; border-radius: 18px; background: #f5f9ff; }
-.pricing-boundary strong { color: var(--ink); font-size: 14px; }
+.pricing-boundary strong { display: flex; gap: 11px; align-items: center; color: var(--ink); font-size: 14px; }
+.pricing-boundary-icon { display: grid; flex: 0 0 38px; place-items: center; width: 38px; height: 38px; border: 1px solid #c8def5; border-radius: 12px; background: #e8f3ff; box-shadow: 0 8px 18px rgba(15, 104, 199, .10); font-size: 20px; line-height: 1; }
 .pricing-boundary p { margin: 0; color: #51637e; font-size: 13px; line-height: 1.65; }
 
 .process-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: 72px; align-items: start; }
@@ -523,8 +524,9 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 .copy-message { margin-top: 8px; border: 0; color: var(--blue); background: transparent; cursor: pointer; font-size: 13px; font-weight: 800; }
 .prefill-note { display: none; margin-bottom: 20px; padding: 14px 17px; border-radius: 13px; color: #24567e; background: #eaf4ff; font-size: 13px; font-weight: 700; }
 .prefill-note.active { display: block; }
-.contact-section { background: linear-gradient(180deg, #f5f8fd 0%, #fff 100%); }
+.contact-section { padding: 88px 0; background: linear-gradient(180deg, #f5f8fd 0%, #fff 100%); }
 .contact-section .project-form { background: rgba(255,255,255,.96); }
+.homepage-contact-card { grid-template-columns: minmax(0, 1fr) minmax(280px, 320px); }
 .contact-quiz-link { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .contact-quiz-link a { display: inline-block; margin-top: 7px; color: #0968c7; font-weight: 750; }
 .contact-booking-link { width: 100%; margin: 24px 0 16px; text-align: center; }
@@ -633,6 +635,7 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
   .process-layout, .faq-layout, .approach-grid { gap: 35px; }
   .timeline li { grid-template-columns: 45px 1fr; gap: 15px; }
   .timeline > li > span { width: 44px; height: 44px; }
+  .contact-section { padding: 68px 0; }
   .next-step, .service-cta { padding-bottom: 82px; }
   .next-option, .service-cta-card { padding: 30px 24px; }
   .service-cta-card h2 { font-size: 30px; }
@@ -2178,7 +2181,6 @@ body { font-weight: var(--weight-body); }
    2026-08-13 — contextual pricing and a quieter CTA hierarchy
    -------------------------------------------------------------------------- */
 body.pricing-open { overflow: hidden; }
-#lead-form { scroll-margin-top: calc(var(--header-height) + 20px); }
 
 .contact-booking-option {
   margin: 24px 0 0;
@@ -2471,15 +2473,18 @@ body.pricing-open { overflow: hidden; }
   align-items: center;
   min-height: 156px;
   padding: 24px;
-  border: 1px solid #c9dff5;
+  border: 1px solid #b9daf7;
   border-radius: 22px;
   color: inherit;
-  background: rgba(255,255,255,.92);
-  box-shadow: 0 22px 55px rgba(20, 69, 129, .10);
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 210, 92, .25), transparent 31%),
+    linear-gradient(145deg, #fff 0%, #f1f8ff 100%);
+  box-shadow: 0 24px 58px rgba(20, 69, 129, .13);
   transition: transform .35s var(--ease-premium), border-color .3s ease, box-shadow .35s ease;
 }
 .faq-hero-quiz:hover { transform: translateY(-5px); border-color: #8cc2f5; box-shadow: 0 28px 65px rgba(20, 69, 129, .15); }
-.faq-hero-quiz-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 17px; color: #fff; background: linear-gradient(145deg, var(--blue), #1464bd); box-shadow: 0 14px 28px rgba(15, 134, 255, .24); font-size: 24px; font-weight: 720; }
+.faq-hero-quiz-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 17px; color: #fff; background: linear-gradient(145deg, #238fff, #0757ae); box-shadow: 0 14px 28px rgba(15, 134, 255, .28); font-size: 26px; font-weight: 720; transition: transform .35s var(--ease-premium), box-shadow .35s ease; }
+.faq-hero-quiz:hover .faq-hero-quiz-icon { transform: translateY(-3px) rotate(4deg); box-shadow: 0 18px 32px rgba(15, 134, 255, .34); }
 .faq-hero-quiz small, .faq-hero-quiz strong { display: block; }
 .faq-hero-quiz small { color: var(--blue); font-size: 10px; font-weight: 720; letter-spacing: .08em; text-transform: uppercase; }
 .faq-hero-quiz strong { margin-top: 6px; color: var(--ink); font-size: 17px; }
@@ -2560,7 +2565,7 @@ body.pricing-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .faq-hero-quiz, .faq-category-nav a, .faq-hero-arrow { transition: none; }
+  .faq-hero-quiz, .faq-hero-quiz-icon, .faq-category-nav a, .faq-hero-arrow { transition: none; }
 }
 
 /* Homepage: one coherent work section for the process and first-project offer. */
@@ -2635,5 +2640,6 @@ body.pricing-open { overflow: hidden; }
   .faq-category-nav a:hover { transform: none; }
 
   .text-link:hover span,
-  .faq-hero-quiz:hover .faq-hero-arrow { transform: none; }
+  .faq-hero-quiz:hover .faq-hero-arrow,
+  .faq-hero-quiz:hover .faq-hero-quiz-icon { transform: none; }
 }

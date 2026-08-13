@@ -174,9 +174,9 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
 5. Matomas klausimyno kvietimas lankytojui, kuris dar nežino tinkamos paslaugos.
 6. Bendra skiltis **„Kaip dirbame“**, jungianti projekto eigą ir pirmųjų projektų pasiūlymą.
-7. Pagrindinis „Cal.com“ rezervavimo CTA ir alternatyvi EmailJS kontaktų forma.
+7. Kompaktiškas kontaktų CTA su „Cal.com“ rezervacija ir tiesiogine el. pašto nuoroda.
 
-Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. EmailJS kontaktų forma pagrindinio puslapio skiltyje „Kontaktai“ lieka alternatyva norintiems parašyti, o klausimyno pabaigoje per ją siunčiama paruošta atsakymų santrauka. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
+Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. Norintiems rašyti paliekama tiesioginė nuoroda į `labas@startuok.online`, o EmailJS naudojamas tik klausimyno pabaigoje paruoštai atsakymų santraukai išsiųsti. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
 
 ## 12. Paslaugų puslapių principas
 
@@ -185,10 +185,9 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - konkretus rezultatas;
 - kada paslauga tinka;
 - darbų apimtis ir ribos;
-- reali darbų seka;
 - ką gauna klientas ir ko reikia iš jo;
 - nuoroda į vieną bendrą DUK centrą navigacijoje ir poraštėje;
-- pagrindinis rezervavimo kalendoriaus CTA ir antrinė nuoroda į EmailJS kontaktų formą.
+- pagrindinis rezervavimo kalendoriaus CTA ir antrinė tiesioginė el. pašto nuoroda.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 

@@ -448,29 +448,12 @@ document.documentElement.classList.remove('reveal-fallback');
       closePanel(false);
       setTimeout(() => target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }), reduceMotion ? 0 : 250);
     });
-    dialog.querySelector('[data-pricing-contact]').addEventListener('click', (event) => {
-      const form = doc.querySelector('#lead-form');
-      if (!form || !activeData) return;
-      event.preventDefault();
-      if (form.elements.service) form.elements.service.value = activeData.formValue;
-      const nextUrl = new URL(location.href);
-      nextUrl.searchParams.set('service', activeData.service);
-      nextUrl.hash = 'lead-form';
-      history.pushState(null, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
-      closePanel(false);
-      setTimeout(() => {
-        form.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-        setTimeout(() => form.elements.name?.focus({ preventScroll: true }), reduceMotion ? 0 : 480);
-      }, reduceMotion ? 0 : 250);
-    });
   }
 
   initPricingPanels();
 
   const quizForm = doc.querySelector('#quiz-form');
   if (quizForm) initQuiz(quizForm);
-  const leadForm = doc.querySelector('#lead-form');
-  if (leadForm) initLeadForm(leadForm);
   initConsentBanner();
 
   function initQuiz(form) {
@@ -807,82 +790,6 @@ document.documentElement.classList.remove('reveal-fallback');
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(equalise, 160);
     }, { passive: true });
-  }
-
-  function initLeadForm(form) {
-    const status = form.querySelector('.form-status');
-    const copyButton = form.querySelector('.copy-message');
-    const submitButton = form.querySelector('button[type="submit"]');
-    const messageField = form.elements.message;
-    const serviceField = form.elements.service;
-    const hpField = form.elements.lead_hp;
-    const prefillNote = doc.querySelector('.prefill-note');
-    const params = new URLSearchParams(window.location.search);
-    const serviceMap = { kurimas:'Shopify parduotuvės kūrimas', migracija:'Migracija į Shopify', integracijos:'Shopify integracijos', kita:'Kita situacija' };
-    const requestedService = params.get('service');
-    if (requestedService && serviceMap[requestedService]) serviceField.value = serviceMap[requestedService];
-    if (params.get('from') === 'klausimynas') {
-      try { const brief = sessionStorage.getItem('startuokBrief'); if (brief && !messageField.value) { messageField.value = brief; prefillNote?.classList.add('active'); } } catch (_) {}
-    }
-    let formStarted = false;
-    form.addEventListener('focusin', () => {
-      if (formStarted) return;
-      formStarted = true;
-      trackEvent('contact_form_start', { form_location: form.dataset.formLocation || 'page' });
-    });
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        trackEvent('contact_form_view', { form_location: form.dataset.formLocation || 'page' });
-        observer.disconnect();
-      }, { threshold: .35 });
-      observer.observe(form);
-    }
-    const compose = () => {
-      const data = new FormData(form);
-      const name = String(data.get('name') || '').trim();
-      const email = String(data.get('email') || '').trim();
-      const phone = String(data.get('phone') || '').trim();
-      const company = String(data.get('company') || '').trim();
-      const service = String(data.get('service') || '').trim();
-      const budget = String(data.get('budget') || '').trim();
-      const timing = String(data.get('timing') || '').trim();
-      const message = String(data.get('message') || '').trim();
-      const body = [`Vardas: ${name}`,`El. paštas: ${email}`,phone ? `Telefonas: ${phone}` : '',company ? `Įmonė / svetainė: ${company}` : '',`Paslauga: ${service}`,budget ? `Biudžeto orientyras: ${budget}` : '',timing ? `Pageidaujama paleidimo data: ${timing}` : '','','Projekto situacija:',message].filter(Boolean).join('\n');
-      return { name, email, phone, company, service, budget, timing, message, body };
-    };
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); status.textContent='Patikrinkite privalomus laukus.'; return; }
-      const mail = compose();
-      if (hpField && hpField.value) {
-        status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
-        return;
-      }
-      submitButton.disabled = true;
-      status.textContent = 'Siunčiama…';
-      try {
-        await loadEmailJs();
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
-          source: form.dataset.formSource || 'Kontaktų forma',
-          name: mail.name, email: mail.email, phone: mail.phone, company: mail.company,
-          service: mail.service, budget: mail.budget, timing: mail.timing, message: mail.message,
-          submitted_at: new Date().toLocaleString('lt-LT')
-        });
-        status.textContent = 'Užklausa išsiųsta. Netrukus atsakysime.';
-        copyButton.hidden = true;
-        trackEvent('contact_form_submit', { service: mail.service, form_location: form.dataset.formLocation || 'page' });
-      } catch (_) {
-        submitButton.disabled = false;
-        status.textContent = 'Nepavyko išsiųsti. Pabandykite dar kartą arba nukopijuokite užklausą ir atsiųskite ją tiesiogiai.';
-        copyButton.hidden = false;
-      }
-    });
-    copyButton.addEventListener('click', async () => {
-      const mail = compose();
-      try { await navigator.clipboard.writeText(mail.body); copyButton.textContent = 'Užklausa nukopijuota'; }
-      catch (_) { const helper=doc.createElement('textarea'); helper.value=mail.body; helper.style.cssText='position:fixed;opacity:0'; doc.body.appendChild(helper); helper.select(); doc.execCommand('copy'); helper.remove(); copyButton.textContent='Užklausa nukopijuota'; }
-    });
   }
 
   // Cookie / analytics consent banner. GA4 is loaded with Consent Mode v2 defaults
