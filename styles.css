@@ -293,6 +293,20 @@ p { color: var(--muted); }
 .clean-list li { position: relative; padding: 9px 0 9px 24px; border-top: 1px solid #edf1f7; color: #40516c; font-size: 14px; font-weight: 700; }
 .clean-list li::before { content: "✓"; position: absolute; left: 0; color: var(--blue); font-weight: 900; }
 .service-card .text-link { margin-top: auto; padding-top: 22px; }
+.legacy-anchor { display: block; height: 0; scroll-margin-top: calc(var(--header-height) + 24px); }
+.service-price-card { background: linear-gradient(180deg,#fff,#fbfdff); }
+.service-price-card > p:first-of-type { min-height: 76px; margin-bottom: 8px; }
+.service-price-card > p:first-of-type strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.service-price-card .stage-price { margin: 12px 0 6px; }
+.service-price-card .stage-price small { flex-basis: 100%; }
+.service-price-card .price-total { min-height: 42px; margin-bottom: 18px; }
+.service-price-card h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: .07em; text-transform: uppercase; }
+.service-card-actions { display: grid; gap: 15px; margin-top: auto; padding-top: 24px; }
+.service-card-actions .button { width: 100%; }
+.service-card-actions .text-link { justify-content: center; margin-top: 0; padding-top: 0; text-align: center; }
+.pricing-boundary { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 28px; align-items: start; margin-top: 22px; padding: 24px 28px; border: 1px solid #cfe0f3; border-radius: 18px; background: #f5f9ff; }
+.pricing-boundary strong { color: var(--ink); font-size: 14px; }
+.pricing-boundary p { margin: 0; color: #51637e; font-size: 13px; line-height: 1.65; }
 
 .process-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: 72px; align-items: start; }
 .process-layout .section-head { position: sticky; top: calc(var(--header-height) + 30px); margin: 0; }
@@ -512,6 +526,7 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 .contact-section .project-form { background: rgba(255,255,255,.96); }
 .contact-quiz-link { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .contact-quiz-link a { display: inline-block; margin-top: 7px; color: #0968c7; font-weight: 750; }
+.contact-booking-link { width: 100%; margin: 24px 0 16px; text-align: center; }
 
 /* Privacy and 404 */
 .privacy-layout { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 64px; align-items: start; }
@@ -612,6 +627,8 @@ footer { padding: 52px 0; border-top: 1px solid var(--line); background: #fff; }
   .signal-grid div { border-right: 0; border-top: 1px solid var(--line); }
   .signal-grid div:first-child { border-top: 0; }
   .service-card, .price-card, .result-card, .when-card, .delivery-card { padding: 24px; }
+  .service-price-card > p:first-of-type { min-height: 0; }
+  .pricing-boundary { grid-template-columns: 1fr; gap: 8px; padding: 22px; }
   .process-layout, .faq-layout, .approach-grid { gap: 35px; }
   .timeline li { grid-template-columns: 45px 1fr; gap: 15px; }
   .timeline > li > span { width: 44px; height: 44px; }

@@ -169,14 +169,14 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 
 1. Hero su nekintančiu H1 ir koncepcijų grafika.
 2. Platformos ir integracijos juosta.
-3. Trys paslaugos.
-4. Bendras procesas.
-5. Paslaugomis paremti kainų orientyrai ir etapai.
+3. Trys paslaugos su situacija, apimtimi ir kainos orientyru vienoje kortelėje.
+4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
+5. Bendras procesas.
 6. Bendras DUK.
 7. Pirmųjų klientų pasiūlymas / darbo požiūris.
 8. Trumpa kontaktų forma ir antrinė nuoroda į išsamesnį klausimyną.
 
-Trumpa kontaktų forma yra pagrindinio puslapio skiltyje „Kontaktai“. Klausimynas lieka atskirame puslapyje lankytojui, kuris dar nežino, kokios paslaugos reikia. Kai prijungiama rezervavimo sistema, pagrindiniai CTA gali vesti į kalendorių, tačiau kontaktų forma lieka „Kontaktų“ skiltyje kaip alternatyva.
+Trumpa kontaktų forma yra pagrindinio puslapio skiltyje „Kontaktai“. Klausimynas lieka atskirame puslapyje lankytojui, kuris dar nežino, kokios paslaugos reikia. Pagrindiniai CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas`, tačiau kontaktų forma lieka „Kontaktų“ skiltyje kaip alternatyva.
 
 ## 12. Paslaugų puslapių principas
 
@@ -191,6 +191,8 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - nuoroda į kontaktų skiltį arba prijungtą rezervavimo kalendorių.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
+
+Paslaugos ir kainos pagrindiniame puslapyje pateikiamos vienoje skiltyje. Kiekviena kortelė atsako į keturis klausimus: kam paslauga tinka, kokia pradinė vertė, kas į ją įtraukiama ir kur rasti detalią apimtį.
 
 ## 13. Kainodara
 
