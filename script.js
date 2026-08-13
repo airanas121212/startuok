@@ -241,16 +241,16 @@ document.documentElement.classList.remove('reveal-fallback');
     build: {
       eyebrow: 'Kūrimo kainoraštis',
       title: 'Shopify parduotuvės kūrimas',
-      lead: 'Bazinis projektas apima veikiančios parduotuvės pagrindą. Žemiau matoma orientacinė jo darbų sudėtis ir dažniausi papildomi darbai.',
+      lead: 'Bazinis projektas apima veikiančios parduotuvės pagrindą. Žemiau pateikiama orientacinė darbų sudėtis ir dažniausi papildomi darbai.',
       baseLabel: 'Bazinis projektas nuo',
       basePrice: '1 490 €',
-      baseNote: 'Vienai rinkai, naudojant patikimą Shopify temą ir aiškiai paruoštą turinį.',
+      baseNote: 'Vienai rinkai, iki 50 tvarkingai paruoštų produktų, naudojant patikimą Shopify temą ir paruoštą turinį.',
       compositionTitle: 'Bazinio projekto darbų sudėtis',
       compositionNote: 'Šios dalys planuojamos kaip vienas projektas, o ne užsakomos atskirai.',
       composition: [
         { name: 'Struktūra ir baziniai nustatymai', price: 'nuo 250 €', note: 'Navigacija, kolekcijos, puslapiai ir projekto ribos.' },
         { name: 'Shopify temos pritaikymas', price: 'nuo 490 €', note: 'Spalvos, tipografija ir pagrindiniai temos blokai.' },
-        { name: 'Katalogas ir pirkimo puslapiai', price: 'nuo 350 €', note: 'Kolekcija, produktas, krepšelis ir svarbiausi vaizdai telefone.' },
+        { name: 'Katalogas ir pirkimo puslapiai', price: 'nuo 350 €', note: 'Iki 50 produktų, kolekcijos, produkto puslapis, krepšelis ir svarbiausi vaizdai telefone.' },
         { name: 'Mokėjimai ir pristatymas', price: 'nuo 200 €', note: 'Vienas mokėjimų ir vienas siuntų tiekėjas, tarifai ir bandomas užsakymas.' },
         { name: 'Testai, paleidimas ir mokymas', price: 'nuo 200 €', note: 'Domenas, pagrindinės patikros, perdavimas ir mokymas.' }
       ],
@@ -258,11 +258,11 @@ document.documentElement.classList.remove('reveal-fallback');
       extras: [
         { name: 'Individuali temos sekcija', price: 'nuo 160 €/vnt.', note: 'Naujas administruojamas blokas, kurio nėra pasirinktoje temoje.' },
         { name: 'Papildomas puslapio šablonas', price: 'nuo 180 €/vnt.', note: 'Atskiras turinio, kolekcijos ar produkto išdėstymas.' },
-        { name: 'Produktų importas', price: 'nuo 120 €/100 produktų', note: 'Kai duomenys pateikti sutartu, tvarkingu formatu.' },
+        { name: 'Papildomų produktų importas', price: 'nuo 120 € / 100 produktų', note: 'Kai duomenys pateikti sutartu, tvarkingu formatu.' },
         { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos nustatymai, domeno logika ir pagrindinės patikros.' },
-        { name: 'Trečiosios šalies programėlė', price: 'nuo 120 €', note: 'Vienos programėlės diegimas, nustatymas ir patikra.' }
+        { name: 'Trečiosios šalies programėlės nustatymas', price: 'nuo 120 €', note: 'Vienos programėlės įdiegimas, nustatymas ir patikra.' }
       ],
-      boundary: 'Neįskaičiuoti Shopify planas, mokama tema, programėlių mokesčiai, fotografija, tekstų rašymas ir didelės apimties duomenų tvarkymas.',
+      boundary: 'Į kainą neįskaičiuota: Shopify planas, mokama tema, programėlių mokesčiai, fotografija, tekstų rašymas ir didelės apimties duomenų tvarkymas. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'kurimas',
       formValue: 'Shopify parduotuvės kūrimas',
       detailPath: 'shopify-parduotuviu-kurimas/index.html'
@@ -273,25 +273,25 @@ document.documentElement.classList.remove('reveal-fallback');
       lead: 'Kainą lemia ne tik produktų skaičius. Vertiname duomenų kokybę, atkuriamas funkcijas, istoriją, puslapių adresus ir galutinio perjungimo riziką.',
       baseLabel: 'Bazinis projektas nuo',
       basePrice: '1 900 €',
-      baseNote: 'Vienai parduotuvei, kai duomenys prieinami eksportu ir nereikia atkurti sudėtingų individualių funkcijų.',
+      baseNote: 'Vienai parduotuvei ir iki 1 000 produktų, kai duomenys prieinami eksportu ir nereikia atkurti sudėtingų individualių funkcijų.',
       compositionTitle: 'Bazinio projekto darbų sudėtis',
       compositionNote: 'Galutinė apimtis patvirtinama tik peržiūrėjus senos platformos duomenų pavyzdį.',
       composition: [
         { name: 'Duomenų ir funkcijų peržiūra', price: 'nuo 300 €', note: 'Perkeliamų duomenų, funkcijų, puslapių adresų ir rizikų sąrašas.' },
         { name: 'Shopify parduotuvės pagrindo atkūrimas', price: 'nuo 590 €', note: 'Reikalinga pirkimo patirtis atkuriama Shopify temoje.' },
         { name: 'Bandomas importas ir sutikrinimas', price: 'nuo 420 €', note: 'Laukų susiejimas, importo bandymas ir neatitikimų sąrašas.' },
-        { name: 'Puslapių adresų ir paieškos paruošimas', price: 'nuo 250 €', note: 'Svarbiausių adresų susiejimas ir nuolatiniai nukreipimai.' },
+        { name: 'Puslapių adresų ir paieškos sistemų paruošimas', price: 'nuo 250 €', note: 'Svarbiausių adresų susiejimas ir nuolatiniai nukreipimai.' },
         { name: 'Galutinis importas ir perjungimas', price: 'nuo 340 €', note: 'Paskutinis atnaujinimas, domenas, patikra ir perdavimas.' }
       ],
       extrasTitle: 'Dažniausi papildomi darbai',
       extras: [
-        { name: 'Papildomi produktai', price: 'nuo 180 €/1 000', note: 'Kai šaltinio duomenys tvarkingi ir vienodos struktūros.' },
-        { name: 'Klientų arba užsakymų istorija', price: 'nuo 250 €/objektų tipui', note: 'Apimtis priklauso nuo laukų, kiekio ir šaltinio ribojimų.' },
+        { name: 'Papildomų produktų importas', price: 'nuo 180 € / 1 000 produktų', note: 'Kai šaltinio duomenys tvarkingi ir vienodos struktūros.' },
+        { name: 'Klientų arba užsakymų istorijos importas', price: 'nuo 250 € už duomenų tipą', note: 'Apimtis priklauso nuo laukų, kiekio ir šaltinio ribojimų.' },
         { name: 'Duomenų valymas ir transformacijos', price: 'nuo 180 €', note: 'Dublikatai, trūkstamos reikšmės ir nevienodi formatai.' },
         { name: 'Papildoma rinka arba kalba', price: 'nuo 280 €', note: 'Rinkos struktūra, domenai ir pagrindinės patikros.' },
         { name: 'Papildomas duomenų perdavimas', price: 'nuo 650 €', note: 'Apskaitos, sandėlio ar kita išorinė sistema.' }
       ],
-      boundary: 'Neįskaičiuoti išorinių sistemų mokesčiai, rankinis trūkstamų duomenų atkūrimas ir individualių senos platformos funkcijų perprogramavimas.',
+      boundary: 'Į kainą neįskaičiuota: išorinių sistemų mokesčiai, rankinis trūkstamų duomenų atkūrimas ir individualių senos platformos funkcijų perprogramavimas. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'migracija',
       formValue: 'Migracija į Shopify',
       detailPath: 'migracija-i-shopify/index.html'
@@ -319,7 +319,7 @@ document.documentElement.classList.remove('reveal-fallback');
         { name: 'Duomenų perdavimas abiem kryptimis', price: 'nuo 2 900 €', note: 'Su neatitikimų, pasikartojančių įrašų ir pagrindinės sistemos taisyklėmis.' },
         { name: 'Stebėjimas ir įspėjimai', price: 'nuo 220 €', note: 'Klaidų įrašai, pranešimai ir pakartojimo veiksmai.' }
       ],
-      boundary: 'Neįskaičiuotos programėlių, automatizavimo įrankių ir išorinių sistemų licencijos. Sistemų sujungimo galimybės ir tiekėjų ribojimai įvertinami prieš pasiūlymą.',
+      boundary: 'Į kainą neįskaičiuotos programėlių, automatizavimo įrankių ir išorinių sistemų licencijos. Sistemų sujungimo galimybes ir tiekėjų ribojimus įvertiname prieš pateikdami pasiūlymą. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'integracijos',
       formValue: 'Shopify integracijos',
       detailPath: 'shopify-integracijos/index.html'
@@ -454,6 +454,8 @@ document.documentElement.classList.remove('reveal-fallback');
 
   const quizForm = doc.querySelector('#quiz-form');
   if (quizForm) initQuiz(quizForm);
+  const leadForm = doc.querySelector('#lead-form');
+  if (leadForm) initLeadForm(leadForm);
   initConsentBanner();
 
   function initQuiz(form) {
@@ -790,6 +792,99 @@ document.documentElement.classList.remove('reveal-fallback');
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(equalise, 160);
     }, { passive: true });
+  }
+
+  function initLeadForm(form) {
+    const status = form.querySelector('.form-status');
+    const submit = form.querySelector('[type="submit"]');
+    const success = form.querySelector('.form-success');
+    const messageField = form.elements.message;
+    const serviceField = form.elements.service;
+    const honeypot = form.elements.lead_hp;
+    const prefillNote = form.querySelector('.prefill-note');
+    const params = new URLSearchParams(window.location.search);
+    const serviceMap = {
+      kurimas: 'Shopify parduotuvės kūrimas',
+      migracija: 'Migracija į Shopify',
+      integracijos: 'Shopify integracijos',
+      kita: 'Kita situacija'
+    };
+    const requestedService = params.get('service');
+    if (requestedService && serviceMap[requestedService]) {
+      serviceField.value = serviceMap[requestedService];
+    }
+    if (params.get('from') === 'klausimynas') {
+      try {
+        const brief = sessionStorage.getItem('startuokBrief');
+        if (brief && !messageField.value) {
+          messageField.value = brief;
+          prefillNote?.classList.add('active');
+        }
+      } catch (_) {}
+    }
+
+    let sending = false;
+    const showSuccess = () => {
+      form.classList.add('is-sent');
+      if (success) {
+        success.hidden = false;
+        success.focus({ preventScroll: true });
+      }
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (sending || form.classList.contains('is-sent')) return;
+      status.classList.remove('is-error');
+      status.textContent = '';
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        status.classList.add('is-error');
+        status.textContent = 'Patikrinkite privalomus laukus.';
+        return;
+      }
+      if (honeypot?.value) {
+        showSuccess();
+        return;
+      }
+
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const company = String(data.get('company') || '').trim();
+      const service = String(data.get('service') || '').trim();
+      const budget = String(data.get('budget') || '').trim();
+      const timing = String(data.get('timing') || '').trim();
+      const message = String(data.get('message') || '').trim();
+
+      sending = true;
+      submit.disabled = true;
+      submit.textContent = 'Siunčiama…';
+      try {
+        await loadEmailJs();
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, {
+          source: 'Projekto forma',
+          name,
+          email,
+          phone: '',
+          company,
+          service,
+          budget,
+          timing,
+          message,
+          submitted_at: new Date().toLocaleString('lt-LT')
+        });
+        trackEvent('project_form_submit', { service });
+        showSuccess();
+      } catch (_) {
+        status.classList.add('is-error');
+        status.textContent = 'Užklausos išsiųsti nepavyko. Pabandykite dar kartą.';
+        submit.disabled = false;
+        submit.textContent = 'Siųsti užklausą';
+      } finally {
+        sending = false;
+      }
+    });
   }
 
   // Cookie / analytics consent banner. GA4 is loaded with Consent Mode v2 defaults

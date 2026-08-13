@@ -100,19 +100,19 @@ Manrope, "Avenir Next", "Segoe UI Variable", Inter, system-ui,
 
 **Desktop (nuo 901 px):**
 
-- H1: `clamp(38px, 4.2vw, 55px)`, svoris `660`, line-height apie `1.045-1.06`.
-- H2: `clamp(28px, 3vw, 36px)`, svoris `620`, line-height apie `1.10-1.14`.
-- Bazinis H3: 21 px, svoris `600`; išskirtinėse paslaugų kortelėse leidžiama 22-25 px.
-- Navigacija: 14 px, svoris `580`.
-- Hero paaiškinimas: 18 px; sekcijos paaiškinimas: 17 px; svoris `400`.
+- H1: `clamp(40px, 3.8vw, 52px)`, svoris `660`, line-height apie `1.045-1.06`.
+- H2: `clamp(27px, 2.8vw, 35px)`, svoris `620`, line-height apie `1.10-1.14`.
+- Bazinis H3: 20 px, svoris `600`; išskirtinėse paslaugų kortelėse leidžiama iki 22 px.
+- Navigacija: 13 px, svoris `580`.
+- Hero paaiškinimas: 17 px; sekcijos paaiškinimas: 16 px; svoris `400`.
 - Mygtukai: svoris `660`; tekstinės nuorodos: `620`.
 - Eyebrow ir mikrožymos: svoris apie `700`, didžiosios raidės ir padidintas raidžių tarpas.
 
 **Mobile (iki 900 px):**
 
 - H1 svoris `680`, H2 `650`, H3 `620`.
-- Iki 680 px: H1 `clamp(38px, 11.4vw, 50px)`, H2 `clamp(29px, 8.6vw, 37px)`.
-- Mobilioji navigacija `620`, mygtukai `680`, hero paaiškinimas 16.5 px.
+- Iki 680 px: H1 `clamp(33px, 9.5vw, 38px)`, H2 `clamp(25px, 7.7vw, 31px)`.
+- Mobilioji navigacija `620`, mygtukai `680`, hero paaiškinimas 15 px.
 - Pagrindinis tekstas lieka `400`; svarbios žymos nėra ploninamos tiek, kad nukentėtų skaitomumas.
 
 **Visos svetainės taikymas:** tie patys svorio principai naudojami paslaugų puslapiuose, kortelėse, kainose, DUK, klausimyne, formose, privatumo puslapyje, 404, navigacijoje ir poraštėje. 800-900 svoris paliekamas tik pavieniams mažiems simboliams, jei jo reikia kontrastui.
@@ -121,7 +121,8 @@ Manrope, "Avenir Next", "Segoe UI Variable", Inter, system-ui,
 
 - Turinio plotis: iki 1160 px.
 - Horizontalus tarpas: 40 px desktop, 26 px mobile.
-- Sekcijos vertikalus tarpas: apie 92 px desktop, 76 px planšetėje ir 64 px mobile. Ilgesnis turinys skaidomas ritmu, o ne dirbtiniu `min-height`.
+- Sekcijos vertikalus tarpas: apie 72 px desktop, 60 px planšetėje ir 50 px mobile. Ilgesnis turinys skaidomas ritmu, o ne dirbtiniu `min-height`.
+- Bendras mastelis sąmoningai kompaktiškas: hero grafika, kortelės ir turinio grupės turi tilpti į natūralų ekrano ritmą, nepaliekant perteklinių tuščių zonų.
 - Mygtukų kampai: 13 px.
 - Įvesties laukų kampai: 11 px.
 - Kortelių kampai: 22 px.
@@ -176,9 +177,9 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
 5. Matomas klausimyno kvietimas lankytojui, kuris dar nežino tinkamos paslaugos.
 6. Bendra skiltis **„Kaip dirbame“**, jungianti projekto eigą ir pirmųjų projektų pasiūlymą.
-7. Kompaktiškas kontaktų CTA su „Cal.com“ rezervacija ir tiesiogine el. pašto nuoroda.
+7. Kompaktiškas kontaktų CTA su „Cal.com“ rezervacija ir nuoroda į projekto aptarimo formą.
 
-Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. Norintiems rašyti paliekama tiesioginė nuoroda į `labas@startuok.online`, o EmailJS naudojamas tik klausimyno pabaigoje paruoštai atsakymų santraukai išsiųsti. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
+Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. Norintiems situaciją aprašyti raštu naudojama bendra `/aptarti-projekta/` forma, o EmailJS saugiai perduoda tiek jos užklausas, tiek klausimyno pabaigoje paruoštą atsakymų santrauką. Viešuose CTA tiesioginis el. pašto adresas nerodomas; jis paliekamas tik privatumo ir techninės komunikacijos vietose. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
 
 ## 12. Paslaugų puslapių principas
 
@@ -189,7 +190,7 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - darbų apimtis ir ribos;
 - ką gauna klientas ir ko reikia iš jo;
 - nuoroda į vieną bendrą DUK centrą navigacijoje ir poraštėje;
-- pagrindinis rezervavimo kalendoriaus CTA ir antrinė tiesioginė el. pašto nuoroda.
+- pagrindinis rezervavimo kalendoriaus CTA ir antrinė projekto aptarimo formos nuoroda.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
@@ -202,6 +203,8 @@ Paslaugos ir kainos pagrindiniame puslapyje pateikiamos vienoje skiltyje. Kiekvi
 - Mokėjimų etapai paaiškinami be dirbtinio kainos dalijimo, kol nėra patvirtinta konkreti projekto apimtis.
 - Etapinis mokėjimas turi atitikti realią sutarties ir darbų eigą.
 - Galutinė apimtis, kaina ir trečiųjų šalių išlaidos patvirtinamos raštu.
+- Kiekinės ribos, pavyzdžiui, įtrauktų produktų skaičius, nurodomos šalia kainos orientyro.
+- Ar kainai taikomas PVM, aiškiai nurodoma individualiame pasiūlyme.
 - Kainos neslepiamos, bet didelė suma nepateikiama be konteksto.
 
 ## 14. Pirmųjų klientų pasiūlymas
