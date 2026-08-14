@@ -330,7 +330,7 @@ document.documentElement.classList.remove('reveal-fallback');
     const triggers = [...doc.querySelectorAll('[data-pricing-open]')];
     if (!triggers.length || typeof HTMLDialogElement === 'undefined') return;
 
-    const nestedPage = /\/(migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//.test(location.pathname);
+    const nestedPage = /\/(migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas|paslaugos-ir-kainos)\//.test(location.pathname);
     const prefix = nestedPage ? '../' : '';
     const dialog = doc.createElement('dialog');
     dialog.className = 'pricing-dialog';
