@@ -393,9 +393,9 @@ This refinement deliberately keeps the approved Ofisera direction unchanged. Glo
 | Store | PNG source | Optimized website asset | Result |
 |---|---|---|---|
 | Glowina | `assets/storefront-glowina-hero-v4.png` | `assets/storefront-glowina-hero-v4.webp` | Original adult model, realistic cosmetics construction, exact fictional labels, rose-metal reflections, deeper glamour lighting |
-| Topiniai | `assets/storefront-topiniai-hero-v4.png` | `assets/storefront-topiniai-hero-v4.webp` | Eight credible, correctly scaled gadgets with visible seams, controls, materials, ports and contact shadows |
+| Topiniai | `assets/storefront-topiniai-hero-v7.png` | `assets/storefront-topiniai-hero-v7.webp` | Eight current 2026 devices for AI, travel, charging and smart homes, with original fictional wordmarks and a graphite, cobalt and lime editorial palette |
 
-The former files remain in the project as rollback sources, while the homepage loads the `-v4.webp` files.
+The former files remain in the project as rollback sources, while the homepage loads Glowina v4 and Topiniai v7.
 
 ### Glowina fictional packaging
 
@@ -410,16 +410,16 @@ The live Glowina wordmark is HTML/CSS rather than baked into the photograph. It 
 
 ### Topiniai product construction
 
-1. Palm-size clamshell thermal printer with a paper exit, lid seam, status light and blank roll.
-2. Compact jet handheld fan with a circular turbine grille, slim handle, power control and charging port.
-3. 475 ml-class portable blender with a transparent threaded jar, carry loop, blade, ribbed motor base and one-button control.
-4. Generic smartphone on a folding tripod with a small rectangular magnetic LED light.
-5. Vacuum-insulated handled tumbler with steel rim, lid and straw.
-6. Aluminum sunset projector with a convex lens, tilting U-bracket, base and power lead.
-7. Stainless facial ice roller with a credible axle, chilled metal drum and ergonomic handle.
-8. Rechargeable fabric shaver with a perforated steel head, clear lint chamber, switch and USB-C port.
+1. `VISTIQ` smart audio glasses with restrained temples, microphones and speakers.
+2. `ORYNX` open-ear clip earbuds with a compact charging case.
+3. `NOTRA` pocket AI voice recorder with a microphone grille and status light.
+4. `HELIOQ` smart ring on its magnetic charging cradle.
+5. `VOLTUNE` compact high-output GaN charger and power bank.
+6. `TRIPLI` folding three-device wireless travel charger.
+7. `PICOZA` palm-size mini projector with a credible optical lens and controls.
+8. `AERVUE` tabletop air-quality monitor with a restrained status display.
 
-The proportions were grounded in current official product construction references: [Phomemo M02](https://phomemo.com/en-ca/products/m02-portable-printer), [JisuLife Life9](https://jisulife.com.in/products/jisulife-handheld-fan-life9), [BlendJet](https://blendjet.com/), [Ulanzi magnetic phone light](https://www.ulanzi.com/products/ulanzi-mfl01-mini-portable-phone-flash?country=US&currency=USD&variant=48013670908125) and [Ulanzi phone tripod](https://www.ulanzi.com/en-ca/collections/all-products/products/phone-selfie-stick-tripod-m003). Only functional geometry and material logic were referenced; no brand marks, packaging, UI or product photos were copied into the final campaign.
+The refreshed direction follows current 2026 themes visible in official materials for [intelligent eyewear](https://news.samsung.com/us/samsung-google-first-look-new-intelligent-eyewear/), [AI smart rings](https://www.ces.tech/ces-innovation-awards/2026/wizpr-ring/), [next-generation earbuds](https://www.ces.tech/ces-innovation-awards/2026/naqi-neural-earbuds-with-invisible-user-interface/) and [compact GaN charging](https://www.anker.com/blogs/others/anker-ganprime). These functional categories informed the fictional designs; no brand marks, packaging, UI or product photos were copied.
 
 Glowina's campaign energy was benchmarked against the clarity and merchandising rhythm of [OnlyBio](https://onlybio.life/) and [Stars From The Stars](https://stars.pl/), plus the tactile restraint of [Gisou](https://gisou.com/) and [Typology](https://www.typology.com/). The final art direction is original and intentionally avoids their logos, product names and recognisable packaging systems.
 
@@ -444,14 +444,14 @@ No word Glowina inside the photograph. No existing trademarks, competitor logos,
 Use case: product-mockup.
 Asset type: wide 3:2 social-commerce hero product photograph.
 
-Edit the supplied Topiniai hero without changing its bold cobalt, magenta, lime and deep-slate art direction. Preserve one clean eight-product studio tableau, but rebuild every object with real manufacturing geometry, credible proportions and realistic relative scale. Show exactly: a pocket clamshell thermal printer with a 53 mm blank paper roll; a compact jet handheld fan with a circular turbine grille and slim handle; a 475 ml portable blender with a clear threaded jar, carry loop, stainless blade and ribbed one-button motor base; a generic smartphone on a compact folding tripod with a small rectangular magnetic LED light; a vacuum-insulated handled tumbler with lid and straw; a small aluminum sunset projector with convex lens and tilting bracket; a stainless facial ice roller; and a rechargeable fabric shaver with a perforated steel head and clear lint chamber.
+Create a premium 2026 consumer-tech campaign in a deep graphite studio with charcoal stone, dark cobalt plinths, restrained lime and smoky-blue glass accents. Show exactly eight current, manufacturable products with one exact fictional wordmark each: VISTIQ smart audio glasses; ORYNX open-ear clip earbuds and charging case; NOTRA pocket AI voice recorder; HELIOQ smart ring and charging cradle; VOLTUNE compact GaN charger and power bank; TRIPLI folding three-device travel charger; PICOZA palm-size mini projector; and AERVUE tabletop air-quality monitor.
 
 Make this look like a real high-end product shoot, not CGI: visible molded seams, hinges, vents, buttons, charging ports, screw points, glass thickness, brushed metal, soft-touch ABS, fingerprints controlled but not erased, natural contact shadows and physically believable reflections. Products stand securely on plinths or the studio floor; nothing floats. Keep all eight products individually readable and do not duplicate any item.
 
-No real logos, trademarks, labels, readable text, platform icons, watermarks, extra accessories, impossible controls or toy-like geometry. Phone screen may show only a simple abstract magenta-to-cobalt gradient. Use a crisp catalogue lens and even focus so construction details remain visible in a responsive website crop.
+No real logos, trademarks, packaging, platform icons, watermarks, extra accessories, impossible controls or toy-like geometry. Include only the eight exact fictional wordmarks above, spelled correctly. Use an 85 mm catalogue lens, a soft key light and cool rim light so every construction detail remains visible in a responsive website crop.
 ```
 
-Both V4 images were produced in the built-in ImageGen editing workflow, visually inspected at original resolution, exported as PNG sources and optimized to WebP for delivery.
+The current Glowina v4 and Topiniai v7 images were produced in the built-in ImageGen workflow, visually inspected at original resolution, exported as PNG sources and optimized to WebP for delivery.
 
 ### V4 verification
 
