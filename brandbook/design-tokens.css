@@ -1,7 +1,9 @@
-/* Startuok brand tokens v2.5 — 2026-08-13 */
+/* Startuok brand tokens v2.6 — 2026-08-14 */
 :root {
   --startuok-navy: #06142c;
   --startuok-navy-2: #0b2856;
+  --startuok-navy-surface: #0d2e5b;
+  --startuok-navy-lift: #123e75;
   --startuok-blue: #0f86ff;
   --startuok-blue-2: #3157ff;
   --startuok-sky: #69b4ff;

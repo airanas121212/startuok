@@ -1,7 +1,7 @@
 # Startuok brandbook
 
-**Versija:** 2.5
-**Data:** 2026-08-13
+**Versija:** 2.6
+**Data:** 2026-08-14
 
 ## 1. Prekės ženklo esmė
 
@@ -61,8 +61,12 @@ Naudojamas originalus `assets/startuok-logo.png`.
 |---|---:|---|
 | Navy | `#06142C` | Tamsios sekcijos, stiprus kontrastas |
 | Navy 2 | `#0B2856` | Tamsių gradientų antras taškas |
-| Blue | `#0F86FF` | Pagrindinis CTA, aktyvi būsena, nuoroda |
-| Blue 2 | `#3157FF` | CTA ir akcentų gradientas |
+| Navy surface | `#0D2E5B` | Didesnės sodrios kortelės, kai Navy būtų per tamsi |
+| Navy lift | `#123E75` | Gyvesnis sodrių kortelių gradiento taškas |
+| Blue | `#0F86FF` | Dekoratyvinis akcentas, aktyvi būsena, nuoroda |
+| Blue 2 | `#3157FF` | Iliustracijų ir akcentų gradientas |
+| Action blue | `#0868D7` | CTA gradiento pradžia su baltu tekstu |
+| Action blue 2 | `#284BD8` | CTA gradiento pabaiga su baltu tekstu |
 | Sky | `#69B4FF` | Tamsių sekcijų akcentas |
 | Ink | `#07152E` | Antraštės ir pagrindinis tekstas |
 | Muted | `#61718B` | Antrinis tekstas |
@@ -73,11 +77,13 @@ Naudojamas originalus `assets/startuok-logo.png`.
 
 Mėlyna naudojama prasmingai: vienam pagrindiniam veiksmui, aktyviai būsenai, sekos numeriui arba vienam žodiniam akcentui.
 
+Puslapio paviršių orientyras: apie 65–70 % balto arba labai šviesaus fono, 20–25 % `Soft` ir `Soft blue`, iki 10–15 % sodrių mėlynų paviršių. Gretimos didelės sekcijos neturi abi naudoti tamsaus Navy fono. Navy lieka logotipo spalvinis inkaras ir stipraus kontrasto priemonė, o didesnėms akcentinėms kortelėms naudojami `Navy surface` ir `Navy lift`.
+
 ### 5.1. Mygtukų kontrasto taisyklė
 
 Visi CTA mygtukai naudoja tą patį mėlyną gradientą ir baltą tekstą. Balta užpildyto CTA variacija nenaudojama. Antriniam veiksmui naudojama tekstinė nuoroda, o ne konkuruojantis antras mygtukas.
 
-- **CTA paviršius:** Blue / Blue 2 gradientas.
+- **CTA paviršius:** Action blue / Action blue 2 gradientas.
 - **CTA tekstas:** tik baltas.
 - **Antrinis veiksmas:** tekstinė nuoroda Ink arba Blue spalva, priklausomai nuo fono.
 
