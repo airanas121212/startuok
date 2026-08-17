@@ -1,6 +1,6 @@
 # Startuok brandbook
 
-**Versija:** 2.6
+**Versija:** 2.9
 **Data:** 2026-08-14
 
 ## 1. Prekės ženklo esmė
@@ -59,17 +59,17 @@ Naudojamas originalus `assets/startuok-logo.png`.
 
 | Pavadinimas | HEX | Paskirtis |
 |---|---:|---|
-| Navy | `#06142C` | Tamsios sekcijos, stiprus kontrastas |
-| Navy 2 | `#0B2856` | Tamsių gradientų antras taškas |
-| Navy surface | `#0D2E5B` | Didesnės sodrios kortelės, kai Navy būtų per tamsi |
-| Navy lift | `#123E75` | Gyvesnis sodrių kortelių gradiento taškas |
-| Blue | `#0F86FF` | Dekoratyvinis akcentas, aktyvi būsena, nuoroda |
+| Navy | `#06142C` | Tik logotipo spalvinis inkaras, „Skip to content“ ir 404 skaitmuo. Sekcijoms ir kortelėms nenaudojama |
+| Navy 2 | `#0B2856` | Rezervinis tamsus taškas. Dideliuose paviršiuose nenaudojamas |
+| Navy surface | `#0D2E5B` | Tamsios kortelės gradiento pradžia |
+| Navy lift | `#123E75` | Tamsios kortelės gradiento pabaiga |
+| Blue | `#0F86FF` | Tik dekoratyvinis akcentas: piktogramos, varnelės, rėmeliai, „+“ ir rodyklės. Tekstui nenaudojama |
 | Blue 2 | `#3157FF` | Iliustracijų ir akcentų gradientas |
-| Action blue | `#0868D7` | CTA gradiento pradžia su baltu tekstu |
+| Action blue | `#0868D7` | CTA gradiento pradžia su baltu tekstu **ir visas smulkus mėlynas tekstas ant šviesaus fono**: eyebrow, nuorodos, numeriai, `small` |
 | Action blue 2 | `#284BD8` | CTA gradiento pabaiga su baltu tekstu |
-| Sky | `#69B4FF` | Tamsių sekcijų akcentas |
+| Sky | `#69B4FF` | Akcentas ant tamsios kortelės |
 | Ink | `#07152E` | Antraštės ir pagrindinis tekstas |
-| Muted | `#61718B` | Antrinis tekstas |
+| Muted | `#5C6B84` | Antrinis tekstas |
 | Line | `#D9E4F2` | Rėmeliai ir skyrikliai |
 | Soft | `#F5F8FD` | Švelnūs sekcijų fonai |
 | Soft blue | `#EDF5FF` | Sąveikos ir iliustracijų fonai |
@@ -77,19 +77,46 @@ Naudojamas originalus `assets/startuok-logo.png`.
 
 Mėlyna naudojama prasmingai: vienam pagrindiniam veiksmui, aktyviai būsenai, sekos numeriui arba vienam žodiniam akcentui.
 
-Puslapio paviršių orientyras: apie 65–70 % balto arba labai šviesaus fono, 20–25 % `Soft` ir `Soft blue`, iki 10–15 % sodrių mėlynų paviršių. Gretimos didelės sekcijos neturi abi naudoti tamsaus Navy fono. Navy lieka logotipo spalvinis inkaras ir stipraus kontrasto priemonė, o didesnėms akcentinėms kortelėms naudojami `Navy surface` ir `Navy lift`.
+**Dvi mėlynos, du vaidmenys.** `Blue #0F86FF` ant balto duoda tik 3,6:1, todėl tekstui netinka – jis lieka grafiniam akcentui, kuriam pakanka 3:1. Visas smulkus mėlynas tekstas ant šviesaus fono naudoja `Action blue #0868D7` (5,3:1 ant balto, 4,8:1 ant `Soft blue`).
 
-### 5.1. Mygtukų kontrasto taisyklė
+Puslapio paviršių orientyras: apie 65–70 % balto arba labai šviesaus fono, 20–25 % `Soft` ir `Soft blue`, iki 10 % sodrių mėlynų paviršių.
+
+### 5.1. Tamsių paviršių taisyklė
+
+Tamsa yra akcentas, o ne pagrindas.
+
+**Tamsių sekcijų nėra.** Visos sekcijos yra baltos, `Soft` arba `Soft blue`. Tamsus lieka tik kortelės dydžio elementas, todėl visi puslapiai jaučiasi vienodai šviesūs ir tęstiniai.
+
+Vienas tamsus receptas visoje svetainėje: **`Navy surface #0D2E5B → Navy lift #123E75`**. Kitų tamsių gradientų nekuriame.
+
+| Kur naudojama | Pavyzdys |
+|---|---|
+| Uždaranti CTA kortelė puslapio apačioje | `.service-cta-card`, `.next-card` |
+| Vienas akcentinis pasiūlymo blokas | `.first-clients-panel` |
+| Smulkūs numeriai, žymos, naršyklės juosta | `.path-number`, `.timeline` numeriai, `.browser-bar` |
+
+Orientyras: tamsus paviršius užima apie 5–8 % puslapio ploto. Vienas tamsus blokas puslapyje, daugiausia du.
+
+Tekstas ant tamsaus paviršiaus:
+
+- Antraštės: baltos.
+- Pagrindinis tekstas: `#A7BAD5`.
+- Smulkios pastabos: `#9FB4D0`.
+- Eyebrow ant tamsios kortelės: `#8ECAFF`. Kiti akcentai: `Sky #69B4FF`.
+
+Kiekviena pora patikrinta ties šviesiausiu gradiento tašku (`#123E75`) ir laiko bent 4,5:1. Nenaudoti `#1264AD` ar šviesesnio kaip gradiento pabaigos po pilkšvai mėlynu tekstu – ties tuo tašku kontrastas nukrenta žemiau 4,5:1.
+
+### 5.2. Mygtukų kontrasto taisyklė
 
 Visi CTA mygtukai naudoja tą patį mėlyną gradientą ir baltą tekstą. Balta užpildyto CTA variacija nenaudojama. Antriniam veiksmui naudojama tekstinė nuoroda, o ne konkuruojantis antras mygtukas.
 
 - **CTA paviršius:** Action blue / Action blue 2 gradientas.
 - **CTA tekstas:** tik baltas.
-- **Antrinis veiksmas:** tekstinė nuoroda Ink arba Blue spalva, priklausomai nuo fono.
+- **Antrinis veiksmas:** tekstinė nuoroda Ink arba Action blue spalva, priklausomai nuo fono.
 
 Minimalus teksto ir mygtuko fono kontrastas — 4,5:1.
 
-Taisyklė galioja visoms būsenoms: įprastai, hover, focus, active, disabled, mobiliajame CTA ir tamsiose sekcijose.
+Taisyklė galioja visoms būsenoms: įprastai, hover, focus, active, disabled, mobiliajame CTA ir ant tamsių kortelių.
 
 **Techninė sąlyga.** Kiekviena `.button` taisyklė kartu nurodo mėlyną `background` ir baltą `color`. Ankstesnė `.button-outline` klasė nelaikoma atskira balta variacija. Antriniams veiksmams naudojama `.text-link` arba semantiškai atitinkama tekstinė nuoroda.
 
@@ -200,7 +227,30 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
-Paslaugos ir kainos pagrindiniame puslapyje pateikiamos vienoje skiltyje. Kiekviena kortelė atsako į keturis klausimus: kam paslauga tinka, kokia pradinė vertė, kas į ją įtraukiama ir kur rasti detalią apimtį.
+### 12.1. Paslaugų ir kainų puslapis
+
+Šis puslapis nekartoja nei pagrindinio puslapio, nei paslaugų puslapių. Jis turi savo struktūrą ir savo turinį.
+
+**Puslapis prasideda nuo kainų.** Jokio atskiro hero bloko: iškart po antrašte eina trys paslaugų kortelės su kainos orientyrais. Lankytojas mato kainą pirmame ekrane.
+
+Eiliškumas:
+
+1. Antraštė ir trys kainų kortelės. Kiekviena kortelė atsako į tris klausimus: kam paslauga tinka, kokia pradinė vertė ir kokia bazinė apimtis.
+2. Kainos ribos vienu sakiniu iškart po kortelėmis.
+3. Kainodaros principų juosta.
+4. **Kainoraštis** – bazinio projekto darbų sudėtis ir dažniausi papildomi darbai su kainomis, matomi puslapyje, o ne paslėpti už mygtuko.
+5. Kas keičia galutinę kainą.
+6. Trys žingsniai iki raštu patvirtinto pasiūlymo.
+7. Uždarantis CTA.
+
+**Ko šiame puslapyje nebūna:**
+
+- pasikartojančio paslaugų pasirinkimo bloko, jei tą patį jau pasako trys kortelės;
+- projekto eigos etapų, kurie jau aprašyti pagrindiniame puslapyje;
+- daugiau nei vienos nuorodos į klausimyną;
+- „kas neįskaičiuota“ kartojimo daugiau nei kartą vienai paslaugai.
+
+Detalus kainoraštis puslapyje ir kainoraščio langas paslaugų puslapiuose naudoja tą patį šaltinį, bet ne tas pačias CSS klases: puslapio blokas yra `.pricing-sheet`, langas – `.pricing-dialog`.
 
 ## 13. Kainodara
 
@@ -212,6 +262,7 @@ Paslaugos ir kainos pagrindiniame puslapyje pateikiamos vienoje skiltyje. Kiekvi
 - Kiekinės ribos, pavyzdžiui, įtrauktų produktų skaičius, nurodomos šalia kainos orientyro.
 - Ar kainai taikomas PVM, aiškiai nurodoma individualiame pasiūlyme.
 - Kainos neslepiamos, bet didelė suma nepateikiama be konteksto.
+- Bazinio projekto darbų sudėtis ir dažniausi papildomi darbai su kainomis rodomi paslaugų ir kainų puslapyje kaip matomas kainoraštis, o ne tik iššokančiame lange.
 
 ## 14. Pirmųjų klientų pasiūlymas
 
@@ -251,7 +302,10 @@ Kiekvienas indeksuojamas puslapis privalo turėti:
 - Mygtukai ir laukai turi aiškias žymas.
 - DUK veikia klaviatūra.
 - Kontrastas ir pagrindinis šriftas išlieka patogūs.
-- Visi CTA mygtukai patikrinti pagal 5.1 taisyklę: mėlynas gradientas, baltas tekstas ir bent 4,5:1 kontrastas.
+- Visas tekstas laiko bent 4,5:1 (didelės antraštės – 3:1). Patikrinta automatiškai visuose 10 puslapių.
+- Smulkus mėlynas tekstas naudoja `Action blue`, o ne `Blue`.
+- Visi CTA mygtukai patikrinti pagal 5.2 taisyklę: mėlynas gradientas, baltas tekstas ir bent 4,5:1 kontrastas.
+- Tamsūs paviršiai atitinka 5.1 kopėčias: grynas `Navy` nenaudojamas kaip sekcijos ar kortelės fonas.
 - Nėra horizontalaus slinkimo 360 px ekrane.
 - Animacijos naudoja daugiausia `transform` ir `opacity`.
 - Tikrinama 390 px, planšetė ir 1280-1440 px darbalaukis.

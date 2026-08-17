@@ -1,18 +1,22 @@
-/* Startuok brand tokens v2.6 — 2026-08-14 */
+/* Startuok brand tokens v2.7 — 2026-08-14 */
 :root {
+  /* Navy: tik logotipo inkaras, skip-link ir 404 skaitmuo. Ne sekcijoms. */
   --startuok-navy: #06142c;
   --startuok-navy-2: #0b2856;
+  /* Vienintelis tamsus receptas: tamsi kortelė. Tamsių sekcijų nėra. */
   --startuok-navy-surface: #0d2e5b;
   --startuok-navy-lift: #123e75;
+  /* Blue: tik grafinis akcentas. Smulkiam tekstui naudoti Action blue. */
   --startuok-blue: #0f86ff;
   --startuok-blue-2: #3157ff;
   --startuok-sky: #69b4ff;
   --startuok-ink: #07152e;
-  --startuok-muted: #61718b;
+  --startuok-muted: #5c6b84;
   --startuok-line: #d9e4f2;
   --startuok-soft: #f5f8fd;
   --startuok-soft-blue: #edf5ff;
   --startuok-white: #ffffff;
+  /* Action blue: CTA gradientas ir visas smulkus mėlynas tekstas. */
   --startuok-action-blue: #0868d7;
   --startuok-action-blue-2: #284bd8;
   --startuok-button-text: #ffffff;
