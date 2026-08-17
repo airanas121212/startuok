@@ -78,6 +78,9 @@ a[href], button, summary, .quiz-options label { touch-action: manipulation; }
 .section-glow p { color: var(--muted); }
 .section-head { max-width: 760px; margin-bottom: 48px; }
 .section-head.center { margin-inline: auto; text-align: center; }
+/* Kicker removed above the h2 here: stop its own top margin from
+   collapsing into the parent so it keeps a normal top margin. */
+#situacija .section-head { display: flow-root; }
 .eyebrow {
   display: inline-block;
   color: var(--action-blue);
@@ -226,6 +229,9 @@ p { color: var(--muted); }
 }
 .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.04fr) minmax(390px,.82fr); gap: 72px; align-items: center; }
 .hero-copy { max-width: 690px; }
+/* Kicker removed above the h1 here: stop its own top margin from
+   collapsing into the parent so it keeps a normal top margin. */
+.hero-copy { display: flow-root; }
 .hero-copy h1 { margin-top: 17px; }
 .hero-lead { max-width: 680px; font-size: 19px; line-height: 1.72; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 32px; }
@@ -3590,3 +3596,8 @@ footer { padding: 38px 0; }
   .contact-legal > div { grid-template-columns: 1fr; gap: 3px; }
   .contact-legal > div:nth-child(2) { border-top: 1px solid var(--line); padding-top: 13px; }
 }
+
+/* Homepage: "Kaip dirbame" process block removed; the first-clients offer
+   panel now opens the section directly, so drop the divider/spacing that
+   used to separate it from the process steps above it. */
+.work-program.work-program-first { padding-top: 0; border-top: none; }
