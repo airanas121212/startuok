@@ -892,7 +892,7 @@ document.documentElement.classList.remove('reveal-fallback');
   // flip analytics_storage etc. to "granted" (see privatumas.html for details).
   function initConsentBanner() {
     const STORAGE_KEY = 'startuok_consent';
-    const subfolderPattern = /\/(klausimynas|aptarti-projekta|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//;
+    const subfolderPattern = /\/(klausimynas|kontaktai|aptarti-projekta|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//;
     const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
     let stored = null;
     try { stored = localStorage.getItem(STORAGE_KEY); } catch (_) {}

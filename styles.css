@@ -73,10 +73,7 @@ a[href], button, summary, .quiz-options label { touch-action: manipulation; }
 }
 .section-glow > .container { position: relative; z-index: 1; }
 .section-glow .eyebrow { color: var(--action-blue); }
-.service-cta-card .eyebrow,
-.next-card .eyebrow,
-.first-clients-panel .eyebrow,
-.pricing-summary .eyebrow { color: #8ecaff; }
+.first-clients-panel .eyebrow { color: #8ecaff; }
 .section-glow .section-lead,
 .section-glow p { color: var(--muted); }
 .section-head { max-width: 760px; margin-bottom: 48px; }
@@ -364,10 +361,11 @@ details p { max-width: 760px; margin: -2px 54px 22px 0; font-size: 15px; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
+  border: 1px solid var(--line);
   border-radius: var(--radius-feature);
-  color: var(--white);
-  background: linear-gradient(135deg, var(--navy-surface), var(--navy-lift));
-  box-shadow: var(--shadow-feature);
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
 }
 .next-option { padding: 42px; }
 .next-option + .next-option { border-left: 1px solid rgba(167,186,213,.18); }
@@ -407,9 +405,9 @@ details p { max-width: 760px; margin: -2px 54px 22px 0; font-size: 15px; }
 .delivery-card h2 { font-size: 28px; }
 .boundary-note { margin-top: 20px; padding: 20px 23px; border-left: 4px solid var(--blue); border-radius: 0 14px 14px 0; background: #eaf4ff; color: #334c6c; font-size: 14px; font-weight: 700; }
 .service-cta { padding: 0 0 104px; }
-.service-cta-card { display: grid; grid-template-columns: 1fr auto; gap: 35px; align-items: center; padding: 48px; border-radius: var(--radius-feature); color: var(--white); background: linear-gradient(135deg, var(--navy-surface), var(--navy-lift)); box-shadow: var(--shadow-feature); }
+.service-cta-card { display: grid; grid-template-columns: 1fr auto; gap: 35px; align-items: center; padding: 48px; border: 1px solid var(--line); border-radius: var(--radius-feature); color: var(--ink); background: var(--white); box-shadow: var(--shadow-card); }
 .service-cta-card h2 { max-width: 760px; margin: 9px 0 10px; font-size: 36px; }
-.service-cta-card p { max-width: 760px; margin: 0; color: #a7bad5; }
+.service-cta-card p { max-width: 760px; margin: 0; color: var(--muted); }
 
 /* Questionnaire */
 .page-hero { padding: 66px 0 72px; background: linear-gradient(180deg,#fff 0%,#f4f8ff 100%); }
@@ -873,8 +871,8 @@ body.is-ready .hero-reveal{animation:heroEnter .75s var(--ease-premium) forwards
 .first-clients-panel h3{color:#fff}.first-clients-panel p{color:#a7bad5}.first-clients-panel .comment-note{color:#9fb4d0!important}
 
 /* Next step / CTA */
-.next-card,.service-cta-card{overflow:hidden;background:linear-gradient(130deg,var(--navy-surface),var(--navy-lift))}
-.next-card::before,.service-cta-card::before{content:"";position:absolute;width:360px;height:360px;right:-120px;top:-210px;border-radius:50%;background:rgba(15,134,255,.22);filter:blur(2px);z-index:-1}
+.next-card,.service-cta-card{overflow:hidden;background:linear-gradient(145deg,#f9fbff,#eff5fe 70%,#f8fbfe)}
+
 .next-option{transition:background .35s ease}.next-option:hover{background:rgba(255,255,255,.035)}
 
 /* Service pages */
@@ -2209,13 +2207,13 @@ body.pricing-open { overflow: hidden; }
 .service-cta-actions { display: grid; justify-items: stretch; gap: 13px; min-width: 290px; }
 .service-cta-actions .button { width: 100%; text-align: center; }
 .service-booking-link {
-  color: #b8d8fb;
+  color: var(--action-blue);
   font-size: 13px;
   font-weight: 650;
   text-align: center;
   transition: color .2s ease;
 }
-.service-booking-link:hover { color: #fff; }
+.service-booking-link:hover { color: var(--ink); }
 
 .pricing-dialog {
   position: fixed;
@@ -3556,4 +3554,60 @@ footer { padding: 38px 0; }
   .pricing-final-col { padding: 22px 18px 20px; border-radius: var(--radius-card); }
   .pricing-final-list li { grid-template-columns: 30px minmax(0, 1fr); gap: 12px; }
   .pricing-final-list li > span { width: 30px; height: 30px; border-radius: 10px; }
+}
+
+
+/* --------------------------------------------------------------------------
+   Kontaktų puslapis: trys būdai susisiekti, po jų projekto forma.
+   -------------------------------------------------------------------------- */
+.contact-page-head { padding-top: calc(var(--header-height) + 46px); padding-bottom: 0; }
+.contact-head-copy { max-width: 760px; margin-bottom: 44px; }
+.contact-head-copy .breadcrumbs { margin-bottom: 18px; }
+.contact-head-copy h1 { margin: 10px 0 16px; }
+.contact-head-lead { max-width: 660px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.62; }
+
+.contact-channels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.contact-channel {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-premium), border-color .35s ease, box-shadow .35s ease;
+}
+.contact-channel h2 { margin: 0 0 9px; font-size: 20px; }
+.contact-channel p { margin: 0 0 20px; color: var(--muted); font-size: 13.5px; line-height: 1.58; }
+.contact-channel > :last-child { margin-top: auto; }
+.contact-channel .button { width: 100%; text-align: center; }
+.contact-channel-primary {
+  border-color: #bcd9f5;
+  background: radial-gradient(circle at 90% 8%, rgba(15,134,255,.10), transparent 34%), var(--white);
+}
+.contact-channel .direct-email { margin: 0; font-size: 15px; }
+
+.contact-legal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; margin: 0; }
+.contact-legal > div {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+}
+.contact-legal > div:first-child, .contact-legal > div:nth-child(2) { border-top: 0; padding-top: 0; }
+.contact-legal dt { color: var(--muted); font-size: 13px; }
+.contact-legal dd { margin: 0; font-size: 14px; font-weight: 650; }
+
+@media (max-width: 900px) {
+  .contact-page-head { padding-top: calc(var(--header-height) + 32px); }
+  .contact-head-copy { margin-bottom: 32px; }
+  .contact-channels { grid-template-columns: 1fr; }
+  .contact-legal { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .contact-head-lead { font-size: 15px; }
+  .contact-channel { padding: 24px 20px; }
+  .contact-legal > div { grid-template-columns: 1fr; gap: 3px; }
+  .contact-legal > div:nth-child(2) { border-top: 1px solid var(--line); padding-top: 13px; }
 }

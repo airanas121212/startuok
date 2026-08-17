@@ -1,6 +1,6 @@
 # Startuok brandbook
 
-**Versija:** 3.0
+**Versija:** 3.2
 **Data:** 2026-08-14
 
 ## 1. Prekės ženklo esmė
@@ -91,11 +91,12 @@ Vienas tamsus receptas visoje svetainėje: **`Navy surface #0D2E5B → Navy lift
 
 | Kur naudojama | Pavyzdys |
 |---|---|
-| Uždaranti CTA kortelė puslapio apačioje | `.service-cta-card`, `.next-card` |
-| Vienas akcentinis pasiūlymo blokas | `.first-clients-panel` |
+| Vienas akcentinis pasiūlymo blokas pagrindiniame | `.first-clients-panel` |
 | Smulkūs numeriai, žymos, naršyklės juosta | `.path-number`, `.timeline` numeriai, `.browser-bar` |
 
-Orientyras: tamsus paviršius užima apie 5–8 % puslapio ploto. Vienas tamsus blokas puslapyje, daugiausia du.
+**Uždarantis CTA blokas yra šviesus.** `.service-cta-card` naudoja tą patį šviesų paviršių kaip sekcijos (`#F8FBFF → #EDF5FF`) su Ink tekstu ir mėlynu mygtuku. Tamsios uždarančios kortelės nebenaudojamos – jos darė visų puslapių apačias sunkias.
+
+Orientyras: tamsus paviršius užima apie 5–8 % puslapio ploto. Daugumoje puslapių tamsaus paviršiaus visai nėra – lieka tik smulkūs numeriai ir žymos.
 
 Tekstas ant tamsaus paviršiaus:
 
@@ -210,9 +211,9 @@ Emoji naudojami klausimyne kaip greitos orientacijos ir emocinio lengvumo elemen
 4. Bendras kainos ribų ir trečiųjų šalių išlaidų paaiškinimas.
 5. Matomas klausimyno kvietimas lankytojui, kuris dar nežino tinkamos paslaugos.
 6. Bendra skiltis **„Kaip dirbame“**, jungianti projekto eigą ir pirmųjų projektų pasiūlymą.
-7. Kompaktiškas kontaktų CTA su „Cal.com“ rezervacija ir nuoroda į projekto aptarimo formą.
+7. Kompaktiškas šviesus kontaktų CTA su „Cal.com“ rezervacija ir nuoroda į kontaktų puslapį.
 
-Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. Norintiems situaciją aprašyti raštu naudojama bendra `/aptarti-projekta/` forma, o EmailJS saugiai perduoda tiek jos užklausas, tiek klausimyno pabaigoje paruoštą atsakymų santrauką. Viešuose CTA tiesioginis el. pašto adresas nerodomas; jis paliekamas tik privatumo ir techninės komunikacijos vietose. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
+Pagrindiniai konversijos CTA veda į `https://cal.com/startuok/shopify-projekto-aptarimas` ir siūlo rezervuoti 20 min. pokalbį. Norintiems situaciją aprašyti raštu naudojama forma `/kontaktai/` puslapyje, o EmailJS saugiai perduoda tiek jos užklausas, tiek klausimyno pabaigoje paruoštą atsakymų santrauką. Kainų ir klausimyno mygtukai išlaiko savo konkrečią funkciją.
 
 ## 12. Paslaugų puslapių principas
 
@@ -223,7 +224,7 @@ Kiekvienas paslaugos puslapis kalba tik apie savo paslaugą:
 - darbų apimtis ir ribos;
 - ką gauna klientas ir ko reikia iš jo;
 - nuoroda į vieną bendrą DUK centrą navigacijoje ir poraštėje;
-- pagrindinis rezervavimo kalendoriaus CTA ir antrinė projekto aptarimo formos nuoroda.
+- pagrindinis rezervavimo kalendoriaus CTA ir antrinė nuoroda į kontaktų puslapį.
 
 Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
@@ -249,6 +250,23 @@ Eiliškumas:
 - daugiau nei vienos nuorodos į klausimyną.
 
 Detalus kainoraštis nėra atskira puslapio sekcija. Kiekviena kortelė turi mygtuką „Išsamus kainoraštis“, atidarantį bendrą `.pricing-dialog` langą su bazinio projekto darbų sudėtimi ir dažniausiais papildomais darbais. Tas pats langas naudojamas paslaugų puslapiuose, todėl kainos aprašomos vienoje vietoje.
+
+### 12.2. Kontaktų puslapis
+
+`/kontaktai/` yra vienintelė vieta, kur surinkti visi susisiekimo būdai. Atskiros projekto formos puslapio nebėra – senasis `/aptarti-projekta/` adresas nukreipia čia.
+
+Struktūra:
+
+1. Antraštė ir vienas paaiškinimo sakinys.
+2. Trys būdai susisiekti vienoje eilėje: **20 min. pokalbis** (pagrindinis, su „Cal.com“ mygtuku), **el. paštas** ir **savarankiškas kelias** į DUK bei klausimyną.
+3. Pilna projekto forma su šoniniu bloku, kas svarbiausia aprašyme.
+4. Rekvizitai: veiklos forma, kontaktinis el. paštas ir nuoroda, kad pilni rekvizitai pateikiami pasiūlyme, sutartyje ir sąskaitoje.
+
+**Rekvizitų taisyklė.** Startuok veikia kaip individuali veikla pagal pažymą. Vardas, pažymos numeris ir adresas svetainėje nepublikuojami – jie pateikiami komerciniame pasiūlyme, sutartyje ir sąskaitoje. Ta pati formuluotė galioja privatumo puslapyje, todėl abu tekstai turi sutapti: pakeitus vieną, būtina pakeisti ir kitą.
+
+Kontaktų puslapyje el. pašto adresas rodomas atvirai – tai kontaktų puslapio paskirtis. Kituose puslapiuose viešuose CTA jis nerodomas, ten veda mygtukas arba nuoroda į `/kontaktai/`.
+
+Kiekvienas puslapis baigiasi šviesiu CTA bloku: pagrindinis mygtukas veda į kalendorių, antrinė tekstinė nuoroda – į `/kontaktai/`.
 
 ## 13. Kainodara
 
