@@ -1,6 +1,6 @@
 # Startuok brandbook
 
-**Versija:** 2.9
+**Versija:** 3.0
 **Data:** 2026-08-14
 
 ## 1. Prekės ženklo esmė
@@ -235,22 +235,20 @@ Pagrindiniame puslapyje techninės detalės nedubliuojamos.
 
 Eiliškumas:
 
-1. Antraštė ir trys kainų kortelės. Kiekviena kortelė atsako į tris klausimus: kam paslauga tinka, kokia pradinė vertė ir kokia bazinė apimtis.
+1. Antraštė ir trys kainų kortelės. Kiekviena kortelė atsako į keturis klausimus: kam paslauga tinka, kokia pradinė vertė, kas į bazinį orientyrą įtraukiama ir kur rasti detalią apimtį.
 2. Kainos ribos vienu sakiniu iškart po kortelėmis.
 3. Kainodaros principų juosta.
-4. **Kainoraštis** – bazinio projekto darbų sudėtis ir dažniausi papildomi darbai su kainomis, matomi puslapyje, o ne paslėpti už mygtuko.
-5. Kas keičia galutinę kainą.
-6. Trys žingsniai iki raštu patvirtinto pasiūlymo.
-7. Uždarantis CTA.
+4. Vienas bendras blokas „Nuo orientyro iki tikslios kainos“: kairėje – kas keičia darbų apimtį, dešinėje – trys žingsniai iki raštu patvirtintos sumos.
+5. Uždarantis CTA.
 
 **Ko šiame puslapyje nebūna:**
 
 - pasikartojančio paslaugų pasirinkimo bloko, jei tą patį jau pasako trys kortelės;
+- atskirų sekcijų kainos veiksniams ir pasiūlymo žingsniams – tai vienas blokas;
 - projekto eigos etapų, kurie jau aprašyti pagrindiniame puslapyje;
-- daugiau nei vienos nuorodos į klausimyną;
-- „kas neįskaičiuota“ kartojimo daugiau nei kartą vienai paslaugai.
+- daugiau nei vienos nuorodos į klausimyną.
 
-Detalus kainoraštis puslapyje ir kainoraščio langas paslaugų puslapiuose naudoja tą patį šaltinį, bet ne tas pačias CSS klases: puslapio blokas yra `.pricing-sheet`, langas – `.pricing-dialog`.
+Detalus kainoraštis nėra atskira puslapio sekcija. Kiekviena kortelė turi mygtuką „Išsamus kainoraštis“, atidarantį bendrą `.pricing-dialog` langą su bazinio projekto darbų sudėtimi ir dažniausiais papildomais darbais. Tas pats langas naudojamas paslaugų puslapiuose, todėl kainos aprašomos vienoje vietoje.
 
 ## 13. Kainodara
 
@@ -262,7 +260,7 @@ Detalus kainoraštis puslapyje ir kainoraščio langas paslaugų puslapiuose nau
 - Kiekinės ribos, pavyzdžiui, įtrauktų produktų skaičius, nurodomos šalia kainos orientyro.
 - Ar kainai taikomas PVM, aiškiai nurodoma individualiame pasiūlyme.
 - Kainos neslepiamos, bet didelė suma nepateikiama be konteksto.
-- Bazinio projekto darbų sudėtis ir dažniausi papildomi darbai su kainomis rodomi paslaugų ir kainų puslapyje kaip matomas kainoraštis, o ne tik iššokančiame lange.
+- Bazinio projekto darbų sudėtis ir dažniausi papildomi darbai su kainomis pateikiami bendrame kainoraščio lange, pasiekiamame nuo kiekvienos paslaugos kortelės.
 
 ## 14. Pirmųjų klientų pasiūlymas
 
