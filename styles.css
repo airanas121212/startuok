@@ -2539,6 +2539,16 @@ body.pricing-open { overflow: hidden; }
 .faq-category-accordion .details-content p + p { margin-top: 11px; }
 .faq-category-accordion .details-content a { color: #096bc8; font-weight: 650; text-decoration: underline; text-decoration-color: rgba(9,107,200,.27); text-underline-offset: 3px; }
 .faq-category-accordion .details-content a:hover { text-decoration-color: currentColor; }
+details.faq-category { border-top: 0; }
+details.faq-category > summary.faq-category-head { padding: 0; margin: 0; list-style: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+details.faq-category > summary.faq-category-head::-webkit-details-marker { display: none; }
+details.faq-category > summary.faq-category-head::after { content: none; }
+details.faq-category > summary.faq-category-head:focus-visible { outline: 2px solid var(--action-blue, #096bc8); outline-offset: 6px; border-radius: 8px; }
+.faq-category-head > div { padding-right: 44px; }
+.faq-category-toggle { position: absolute; top: 1px; right: 0; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: #096bc8; background: #eaf4ff; transition: background .3s ease; }
+.faq-category-toggle svg { width: 14px; height: 14px; display: block; transition: transform .35s var(--ease-premium, ease); }
+details.faq-category[open] > summary.faq-category-head .faq-category-toggle { background: #dcedff; }
+details.faq-category[open] > summary.faq-category-head .faq-category-toggle svg { transform: rotate(180deg); }
 .faq-bottom-cta { padding-top: 0; }
 
 @media (max-width: 980px) {
@@ -2547,7 +2557,7 @@ body.pricing-open { overflow: hidden; }
   .faq-hero-grid { grid-template-columns: 1fr; gap: 36px; }
   .faq-hero-quiz { max-width: 620px; }
   .faq-category { grid-template-columns: 1fr; gap: 32px; }
-  .faq-category-head { position: static; max-width: 620px; }
+  .faq-category-head { position: relative; top: auto; max-width: 620px; }
 }
 
 @media (max-width: 680px) {
@@ -2591,6 +2601,7 @@ body.pricing-open { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .faq-hero-quiz, .faq-hero-quiz-icon, .faq-category-nav a, .faq-hero-arrow { transition: none; }
+  .faq-category-toggle svg { transition: none; }
 }
 
 /* Homepage: one coherent work section for the process and first-project offer. */

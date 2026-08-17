@@ -234,6 +234,33 @@ document.documentElement.classList.remove('reveal-fallback');
     });
   });
 
+  // FAQ category toggles: native <details>/<summary>, each independent, all
+  // collapsed by default. Animate the height when motion is allowed; fall back
+  // to the browser's own instant open/close otherwise.
+  doc.querySelectorAll('.faq-category-list > .faq-category').forEach((category) => {
+    const summary = category.querySelector(':scope > summary');
+    const content = category.querySelector(':scope > .faq-category-accordion');
+    if (!summary || !content || reduceMotion) return;
+    let animation = null;
+    summary.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (animation) animation.cancel();
+      const opening = !category.open;
+      const start = category.offsetHeight;
+      if (opening) category.open = true;
+      const end = opening ? category.scrollHeight : summary.offsetHeight;
+      category.style.overflow = 'hidden';
+      animation = category.animate({ height: [`${start}px`, `${end}px`] }, { duration: 340, easing: 'cubic-bezier(.22,1,.36,1)' });
+      animation.onfinish = () => {
+        if (!opening) category.open = false;
+        category.style.height = '';
+        category.style.overflow = '';
+        animation = null;
+      };
+      animation.oncancel = () => { animation = null; };
+    });
+  });
+
   // Contextual pricing: one accessible panel is reused by all service cards and
   // service pages. Desktop receives a right-side drawer; phones receive a
   // full-height bottom sheet through CSS, without duplicating the price copy.
