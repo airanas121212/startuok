@@ -484,6 +484,7 @@ document.documentElement.classList.remove('reveal-fallback');
   const leadForm = doc.querySelector('#lead-form');
   if (leadForm) initLeadForm(leadForm);
   initConsentBanner();
+  initExitIntentPopup();
 
   function initQuiz(form) {
     // One continuous flow: the seven question steps and the closing review +
@@ -968,6 +969,98 @@ document.documentElement.classList.remove('reveal-fallback');
       const copyrightEl = footerInfo.querySelector('.copyright');
       if (copyrightEl) footerInfo.insertBefore(manage, copyrightEl);
       else footerInfo.appendChild(manage);
+    }
+  }
+
+  // Site-wide exit-intent / scroll promo popup. Never shown on /klausimynas/
+  // or /kontaktai/ (the quiz already collects the email, and the popup exists
+  // to route people into the quiz). No email field here — this is not a lead
+  // form, just a nudge. Shows at most once per browser session.
+  function initExitIntentPopup() {
+    const EXCLUDED_PATHS = /\/(klausimynas|kontaktai)(\/|$)/;
+    if (EXCLUDED_PATHS.test(location.pathname)) return;
+
+    const SESSION_KEY = 'startuok_exit_popup_shown';
+    let alreadyShown = false;
+    try { alreadyShown = sessionStorage.getItem(SESSION_KEY) === '1'; } catch (_) {}
+    if (alreadyShown) return;
+
+    const subfolderPattern = /\/(duk|klausimynas|kontaktai|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas|paslaugos-ir-kainos|aptarti-projekta)\//;
+    const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
+
+    let overlay = null;
+    let lastFocused = null;
+    let shown = false;
+    let mobileTimer = null;
+
+    const markShown = () => { try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (_) {} };
+
+    const detachTriggers = () => {
+      doc.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('scroll', onScroll);
+      if (mobileTimer) { clearTimeout(mobileTimer); mobileTimer = null; }
+    };
+
+    const onKeydown = (event) => { if (event.key === 'Escape') closePopup(); };
+
+    function closePopup() {
+      if (!overlay) return;
+      overlay.classList.remove('visible');
+      doc.body.classList.remove('exit-popup-open');
+      doc.removeEventListener('keydown', onKeydown);
+      const toRemove = overlay;
+      overlay = null;
+      setTimeout(() => { if (toRemove.parentNode) toRemove.parentNode.removeChild(toRemove); }, 250);
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    function showPopup() {
+      if (shown) return;
+      shown = true;
+      markShown();
+      detachTriggers();
+
+      lastFocused = doc.activeElement;
+      overlay = doc.createElement('div');
+      overlay.className = 'exit-popup-overlay';
+      overlay.innerHTML = `
+        <div class="exit-popup-card" role="dialog" aria-modal="true" aria-labelledby="exit-popup-text">
+          <button type="button" class="exit-popup-close" aria-label="Uždaryti">×</button>
+          <p id="exit-popup-text" class="exit-popup-text">Pirmiems 3 projektams −15%. Sužinokite per 2 min., ar jums tinka →</p>
+          <a class="button button-small exit-popup-cta" data-track="exit_popup_cta_click" data-track-location="exit_popup" href="${prefix}klausimynas/index.html">Pradėti klausimyną</a>
+        </div>`;
+      doc.body.appendChild(overlay);
+
+      overlay.addEventListener('click', (event) => { if (event.target === overlay) closePopup(); });
+      overlay.querySelector('.exit-popup-close').addEventListener('click', closePopup);
+      doc.addEventListener('keydown', onKeydown);
+
+      requestAnimationFrame(() => {
+        doc.body.classList.add('exit-popup-open');
+        overlay.classList.add('visible');
+        const closeBtn = overlay.querySelector('.exit-popup-close');
+        if (closeBtn) closeBtn.focus();
+      });
+    }
+
+    function onMouseLeave(event) {
+      // Desktop exit-intent: only fire when the pointer leaves upward, toward
+      // the tab/address bar — not on every mouseleave (e.g. into an iframe).
+      if (event.clientY <= 0) showPopup();
+    }
+
+    function onScroll() {
+      const html = doc.documentElement;
+      const scrollable = html.scrollHeight - html.clientHeight;
+      if (scrollable <= 0) return;
+      if (window.scrollY / scrollable >= 0.5) showPopup();
+    }
+
+    if (finePointer) {
+      doc.addEventListener('mouseleave', onMouseLeave);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      mobileTimer = setTimeout(showPopup, 25000);
     }
   }
 })();

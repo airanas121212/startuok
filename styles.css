@@ -3563,6 +3563,7 @@ footer { padding: 38px 0; }
 .contact-head-lead { max-width: 660px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.62; }
 
 .contact-channels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.contact-channels-single { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
 .contact-channel {
   display: flex;
   flex-direction: column;
@@ -3612,3 +3613,54 @@ footer { padding: 38px 0; }
    panel now opens the section directly, so drop the divider/spacing that
    used to separate it from the process steps above it. */
 .work-program.work-program-first { padding-top: 0; border-top: none; }
+
+/* Exit-intent / scroll promo popup (site-wide, injected via script.js). */
+.exit-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(7, 21, 46, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.exit-popup-overlay.visible { opacity: 1; pointer-events: auto; }
+.exit-popup-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 34px 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-feature);
+  text-align: center;
+  transform: translateY(14px) scale(.98);
+  transition: transform .3s ease;
+}
+.exit-popup-overlay.visible .exit-popup-card { transform: translateY(0) scale(1); }
+.exit-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.exit-popup-close:hover { color: var(--ink); }
+.exit-popup-text { margin: 6px 0 22px; color: var(--ink); font-size: 18px; font-weight: 700; line-height: 1.4; }
+.exit-popup-cta { display: inline-flex; }
+@media (max-width: 680px) {
+  .exit-popup-card { padding: 28px 22px; }
+  .exit-popup-text { font-size: 16px; }
+}
