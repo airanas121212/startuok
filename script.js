@@ -195,17 +195,6 @@ document.documentElement.classList.remove('reveal-fallback');
     show(0);
   }
 
-  // Timeline emphasis as each real step enters the reading area.
-  doc.querySelectorAll('.animated-timeline').forEach((timeline) => {
-    const items = [...timeline.querySelectorAll(':scope > li')];
-    if (!items.length) return;
-    if (reduceMotion || !('IntersectionObserver' in window)) { items.forEach((item) => item.classList.add('is-active')); return; }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => entry.target.classList.toggle('is-active', entry.isIntersecting));
-    }, { rootMargin: '-32% 0px -48% 0px', threshold: .15 });
-    items.forEach((item) => observer.observe(item));
-  });
-
   // Accessible accordion: only one open; animate content height when motion is allowed.
   doc.querySelectorAll('.accordion').forEach((accordion) => {
     const items = [...accordion.querySelectorAll(':scope > details')];
@@ -484,7 +473,7 @@ document.documentElement.classList.remove('reveal-fallback');
   const leadForm = doc.querySelector('#lead-form');
   if (leadForm) initLeadForm(leadForm);
   initConsentBanner();
-  initExitIntentPopup();
+  initQuizWidget();
 
   function initQuiz(form) {
     // One continuous flow: the seven question steps and the closing review +
@@ -931,11 +920,10 @@ document.documentElement.classList.remove('reveal-fallback');
     banner.setAttribute('aria-label', 'Slapukų nustatymai');
     banner.innerHTML = `
       <div class="consent-banner-text">
-        <strong>Naudojame analitikos slapukus.</strong>
-        <p>Tai padeda suprasti, kaip lankytojai naudojasi svetaine. Įjungiami tik gavus jūsų sutikimą. <a href="${prefix}privatumas.html">Privatumo informacija</a></p>
+        <p>Naudoju analitikos slapukus, kad matyčiau, kaip lankotės svetainėje. <a href="${prefix}privatumas.html">Plačiau</a></p>
       </div>
       <div class="consent-banner-actions">
-        <button type="button" class="consent-secondary" data-consent="reject">Tik būtini slapukai</button>
+        <button type="button" class="consent-secondary" data-consent="reject">Tik būtini</button>
         <button type="button" class="button button-small" data-consent="accept">Sutinku</button>
       </div>`;
     doc.body.appendChild(banner);
@@ -972,95 +960,53 @@ document.documentElement.classList.remove('reveal-fallback');
     }
   }
 
-  // Site-wide exit-intent / scroll promo popup. Never shown on /klausimynas/
-  // or /kontaktai/ (the quiz already collects the email, and the popup exists
-  // to route people into the quiz). No email field here — this is not a lead
-  // form, just a nudge. Shows at most once per browser session.
-  function initExitIntentPopup() {
-    const EXCLUDED_PATHS = /\/(klausimynas|kontaktai)(\/|$)/;
+  // Site-wide floating quiz widget — a small "?" button fixed in the corner
+  // on every page (except /klausimynas/, /kontaktai/ and /aptarti-projekta/,
+  // where it would be redundant or get in the way of a form). Starts
+  // collapsed and only opens on click, so it never interrupts browsing.
+  function initQuizWidget() {
+    const EXCLUDED_PATHS = /\/(klausimynas|kontaktai|aptarti-projekta)(\/|$)/;
     if (EXCLUDED_PATHS.test(location.pathname)) return;
-
-    const SESSION_KEY = 'startuok_exit_popup_shown';
-    let alreadyShown = false;
-    try { alreadyShown = sessionStorage.getItem(SESSION_KEY) === '1'; } catch (_) {}
-    if (alreadyShown) return;
 
     const subfolderPattern = /\/(duk|klausimynas|kontaktai|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas|paslaugos-ir-kainos|aptarti-projekta)\//;
     const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
 
-    let overlay = null;
-    let lastFocused = null;
-    let shown = false;
-    let mobileTimer = null;
+    const widget = doc.createElement('div');
+    widget.className = 'quiz-widget';
+    widget.setAttribute('data-open', 'false');
+    widget.innerHTML = `
+      <div class="quiz-widget-panel" id="quiz-widget-panel" role="dialog" aria-label="Shopify projekto klausimynas">
+        <button type="button" class="quiz-widget-close" aria-label="Uždaryti">×</button>
+        <a class="quiz-widget-card" data-track="quiz_cta_click" data-track-location="floating_widget" href="${prefix}klausimynas/index.html">
+          <span aria-hidden="true" class="quiz-widget-icon">🚀</span>
+          <span>
+            <small>Nežinote, nuo ko pradėti?</small>
+            <strong>Atlikite 7 klausimų klausimyną</strong>
+            <p>~2 min. · rekomenduojama kryptis ir paruošta užklausos santrauka</p>
+          </span>
+        </a>
+      </div>
+      <button type="button" class="quiz-widget-toggle" id="quiz-widget-toggle" aria-expanded="false" aria-controls="quiz-widget-panel" aria-label="Atidaryti Shopify projekto klausimyną">
+        <span aria-hidden="true">?</span>
+      </button>`;
+    doc.body.appendChild(widget);
 
-    const markShown = () => { try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (_) {} };
+    const toggle = widget.querySelector('.quiz-widget-toggle');
+    const closeBtn = widget.querySelector('.quiz-widget-close');
 
-    const detachTriggers = () => {
-      doc.removeEventListener('mouseleave', onMouseLeave);
-      window.removeEventListener('scroll', onScroll);
-      if (mobileTimer) { clearTimeout(mobileTimer); mobileTimer = null; }
+    const setOpen = (open) => {
+      widget.setAttribute('data-open', String(open));
+      toggle.setAttribute('aria-expanded', String(open));
     };
 
-    const onKeydown = (event) => { if (event.key === 'Escape') closePopup(); };
-
-    function closePopup() {
-      if (!overlay) return;
-      overlay.classList.remove('visible');
-      doc.body.classList.remove('exit-popup-open');
-      doc.removeEventListener('keydown', onKeydown);
-      const toRemove = overlay;
-      overlay = null;
-      setTimeout(() => { if (toRemove.parentNode) toRemove.parentNode.removeChild(toRemove); }, 250);
-      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-    }
-
-    function showPopup() {
-      if (shown) return;
-      shown = true;
-      markShown();
-      detachTriggers();
-
-      lastFocused = doc.activeElement;
-      overlay = doc.createElement('div');
-      overlay.className = 'exit-popup-overlay';
-      overlay.innerHTML = `
-        <div class="exit-popup-card" role="dialog" aria-modal="true" aria-labelledby="exit-popup-text">
-          <button type="button" class="exit-popup-close" aria-label="Uždaryti">×</button>
-          <p id="exit-popup-text" class="exit-popup-text">Pirmiems 3 projektams −15%. Sužinokite per 2 min., ar jums tinka →</p>
-          <a class="button button-small exit-popup-cta" data-track="exit_popup_cta_click" data-track-location="exit_popup" href="${prefix}klausimynas/index.html">Pradėti klausimyną</a>
-        </div>`;
-      doc.body.appendChild(overlay);
-
-      overlay.addEventListener('click', (event) => { if (event.target === overlay) closePopup(); });
-      overlay.querySelector('.exit-popup-close').addEventListener('click', closePopup);
-      doc.addEventListener('keydown', onKeydown);
-
-      requestAnimationFrame(() => {
-        doc.body.classList.add('exit-popup-open');
-        overlay.classList.add('visible');
-        const closeBtn = overlay.querySelector('.exit-popup-close');
-        if (closeBtn) closeBtn.focus();
-      });
-    }
-
-    function onMouseLeave(event) {
-      // Desktop exit-intent: only fire when the pointer leaves upward, toward
-      // the tab/address bar — not on every mouseleave (e.g. into an iframe).
-      if (event.clientY <= 0) showPopup();
-    }
-
-    function onScroll() {
-      const html = doc.documentElement;
-      const scrollable = html.scrollHeight - html.clientHeight;
-      if (scrollable <= 0) return;
-      if (window.scrollY / scrollable >= 0.5) showPopup();
-    }
-
-    if (finePointer) {
-      doc.addEventListener('mouseleave', onMouseLeave);
-    } else {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      mobileTimer = setTimeout(showPopup, 25000);
-    }
+    toggle.addEventListener('click', () => setOpen(widget.getAttribute('data-open') !== 'true'));
+    closeBtn.addEventListener('click', () => setOpen(false));
+    doc.addEventListener('click', (event) => {
+      if (widget.getAttribute('data-open') === 'true' && !widget.contains(event.target)) setOpen(false);
+    });
+    doc.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && widget.getAttribute('data-open') === 'true') { setOpen(false); toggle.focus(); }
+    });
   }
+
 })();
