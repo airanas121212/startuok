@@ -1020,7 +1020,7 @@ document.documentElement.classList.remove('reveal-fallback');
           <span aria-hidden="true" class="quiz-widget-icon">🚀</span>
           <span>
             <small>Nežinote, nuo ko pradėti?</small>
-            <strong>Atlikite 7 klausimų klausimyną</strong>
+            <strong>Atsakykite į 7 klausimus apie savo projektą</strong>
             <p>~2 min. · rekomenduojama kryptis ir paruošta užklausos santrauka</p>
           </span>
         </a>

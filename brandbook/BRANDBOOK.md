@@ -144,7 +144,7 @@ Pagrindinis veiksmas turi būti konkretus veiksmažodis:
 - „Rezervuoti 20 min. pokalbį“;
 - „Rezervuoti pokalbį“;
 - „Peržiūrėti kainas“;
-- „Pradėti 7 klausimų klausimyną“;
+- „Atsakyti į 7 klausimus“;
 - „Siųsti užklausą“.
 
 Antrinis veiksmas yra tekstinė nuoroda:
