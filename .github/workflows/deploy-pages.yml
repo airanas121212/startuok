@@ -41,6 +41,9 @@ jobs:
             exit 1
           fi
 
+      - name: Verify clean public URLs
+        run: node tools/check-clean-urls.mjs _site
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4
         with:
