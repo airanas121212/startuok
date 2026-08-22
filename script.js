@@ -6,6 +6,50 @@ document.documentElement.classList.remove('reveal-fallback');
   const root = doc.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const siteRootUrl = new URL('.', doc.currentScript?.src || location.href);
+  const sitePath = (relativePath) => new URL(relativePath, siteRootUrl).pathname;
+
+  // Clean directory URLs are correct on GitHub Pages, but browsers do not
+  // resolve them to index.html when a page is opened directly from disk.
+  // Rewrite anchors only for file:// previews; hosted URLs remain untouched.
+  if (location.protocol === 'file:') {
+    const rewriteFilePreviewLinks = (scope) => {
+      const anchors = [];
+      if (scope.matches?.('a[href]')) anchors.push(scope);
+      if (scope.querySelectorAll) anchors.push(...scope.querySelectorAll('a[href]'));
+
+      anchors.forEach((anchor) => {
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+
+        try {
+          const target = href.startsWith('/') && !href.startsWith('//')
+            ? new URL(href.replace(/^\/+/, ''), siteRootUrl)
+            : new URL(href, location.href);
+          if (target.protocol !== 'file:' || !target.pathname.endsWith('/')) return;
+          target.pathname += 'index.html';
+          anchor.href = target.href;
+        } catch (_) {
+          // Leave malformed or non-navigation values to the browser.
+        }
+      });
+    };
+
+    rewriteFilePreviewLinks(doc);
+    new MutationObserver((records) => {
+      records.forEach((record) => {
+        if (record.type === 'attributes') rewriteFilePreviewLinks(record.target);
+        record.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) rewriteFilePreviewLinks(node);
+        });
+      });
+    }).observe(doc.documentElement, {
+      attributes: true,
+      attributeFilter: ['href'],
+      childList: true,
+      subtree: true
+    });
+  }
 
   // EmailJS: one service, one "owner" template. The owner template's Auto-Reply
   // (configured in the EmailJS dashboard) sends the client-facing confirmation —
@@ -281,7 +325,7 @@ document.documentElement.classList.remove('reveal-fallback');
       boundary: 'Į kainą neįskaičiuota: Shopify planas, mokama tema, programėlių mokesčiai, fotografija, tekstų rašymas ir didelės apimties duomenų tvarkymas. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'kurimas',
       formValue: 'Shopify parduotuvės kūrimas',
-      detailPath: 'shopify-parduotuviu-kurimas/index.html'
+      detailPath: 'shopify-parduotuviu-kurimas/'
     },
     migration: {
       eyebrow: 'Migracijos kainoraštis',
@@ -310,7 +354,7 @@ document.documentElement.classList.remove('reveal-fallback');
       boundary: 'Į kainą neįskaičiuota: išorinių sistemų mokesčiai, rankinis trūkstamų duomenų atkūrimas ir individualių senos platformos funkcijų perprogramavimas. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'migracija',
       formValue: 'Migracija į Shopify',
-      detailPath: 'migracija-i-shopify/index.html'
+      detailPath: 'migracija-i-shopify/'
     },
     integration: {
       eyebrow: 'Integracijų kainoraštis',
@@ -338,7 +382,7 @@ document.documentElement.classList.remove('reveal-fallback');
       boundary: 'Į kainą neįskaičiuotos programėlių, automatizavimo įrankių ir išorinių sistemų licencijos. Sistemų sujungimo galimybes ir tiekėjų ribojimus įvertiname prieš pateikdami pasiūlymą. Ar taikomas PVM, aiškiai nurodome pasiūlyme.',
       service: 'integracijos',
       formValue: 'Shopify integracijos',
-      detailPath: 'shopify-integracijos/index.html'
+      detailPath: 'shopify-integracijos/'
     }
   };
 
@@ -404,7 +448,7 @@ document.documentElement.classList.remove('reveal-fallback');
       dialog.querySelector('[data-pricing-extras]').innerHTML = rowMarkup(data.extras);
       dialog.querySelector('[data-pricing-boundary]').textContent = data.boundary;
       const detailLink = dialog.querySelector('[data-pricing-detail]');
-      const servicePath = `/${data.detailPath.replace('index.html', '')}`;
+      const servicePath = `/${data.detailPath}`;
       const currentServicePage = nestedPage && location.pathname.endsWith(servicePath);
       detailLink.href = currentServicePage ? '#apimtis' : `${prefix}${data.detailPath}`;
       detailLink.dataset.scrollTarget = currentServicePage ? 'apimtis' : '';
@@ -909,8 +953,6 @@ document.documentElement.classList.remove('reveal-fallback');
   // flip analytics_storage etc. to "granted" (see privatumas.html for details).
   function initConsentBanner() {
     const STORAGE_KEY = 'startuok_consent';
-    const subfolderPattern = /\/(klausimynas|kontaktai|aptarti-projekta|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas)\//;
-    const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
     let stored = null;
     try { stored = localStorage.getItem(STORAGE_KEY); } catch (_) {}
 
@@ -920,7 +962,7 @@ document.documentElement.classList.remove('reveal-fallback');
     banner.setAttribute('aria-label', 'Slapukų nustatymai');
     banner.innerHTML = `
       <div class="consent-banner-text">
-        <p>Naudoju analitikos slapukus, kad matyčiau, kaip lankotės svetainėje. <a href="${prefix}privatumas.html">Plačiau</a></p>
+        <p>Naudoju analitikos slapukus, kad matyčiau, kaip lankotės svetainėje. <a href="${sitePath('privatumas.html')}">Plačiau</a></p>
       </div>
       <div class="consent-banner-actions">
         <button type="button" class="consent-secondary" data-consent="reject">Tik būtini</button>
@@ -968,16 +1010,13 @@ document.documentElement.classList.remove('reveal-fallback');
     const EXCLUDED_PATHS = /\/(klausimynas|kontaktai|aptarti-projekta)(\/|$)/;
     if (EXCLUDED_PATHS.test(location.pathname)) return;
 
-    const subfolderPattern = /\/(duk|klausimynas|kontaktai|migracija-i-shopify|shopify-integracijos|shopify-parduotuviu-kurimas|paslaugos-ir-kainos|aptarti-projekta)\//;
-    const prefix = subfolderPattern.test(location.pathname) ? '../' : '';
-
     const widget = doc.createElement('div');
     widget.className = 'quiz-widget';
     widget.setAttribute('data-open', 'false');
     widget.innerHTML = `
       <div class="quiz-widget-panel" id="quiz-widget-panel" role="dialog" aria-label="Shopify projekto klausimynas">
         <button type="button" class="quiz-widget-close" aria-label="Uždaryti">×</button>
-        <a class="quiz-widget-card" data-track="quiz_cta_click" data-track-location="floating_widget" href="${prefix}klausimynas/index.html">
+        <a class="quiz-widget-card" data-track="quiz_cta_click" data-track-location="floating_widget" href="${sitePath('klausimynas/')}">
           <span aria-hidden="true" class="quiz-widget-icon">🚀</span>
           <span>
             <small>Nežinote, nuo ko pradėti?</small>
