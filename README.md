@@ -2,6 +2,10 @@
 
 This folder is a complete static website. It does not need a build step.
 
+## Brandbook
+
+The current website design, content, interaction, accessibility, editorial, and implementation rules are documented in [`brandbook/BRANDBOOK.md`](brandbook/BRANDBOOK.md), including the blog and reusable article layout.
+
 ## Publish with GitHub Pages
 
 1. Create a GitHub repository and copy the contents of this folder into its root.
